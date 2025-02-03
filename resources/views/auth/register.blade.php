@@ -1,4 +1,4 @@
-@extends('layout.app') <!-- Extiende tu layout principal -->
+@extends('layouts.app') <!-- Extiende tu layout principal -->
 
 @section('content')
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
