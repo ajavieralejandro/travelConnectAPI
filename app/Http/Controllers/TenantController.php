@@ -40,20 +40,23 @@ class TenantController extends Controller
     }
 
     public function show(Request $request)
-    {
-        // Obtener el subdominio de la solicitud
-        $subdomain = explode('.', $request->getHost())[0];
+{
+    // Obtener el subdominio de la solicitud
+    $subdomain = explode('.', $request->getHost())[0];
 
-        // Aquí puedes agregar lógica para determinar qué vista o datos devolver
-        // basado en el subdominio
-        $tenantData = $this->getTenantData($subdomain);
+    // Verificar si el subdominio está registrado en la base de datos
+    $tenant = Tenant::where('subdomain', $subdomain)->first();
 
-        // Pasar los datos a la vista de React
-        return view('tenant', [
-            'tenantData' => $tenantData,
-            'subdomain' => $subdomain,
-        ]);
+    if (!$tenant) {
+        abort(404, 'Subdominio no encontrado');
     }
+
+    // Pasar los datos a la vista de React
+    return view('tenant', [
+        'tenantData' => $tenant,
+        'subdomain' => $subdomain,
+    ]);
+}
 
     private function getTenantData($subdomain)
     {
