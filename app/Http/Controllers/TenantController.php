@@ -38,4 +38,33 @@ class TenantController extends Controller
 
         return redirect()->route('welcome')->with('success', 'Usuario registrado con éxito');
     }
+
+    public function show(Request $request)
+    {
+        // Obtener el subdominio de la solicitud
+        $subdomain = explode('.', $request->getHost())[0];
+
+        // Aquí puedes agregar lógica para determinar qué vista o datos devolver
+        // basado en el subdominio
+        $tenantData = $this->getTenantData($subdomain);
+
+        // Pasar los datos a la vista de React
+        return view('tenant', [
+            'tenantData' => $tenantData,
+            'subdomain' => $subdomain,
+        ]);
+    }
+
+    private function getTenantData($subdomain)
+    {
+        // Lógica para obtener datos específicos del inquilino
+        // Esto podría ser una consulta a la base de datos, por ejemplo
+        return [
+            'name' => 'Tenant Name',
+            'config' => [
+                'theme' => 'light',
+                // otros ajustes específicos del inquilino
+            ],
+        ];
+    }
 }

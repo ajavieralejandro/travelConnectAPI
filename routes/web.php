@@ -11,6 +11,12 @@ Route::middleware('is_admin')->group(function () {
     Route::get('/register', [TenantController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [TenantController::class, 'register']);    });
 
+
+Route::domain('{subdomain}.localhost')->group(function () {
+    Route::get('/', [TenantController::class, 'show']);
+});
+
+// Luego, la ruta general
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
