@@ -14,8 +14,10 @@ Route::get('/ver_paquetes', [PaquetesController::class, 'index'])->name('paquete
 
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
+
 Route::middleware('is_admin')->group(function () {
     Route::get('/register', [TenantController::class, 'showRegistrationForm'])->name('register');
+
     Route::post('/register', [TenantController::class, 'register']);    });
 
 

@@ -1,64 +1,95 @@
-private function parseXmlResponse($xmlString)
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Tenant;
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+
+class TenantController extends Controller
 {
-    try {
-        $xml = simplexml_load_string($xmlString);
-        $xml->registerXPathNamespace('soap', 'http://schemas.xmlsoap.org/soap/envelope/');
-        $xml->registerXPathNamespace('ycix', 'http://ycix.sytes.net');
-
-        // Obtener todos los elementos Row
-        $rows = $xml->xpath('//ycix:Row');
-
-        $processedRows = [];
-        foreach ($rows as $row) {
-            $rowData = [
-                'IDPAQUETE' => (string)$row->xpath('.//ycix:IDPAQUETE')[0],
-                'NOMBRE' => (string)$row->xpath('.//ycix:NOMBRE')[0],
-                'IDDESTINO' => (string)$row->xpath('.//ycix:IDDESTINO')[0],
-                'CANTNOCHES' => (string)$row->xpath('.//ycix:CANTNOCHES')[0],
-                'TIPOPAQUETE' => (string)$row->xpath('.//ycix:TIPOPAQUETE')[0],
-                'IZMONEDA' => (string)$row->xpath('.//ycix:IZMONEDA')[0],
-                'VIGENCIADESDE' => (string)$row->xpath('.//ycix:VIGENCIADESDE')[0],
-                'VIGENCIAHASTA' => (string)$row->xpath('.//ycix:VIGENCIAHASTA')[0],
-                'EXPORTA' => (string)$row->xpath('.//ycix:EXPORTA')[0],
-                'DESCRIPCION' => (string)$row->xpath('.//ycix:DESCRIPCION')[0],
-                'RESERVAHABILITADA' => (string)$row->xpath('.//ycix:RESERVAHABILITADA')[0],
-                '_MS' => (string)$row->xpath('.//ycix:_MS')[0]
-            ];
-
-            // Limpiar formato RTF de la descripción
-            $rowData['DESCRIPCION'] = $this->cleanRtf($rowData['DESCRIPCION']);
-
-            $processedRows[] = $rowData;
-        }
-
-        $result = [
-            'data' => [
-                [
-                    'DocumentElement' => [
-                        'Row' => $processedRows
-                    ]
-                ]
-            ]
-        ];
-
-        return response()->json($result);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'Error procesando la respuesta XML',
-            'message' => $e->getMessage()
-        ], 500);
+    public function showRegistrationForm()
+    {
+        return view('auth.register'); // Asegúrate de que esta vista exista
     }
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'subdomain' => 'required|string|unique:tenants,subdomain',
+        ]);
+
+        // Crear el tenant
+        $tenant = Tenant::create([
+            'subdomain' => $request->subdomain,
+            'template' => 'default', // Puedes personalizar esto
+        ]);
+
+        // Crear el usuario
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'tenant_id' => $tenant->id,
+        ]);
+
+        return redirect()->route('welcome')->with('success', 'Usuario registrado con éxito');
+    }
+
+    public function show(Request $request)
+{
+    // Obtener el subdominio de la solicitud
+    $subdomain = explode('.', $request->getHost())[0];
+
+    // Verificar si el subdominio está registrado en la base de datos
+    $tenant = Tenant::where('subdomain', $subdomain)->first();
+
+    if (!$tenant) {
+        abort(404, 'Subdominio no encontrado');
+    }
+
+    if($tenant->default){
+        // Pasar los datos a la vista de React
+    return view('tenant', [
+        'tenantData' => $tenant,
+        'subdomain' => $subdomain,
+    ]);
+    }
+
+    else
+    {
+        return view('tenant2', [
+            'tenantData' => $tenant,
+            'subdomain' => $subdomain,
+        ]);
+    }
+
+
 }
 
-private function cleanRtf($rtfText)
-{
-    // Eliminar comandos RTF básicos y mantener texto plano
-    $cleanText = preg_replace('/\\\\([a-z]{1,})(-?\d{1,})? */i', '', $rtfText);
-    $cleanText = preg_replace('/\{\\\*?\\\'[0-9a-f]{2}\}/i', '', $cleanText);
-    $cleanText = str_replace(['\\par', '\\pard', '{', '}'], "\n", $cleanText);
-    $cleanText = html_entity_decode($cleanText);
-    $cleanText = trim(preg_replace('/\s+/', ' ', $cleanText));
 
-    return $cleanText;
+public function getTenant($domain)
+{
+    // Validar que el dominio no esté vacío
+    if (empty($domain)) {
+        return response()->json(['message' => 'El dominio es requerido'], 400);
+    }
+
+    // Cachear la respuesta por 60 minutos
+    $tenant = Cache::remember("tenant_{$domain}", 60, function () use ($domain) {
+        return Tenant::where('subdomain', $domain)->first();
+    });
+
+    // Si no se encuentra el tenant, devolver un error 404
+    if (!$tenant) {
+        return response()->json(['message' => 'Tenant no encontrado'], 404);
+    }
+
+    // Devolver los datos del tenant en formato JSON
+    return response()->json($tenant);
+}
 }

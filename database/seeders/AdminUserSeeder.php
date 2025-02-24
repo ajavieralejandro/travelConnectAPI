@@ -23,10 +23,10 @@ class AdminUserSeeder extends Seeder
 
         // Crear un usuario admin
         User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@admin.com',
+            'name' => 'Admin User 2',
+            'email' => 'admin2@admin.com',
             'password' => Hash::make($adminPassword), // Usar el password del .env
-            'is_admin' => true, // Asignar el rol de admin
+            'is_admin' => 1, // Asignar el rol de admin
         ]);
 
         $this->command->info('Usuario admin creado exitosamente.');
