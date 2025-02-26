@@ -17,9 +17,7 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        'triptest.com.ar',
-        '127.0.0.1',
-        'localhost',
+        'triptest.com.ar'
     ],
     'tenant_subdomain' => '{tenant}.triptest.com.ar', // Cambia esto por tu dominio principal
 
