@@ -21,7 +21,7 @@ return [
         '127.0.0.1',
         'localhost',
     ],
-    'tenant_subdomain' => '{tenant}.localhost', // Cambia esto por tu dominio principal
+    'tenant_subdomain' => '{tenant}.triptest.com.ar', // Cambia esto por tu dominio principal
 
 
     /**
