@@ -26,7 +26,13 @@ Route::domain('{subdomain}.localhost')->group(function () {
 });
 
 Route::get('/send-soap-request', [SoapController::class, 'sendSoapRequest']);
-
+Route::get('/tenant-check', function () {
+    dd([
+        'tenant' => tenant(), // Should return "javier" tenant
+        'host' => request()->getHost(), // Should be "javier.triptest.com.ar"
+        'config' => config('tenancy.central_domains') // Should include "triptest.com.ar"
+    ]);
+});
 
 Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
 
