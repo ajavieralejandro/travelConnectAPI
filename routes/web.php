@@ -14,6 +14,11 @@ Route::get('/ver_paquetes', [PaquetesController::class, 'index'])->name('paquete
 
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/paquetes/buscar', [PaquetesController::class, 'buscarPaquetes'])->name('paquetes.buscar');
+Route::get('/buscar', function () {
+    return view('buscar_paquetes');
+})->name('paquetes.form');
+
 
 Route::middleware('is_admin')->group(function () {
     Route::get('/register', [TenantController::class, 'showRegistrationForm'])->name('register');

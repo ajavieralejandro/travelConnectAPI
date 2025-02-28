@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
+use XMLReader;
 
 class SoapController extends Controller
 {
@@ -24,15 +25,15 @@ class SoapController extends Controller
           <SOAP-ENV:Body>
             <tns:GetPackagesFares xmlns:tns="http://aws-qa1.ola.com.ar/qa/wsola/endpoint">
               <Request xsi:type="xsd:string"><![CDATA[
-              <GetPackagesFaresRequest>
+               <GetPackagesFaresRequest>
           <GeneralParameters>
             <Username>BUETRIPNOWWEB</Username>
             <Password>e3fab5ef81210da49bee83c32bce283ebcb19dfa8b27596130959a3a6fa55232</Password>
             <CustomerIp>200.126.204.4</CustomerIp>
           </GeneralParameters>
           <DepartureDate>
-            <From>2025-02-13</From>
-            <To>2025-04-10</To>
+            <From>2025-03-02</From>
+            <To>2025-10-10</To>
           </DepartureDate>
           <Rooms>
             <Room>
@@ -63,39 +64,86 @@ class SoapController extends Controller
                 ],
                 'body' => $xmlRequest,
             ]);
-             // Convertir XML a array
-             $xmlString = file_get_contents($response->getBody());
-             $xmlObject = simplexml_load_string($xmlString);
+             // Obtener el XML desde la request
+        $xmlContent = $response->getBody();
 
-             // Extraer la respuesta dentro de <Response> y decodificar entidades XML
-             $responseXml = html_entity_decode($xmlObject->xpath('//Response')[0]);
+        // Crear un XMLReader
+        $reader = new XMLReader();
+        $reader->XML($xmlContent);
 
-             // Convertir la respuesta XML en un objeto SimpleXMLElement
-             $responseObject = simplexml_load_string($responseXml);
+        $packages = [];
+        $flights = [];
+        $currentElement = null;
+        // Recorrer el XML en modo streaming
+        $packages = [];
+        $currentPackage = [];
+        $currentElement = null;
+        $data = [];
 
-             // Convertir el objeto a JSON
-             $json = json_encode($responseObject, JSON_PRETTY_PRINT);
-             dd($json);
+        // Recorrer el XML en modo streaming
+        while ($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT) {
+                array_push($data, $reader->localName);  // Alternativa con función
 
-            return response($response->getBody(), 200)
-                ->header('Content-Type', 'text/xml');
+                switch ($reader->localName) {
+                    case 'Package':
+                        $currentPackage = []; // Inicializar un nuevo paquete
+                        break;
+                    case 'Code':
+                    case 'Type':
+                    case 'Name':
+                    case 'Nights':
+                    case 'Description':
+                        $currentElement = $reader->name;
+                        break;
+                    case 'Origin':
+                        $currentElement = 'Origin';
+                        $currentPackage['Origin'] = [
+                            'Code' => $reader->getAttribute('Code'),
+                            'City' => null, // Se completará en el siguiente paso
+                        ];
+                        break;
+                    case 'Picture':
+                        $currentElement = 'Picture';
+                        if (!isset($currentPackage['Pictures'])) {
+                            $currentPackage['Pictures'] = [];
+                        }
+                        $currentPackage['Pictures'][] = [
+                            'Found' => $reader->getAttribute('Found'),
+                            'Url' => null, // Se completará en el siguiente paso
+                        ];
+                        break;
+                }
+            } elseif ($reader->nodeType == XMLReader::TEXT && $currentElement) {
+                switch ($currentElement) {
+                    case 'Code':
+                    case 'Type':
+                    case 'Name':
+                    case 'Nights':
+                    case 'Description':
+                        $currentPackage[$currentElement] = trim($reader->value);
+                        break;
+                    case 'Origin':
+                        $currentPackage['Origin']['City'] = trim($reader->value);
+                        break;
+                    case 'Picture':
+                        // Obtener el último índice agregado en Pictures y completar la URL
+                        $lastIndex = count($currentPackage['Pictures']) - 1;
+                        $currentPackage['Pictures'][$lastIndex]['Url'] = trim($reader->value);
+                        break;
+                }
+            }
 
-            $xmlResponse = $response->getBody();
-            $xmlString = file_get_contents($xmlResponse); // O la respuesta del servicio
-$xml = simplexml_load_string($xmlString);
-$json = json_encode($xml);
-$data = json_decode($json, true);
-// Acceder a los valores específicos
-$currentPage = $data['Pagination']['CurrentPage'] ?? null;
-$itemPerPage = $data['Pagination']['ItemPerPage'] ?? null;
-$totalItems = $data['Pagination']['TotalItems'] ?? null;
+            // Cuando se cierre un Package, lo agregamos al array final
+            if ($reader->nodeType == XMLReader::END_ELEMENT && $reader->name == 'Package') {
+                $packages[] = $currentPackage;
+            }
+        }
 
-return response()->json([
-    'current_page' => $currentPage,
-    'items_per_page' => $itemPerPage,
-    'total_items' => $totalItems,
-]);
+        // Cerrar el XMLReader
+        $reader->close();
 
+        return response()->json($data);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

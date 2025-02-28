@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Paquete;
 use App\Models\PaqueteJulia;
+use Carbon\Carbon;
 
 class PaquetesController extends Controller
 {
@@ -52,5 +53,53 @@ class PaquetesController extends Controller
     // Devolver los paquetes encontrados en formato JSON
     return response()->json($paquetes);
 }
+
+public function buscarPaquetes(Request $request)
+{
+     // Obtener los parámetros de la solicitud
+     $destino = $request->input('destino');
+     $fechaDesde = $request->input('fecha_desde');
+     $fechaHasta = $request->input('fecha_hasta');
+     $cantidadPasajeros = $request->input('cantidad_pasajeros');
+     // Iniciar la consulta base para obtener los paquetes
+     $query = Paquete::query();
+
+     // Filtrar por destino (país o ciudad)
+     if ($destino) {
+         $query->where(function ($q) use ($destino) {
+             $q->where('pais', 'like', '%' . $destino . '%')
+               ->orWhere('ciudad', 'like', '%' . $destino . '%');
+         });
+     }
+
+if ($fechaDesde) {
+    // Asegúrate de que la fecha esté en formato Carbon
+    $fechaDesde = Carbon::parse($fechaDesde);
+    $query->where('fecha_vigencia_desde', '>=', $fechaDesde);
+}
+     /*
+     // Filtrar por fechas si están presentes
+
+     if ($fechaHasta) {
+         $query->where('fecha_vigencia_hasta', '<=', $fechaHasta);
+     }
+
+     // Filtrar por cantidad de pasajeros dentro de 'componentes' (formato JSON)
+     if ($cantidadPasajeros) {
+         $query->whereJsonContains('componentes->pasajeros', (int) $cantidadPasajeros);
+     }*/
+
+     // Obtener los paquetes que cumplen con los filtros
+     $paquetes = $query->get();
+
+     // Verificar si se encontraron paquetes
+     if ($paquetes->isEmpty()) {
+         return response()->json(['message' => 'No se encontraron paquetes con los filtros proporcionados.'], 404);
+     }
+
+     // Devolver los paquetes encontrados en formato JSON
+     return response()->json($paquetes);
+}
+
 
 }

@@ -28,7 +28,6 @@ class AllSeasonsController extends Controller
     $xml = new SimpleXMLElement($response->body());
     $json = json_encode($xml);
     $paquetesArray = json_decode($json, true);
-    dd($paquetesArray);
 
     // 🔥 Corrección aquí: acceder a 'paquetes' en lugar de 'paquete'
     if (!isset($paquetesArray['paquetes']['paquete']) || empty($paquetesArray['paquetes']['paquete'])) {
@@ -74,6 +73,8 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
                 'usuario_id' => $paquete['usuario_id'] ?? null,
                 'fecha_vigencia_desde' => $paquete['fecha_vigencia_desde'] ?? null,
                 'fecha_vigencia_hasta' => $paquete['fecha_vigencia_hasta'] ?? null,
+                'fecha_desde' => $paquete['fecha_desde'] ?? null,
+'fecha_hasta' => $paquete['fecha_hasta'] ?? null,
                 'tipo_producto' => $paquete['tipo_producto'] ?? null,
                 'cant_noches' => $paquete['cant_noches'] ?? null,
                 'tipo_moneda' => $paquete['tipo_moneda'] ?? null,

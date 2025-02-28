@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('ciudad_iata');
             $table->date('fecha_vigencia_desde');
             $table->date('fecha_vigencia_hasta');
+
             $table->integer('cant_noches');
             $table->string('tipo_producto');
             $table->json('componentes');
