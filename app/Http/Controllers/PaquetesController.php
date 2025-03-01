@@ -17,6 +17,12 @@ class PaquetesController extends Controller
         $tarjetasJulia = PaqueteJulia::all();
         return view('paquetes.index', compact('paquetes','tarjetasJulia'));
     }
+
+    public function getPaquetes(){
+        $paquetes = Paquete::all();
+        return response()->json($paquetes);
+
+    }
     public function obtenerPaquetesPorDestino(Request $request)
 {
     // Obtener los parámetros de destino desde la solicitud (Request)
