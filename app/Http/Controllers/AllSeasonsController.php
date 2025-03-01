@@ -78,7 +78,7 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
                 'tipo_producto' => $paquete['tipo_producto'] ?? null,
                 'cant_noches' => $paquete['cant_noches'] ?? null,
                 'tipo_moneda' => $paquete['tipo_moneda'] ?? null,
-                'activo' => $paquete['activo'] ?? null,
+'activo' => isset($paquete['activo']) && $paquete['activo'] === 'SI',
                 'imagen_principal' => $paquete['imagen_principal'] ?? null,
                 'edad_menores' => $paquete['edad_menores'] ?? null,
                 'transporte' => $paquete['transporte'] ?? null,
