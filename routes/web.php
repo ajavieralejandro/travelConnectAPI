@@ -10,7 +10,7 @@ use App\Http\Controllers\PaquetesController;
 
 
 Route::get('/paquetes', [JuliaController::class, 'getPaquetes']);
-Route::get('/get_paquetes',[PaquetesController::class,'inde']);
+Route::get('/get_paquetes',[PaquetesController::class,'index']);
 Route::get('/ver_paquetes', [PaquetesController::class, 'getPaquetes'])->name('paquetes.get');
 
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
