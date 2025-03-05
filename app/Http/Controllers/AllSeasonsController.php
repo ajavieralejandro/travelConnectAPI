@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
 use App\Models\Paquete;
+use App\Models\Salida;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+
+use Carbon\Carbon;
 
 class AllSeasonsController extends Controller
 {
@@ -65,7 +69,7 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
         $categorias = is_array($categoriasArray) ? implode(',', array_column($categoriasArray, 'categoria_id')) : (string) $categoriasArray;
 
         // Guardar en la base de datos
-        Paquete::updateOrCreate(
+        $nuevo_paquete = Paquete::updateOrCreate(
             ['paquete_externo_id' => $paquete['paquete_externo_id']],
             [
                 'fecha_modificacion' => $paquete['fecha_modificacion'] ?? null,
@@ -90,6 +94,54 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
                 'categorias' => $categorias,
             ]
         );
+
+        foreach ($paquete['salidas'] as $salidaData) {
+            if(!isset($salidaData['salida_id']))
+            foreach($salidaData as $nueva_salida){
+
+                $salida = new Salida();
+
+
+        $salida->paquete_id = $nuevo_paquete->id; // Asocia el paquete creado
+        $salida->salida_externo_id =  $nueva_salida['salida_id'];
+        $salida->venta_online = $nueva_salida['venta_online'] == 'si'; // Convierte en booleano
+        $salida->cupos = $nueva_salida['cupos'];
+        $salida->info_tramos = $nueva_salida['info_tramos'] == 'si'; // Convierte en booleano
+
+
+        }
+
+        else{
+
+$salida_externo_id = $salidaData['salida_id'];
+$existe = DB::table('salidas')->where('salida_externo_id', $salida_externo_id)->exists();
+
+if ($existe) {
+    // Si ya existe un registro con el mismo `salida_externo_id`, puedes realizar una actualización
+    $salida = Salida::where('salida_externo_id', $salida_externo_id)->first();
+} else {
+    // Si no existe, crea una nueva entrada
+    $salida = new Salida();
+}
+
+$salida->paquete_id = $nuevo_paquete->id; // Asocia el paquete creado
+$salida->salida_externo_id = $salida_externo_id;
+$salida->venta_online = $salidaData['venta_online'] == 'si'; // Convierte en booleano
+$salida->cupos = $salidaData['cupos'];
+$salida->info_tramos = $salidaData['info_tramos'] == 'si'; // Convierte en booleano
+
+// Otros campos que puedas tener
+// $salida->ida_origen_fecha = ...;
+// $salida->ida_origen_hora = ...;
+
+// Guarda el registro
+$salida->save();
+        }
+
+
+            // Guardamos la salida
+        }
+
     }
 
     // Retornar respuesta con paquetes guardados

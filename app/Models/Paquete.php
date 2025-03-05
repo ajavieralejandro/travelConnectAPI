@@ -43,4 +43,9 @@ class Paquete extends Model
         'categorias' => 'array',
         'galeria_imagenes' => 'array',
     ];
+
+    public function salidas()
+{
+    return $this->hasMany(Salida::class);
+}
 }

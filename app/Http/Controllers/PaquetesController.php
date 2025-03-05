@@ -78,11 +78,12 @@ public function buscarPaquetes(Request $request)
          });
      }
 
-if ($fechaDesde) {
+/*if ($fechaDesde) {
     // Asegúrate de que la fecha esté en formato Carbon
     $fechaDesde = Carbon::parse($fechaDesde);
+
     $query->where('fecha_vigencia_desde', '>=', $fechaDesde);
-}
+}*/
      /*
      // Filtrar por fechas si están presentes
 
@@ -102,10 +103,10 @@ if ($fechaDesde) {
      if ($paquetes->isEmpty()) {
          return response()->json(['message' => 'No se encontraron paquetes con los filtros proporcionados.'], 404);
      }
-
+     $tarjetasJulia = [];
      // Devolver los paquetes encontrados en formato JSON
-     return response()->json($paquetes);
-}
+     return view('paquetes.index', compact('paquetes','tarjetasJulia'));
+    }
 
 
 }
