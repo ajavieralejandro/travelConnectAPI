@@ -94,7 +94,6 @@ $salida->familia_2_otro = $this->computarArreglo($nueva_salida['familia_2_otro']
 $salida->familia_2_otro2 = $this->computarArreglo($nueva_salida['familia_2_otro2'] ?? null);
 
 $salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas'] ?? null);
-        dd($salida);
 
 
         $salida->save();
