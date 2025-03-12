@@ -127,15 +127,18 @@ $salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas']
             return $fecha;
         }
 
-        // Intentar convertir la fecha si está en formato DD-MM-YYYY o similar
-        $date = DateTime::createFromFormat('d-m-Y', $fecha);
-        if (!$date) {
-            $date = DateTime::createFromFormat('d/m/Y', $fecha);
+        // Intentar convertir la fecha desde distintos formatos
+        $formatos = ['d-m-Y', 'd/m/Y', 'Y-m-d', 'Y/m/d'];
+        foreach ($formatos as $formato) {
+            $date = DateTime::createFromFormat($formato, $fecha);
+            if ($date) {
+                return $date->format('Y-m-d');
+            }
         }
 
-        return $date ? $date->format('Y-m-d') : null;
+        // Si no se pudo convertir, devolver NULL explícito
+        return null;
     }
-
 
     public function getSeasons()
     {
