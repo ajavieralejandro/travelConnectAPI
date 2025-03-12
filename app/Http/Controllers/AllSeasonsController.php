@@ -111,32 +111,37 @@ $salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas']
         return $array;
     }
 
-
-    private function computarFecha($fecha){
-        // Si la fecha es un arreglo vacío, devolver null
+    private function computarFecha($fecha) {
+        // Si la fecha es un array, tomar el primer valor si existe, sino devolver null
         if (is_array($fecha)) {
-            if (count($fecha) > 0) {
-                $fecha = $fecha[0]; // Tomar el primer valor del array
-            } else {
-                return null;
-            }
+            $fecha = count($fecha) > 0 ? $fecha[0] : null;
         }
 
-        // Si la fecha ya está en formato correcto, devolverla
-        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha)) {
-            return $fecha;
+        // Si es NULL o una cadena vacía, devolver NULL
+        if (empty($fecha) || in_array($fecha, ['-0001-11-30', '0000-00-00', '1970-01-01'], true)) {
+            return null;
         }
 
-        // Intentar convertir la fecha desde distintos formatos
-        $formatos = ['d-m-Y', 'd/m/Y', 'Y-m-d', 'Y/m/d'];
+        // Formatos de fecha que queremos aceptar
+        $formatos = ['Y-m-d', 'd-m-Y', 'd/m/Y', 'Y/m/d', 'm-d-Y', 'm/d/Y'];
+
+        // Intentar convertir la fecha y validar que sea real
         foreach ($formatos as $formato) {
             $date = DateTime::createFromFormat($formato, $fecha);
-            if ($date) {
-                return $date->format('Y-m-d');
+
+            if ($date && $date->format($formato) === $fecha) {
+                // Validar que la fecha sea real (checkdate)
+                $anio = (int) $date->format('Y');
+                $mes = (int) $date->format('m');
+                $dia = (int) $date->format('d');
+
+                if (checkdate($mes, $dia, $anio)) {
+                    return $date->format('Y-m-d'); // Convertimos a formato estándar
+                }
             }
         }
 
-        // Si no se pudo convertir, devolver NULL explícito
+        // Si no es válida, devolver NULL
         return null;
     }
 
