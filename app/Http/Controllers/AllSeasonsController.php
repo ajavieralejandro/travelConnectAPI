@@ -9,7 +9,7 @@ use App\Models\Paquete;
 use App\Models\Salida;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
-
+use DateTime;
 use Carbon\Carbon;
 
 class AllSeasonsController extends Controller
@@ -113,17 +113,29 @@ $salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas']
 
 
     private function computarFecha($fecha){
-        //Si la fecha es un arreglo vacio entonces es nula
-        if(is_array($fecha))
-            {
-                if(count($fecha)>0)
-                    return $fecha[0];
-                else
-                    return null;
-
+        // Si la fecha es un arreglo vacío, devolver null
+        if (is_array($fecha)) {
+            if (count($fecha) > 0) {
+                $fecha = $fecha[0]; // Tomar el primer valor del array
+            } else {
+                return null;
             }
-        return $fecha;
+        }
+
+        // Si la fecha ya está en formato correcto, devolverla
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha)) {
+            return $fecha;
+        }
+
+        // Intentar convertir la fecha si está en formato DD-MM-YYYY o similar
+        $date = DateTime::createFromFormat('d-m-Y', $fecha);
+        if (!$date) {
+            $date = DateTime::createFromFormat('d/m/Y', $fecha);
+        }
+
+        return $date ? $date->format('Y-m-d') : null;
     }
+
 
     public function getSeasons()
     {
