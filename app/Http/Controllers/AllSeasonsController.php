@@ -34,67 +34,82 @@ class AllSeasonsController extends Controller
         $salida->venta_online = isset($nueva_salida['venta_online']) ? ($nueva_salida['venta_online'] == 'si') : false;
         $salida->cupos = $nueva_salida['cupos'] ?? 0;
         $salida->info_tramos = isset($nueva_salida['info_tramos']) ? ($nueva_salida['info_tramos'] == 'si') : false;
+
         $salida->fecha_desde = $this->computarFecha($nueva_salida['fecha_desde']);
         $salida->fecha_hasta = $this->computarFecha($nueva_salida['fecha_hasta']);
         $salida->fecha_viaje = $this->computarFecha($nueva_salida['fecha_viaje']);
         $salida->ida_origen_fecha = $this->computarFecha($nueva_salida['ida_origen_fecha']);
         $salida->ida_origen_hora = $this->computarFecha($nueva_salida['ida_origen_hora']);
-        $salida->ida_origen_ciudad = $nueva_salida['ida_origen_ciudad'];
+
+
+        $salida->ida_origen_ciudad = $this->computarArreglo($nueva_salida['ida_origen_ciudad']);
         $salida->ida_destino_fecha = $this->computarFecha($nueva_salida['ida_destino_fecha']);
         $salida->ida_destino_hora = $this->computarFecha($nueva_salida['ida_destino_hora']);
-        $salida->ida_destino_ciudad = $nueva_salida['ida_destino_ciudad'];
-        $salida->ida_clase_vuelo = $nueva_salida['ida_clase_vuelo'];
-        $salida->ida_linea_aerea = $nueva_salida['ida_linea_aerea'];
-        $salida->ida_vuelo = $nueva_salida['ida_vuelo'];
-        $salida->ida_escalas = $nueva_salida['ida_escalas'];
-        $salida->vuelta_origen_fecha = $this->computarFecha($nueva_salida['vuelta_origen_fecha']);
-        $salida->vuelta_origen_hora = $this->computarFecha($nueva_salida['vuelta_origen_hora']);
-        $salida->vuelta_origen_ciudad = $nueva_salida['vuelta_origen_ciudad'];
-        $salida->vuelta_destino_fecha = $this->computarFecha($nueva_salida['vuelta_destino_fecha']);
-        $salida->vuelta_destino_hora = $this->computarFecha($nueva_salida['vuelta_destino_hora']);
-        $salida->vuelta_destino_ciudad = $nueva_salida['vuelta_destino_ciudad'];
-        $salida->vuelta_clase_vuelo = $nueva_salida['vuelta_clase_vuelo'];
-        $salida->vuelta_linea_aerea = $nueva_salida['vuelta_linea_aerea'];
-        $salida->vuelta_vuelo = $nueva_salida['vuelta_vuelo'];
-        $salida->vuelta_escalas = $nueva_salida['vuelta_escalas'];
+        $salida->ida_destino_ciudad =  $this->computarArreglo($nueva_salida['ida_destino_ciudad']);
 
-        $salida->single_precio = $nueva_salida['single_precio'] ?? null;
-        $salida->single_impuesto = $nueva_salida['single_impuesto'] ?? null;
-        $salida->single_otro = $nueva_salida['single_otro'] ?? null;
-        $salida->single_otro2 = $nueva_salida['single_otro2'] ?? null;
+        $salida->ida_clase_vuelo =  $this->computarArreglo($nueva_salida['ida_clase_vuelo']);
+        $salida->ida_linea_aerea = $this->computarArreglo($nueva_salida['ida_linea_aerea']);
+$salida->ida_vuelo = $this->computarArreglo($nueva_salida['ida_vuelo']);
+$salida->ida_escalas = $this->computarArreglo($nueva_salida['ida_escalas']);
 
-        $salida->doble_precio = $nueva_salida['doble_precio'] ?? null;
-        $salida->doble_impuesto = $nueva_salida['doble_impuesto'] ?? null;
-        $salida->doble_otro = $nueva_salida['doble_otro'] ?? null;
-        $salida->doble_otro2 = $nueva_salida['doble_otro2'] ?? null;
+$salida->vuelta_origen_fecha = $this->computarFecha($nueva_salida['vuelta_origen_fecha']);
+$salida->vuelta_origen_hora = $this->computarFecha($nueva_salida['vuelta_origen_hora']);
+$salida->vuelta_origen_ciudad = $this->computarArreglo($nueva_salida['vuelta_origen_ciudad']);
+$salida->vuelta_destino_fecha = $this->computarFecha($nueva_salida['vuelta_destino_fecha']);
+$salida->vuelta_destino_hora = $this->computarFecha($nueva_salida['vuelta_destino_hora']);
+$salida->vuelta_destino_ciudad = $this->computarArreglo($nueva_salida['vuelta_destino_ciudad']);
+$salida->vuelta_clase_vuelo = $this->computarArreglo($nueva_salida['vuelta_clase_vuelo']);
+$salida->vuelta_linea_aerea = $this->computarArreglo($nueva_salida['vuelta_linea_aerea']);
+$salida->vuelta_vuelo = $this->computarArreglo($nueva_salida['vuelta_vuelo']);
+$salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas']);
 
-        $salida->triple_precio = $nueva_salida['triple_precio'] ?? null;
-        $salida->triple_impuesto = $nueva_salida['triple_impuesto'] ?? null;
-        $salida->triple_otro = $nueva_salida['triple_otro'] ?? null;
-        $salida->triple_otro2 = $nueva_salida['triple_otro2'] ?? null;
+$salida->single_precio = $this->computarArreglo($nueva_salida['single_precio'] ?? null);
+$salida->single_impuesto = $this->computarArreglo($nueva_salida['single_impuesto'] ?? null);
+$salida->single_otro = $this->computarArreglo($nueva_salida['single_otro'] ?? null);
+$salida->single_otro2 = $this->computarArreglo($nueva_salida['single_otro2'] ?? null);
 
-        $salida->cuadruple_precio = $nueva_salida['cuadruple_precio'] ?? null;
-        $salida->cuadruple_impuesto = $nueva_salida['cuadruple_impuesto'] ?? null;
-        $salida->cuadruple_otro = $nueva_salida['cuadruple_otro'] ?? null;
-        $salida->cuadruple_otro2 = $nueva_salida['cuadruple_otro2'] ?? null;
+$salida->doble_precio = $this->computarArreglo($nueva_salida['doble_precio'] ?? null);
+$salida->doble_impuesto = $this->computarArreglo($nueva_salida['doble_impuesto'] ?? null);
+$salida->doble_otro = $this->computarArreglo($nueva_salida['doble_otro'] ?? null);
+$salida->doble_otro2 = $this->computarArreglo($nueva_salida['doble_otro2'] ?? null);
 
-        // Precios familiares
-        $salida->familia_1_precio = $nueva_salida['familia_1_precio'] ?? null;
-        $salida->familia_1_impuesto = $nueva_salida['familia_1_impuesto'] ?? null;
-        $salida->familia_1_otro = $nueva_salida['familia_1_otro'] ?? null;
-        $salida->familia_1_otro2 = $nueva_salida['familia_1_otro2'] ?? null;
+$salida->triple_precio = $this->computarArreglo($nueva_salida['triple_precio'] ?? null);
+$salida->triple_impuesto = $this->computarArreglo($nueva_salida['triple_impuesto'] ?? null);
+$salida->triple_otro = $this->computarArreglo($nueva_salida['triple_otro'] ?? null);
+$salida->triple_otro2 = $this->computarArreglo($nueva_salida['triple_otro2'] ?? null);
 
-        $salida->familia_2_precio = $nueva_salida['familia_2_precio'] ?? null;
-        $salida->familia_2_impuesto = $nueva_salida['familia_2_impuesto'] ?? null;
-        $salida->familia_2_otro = $nueva_salida['familia_2_otro'] ?? null;
-        $salida->familia_2_otro2 = $nueva_salida['familia_2_otro2'] ?? null;
+$salida->cuadruple_precio = $this->computarArreglo($nueva_salida['cuadruple_precio'] ?? null);
+$salida->cuadruple_impuesto = $this->computarArreglo($nueva_salida['cuadruple_impuesto'] ?? null);
+$salida->cuadruple_otro = $this->computarArreglo($nueva_salida['cuadruple_otro'] ?? null);
+$salida->cuadruple_otro2 = $this->computarArreglo($nueva_salida['cuadruple_otro2'] ?? null);
 
-        // Campo adicional de vuelta_escalas
-        $salida->vuelta_escalas = $nueva_salida['vuelta_escalas'] ?? null;
+$salida->familia_1_precio = $this->computarArreglo($nueva_salida['familia_1_precio'] ?? null);
+$salida->familia_1_impuesto = $this->computarArreglo($nueva_salida['familia_1_impuesto'] ?? null);
+$salida->familia_1_otro = $this->computarArreglo($nueva_salida['familia_1_otro'] ?? null);
+$salida->familia_1_otro2 = $this->computarArreglo($nueva_salida['familia_1_otro2'] ?? null);
+
+$salida->familia_2_precio = $this->computarArreglo($nueva_salida['familia_2_precio'] ?? null);
+$salida->familia_2_impuesto = $this->computarArreglo($nueva_salida['familia_2_impuesto'] ?? null);
+$salida->familia_2_otro = $this->computarArreglo($nueva_salida['familia_2_otro'] ?? null);
+$salida->familia_2_otro2 = $this->computarArreglo($nueva_salida['familia_2_otro2'] ?? null);
+
+$salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas'] ?? null);
+
 
 
         $salida->save();
 
+    }
+
+
+    private function computarArreglo($array){
+        if(is_array($array)){
+            if(count($array)>0)
+            return $array[0];
+            else
+            return null;
+        }
+        return $array;
     }
 
 
