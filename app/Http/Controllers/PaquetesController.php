@@ -14,12 +14,13 @@ class PaquetesController extends Controller
     public function index()
     {
         $paquetes = Paquete::paginate(50);
-        $tarjetasJulia = PaqueteJulia::all();
+        $tarjetasJulia =[];
         return view('paquetes.index', compact('paquetes','tarjetasJulia'));
     }
 
     public function getPaquetes(){
-        $paquetes = Paquete::all();
+        $paquetes = Paquete::with('salidas')->paginate(30);
+
         return response()->json($paquetes);
 
     }

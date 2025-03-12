@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
 use XMLReader;
+use DOMDocument;
 
 class SoapController extends Controller
 {
@@ -25,15 +26,15 @@ class SoapController extends Controller
           <SOAP-ENV:Body>
             <tns:GetPackagesFares xmlns:tns="http://aws-qa1.ola.com.ar/qa/wsola/endpoint">
               <Request xsi:type="xsd:string"><![CDATA[
-               <GetPackagesFaresRequest>
+                <GetPackagesFaresRequest>
           <GeneralParameters>
             <Username>BUETRIPNOWWEB</Username>
             <Password>e3fab5ef81210da49bee83c32bce283ebcb19dfa8b27596130959a3a6fa55232</Password>
-            <CustomerIp>200.126.204.4</CustomerIp>
+            <CustomerIp>181.231.247.65</CustomerIp>
           </GeneralParameters>
           <DepartureDate>
-            <From>2025-03-02</From>
-            <To>2025-10-10</To>
+            <From>2025-04-01</From>
+            <To>2025-04-30</To>
           </DepartureDate>
           <Rooms>
             <Room>
@@ -41,7 +42,8 @@ class SoapController extends Controller
               <Passenger Type="ADL"/>
             </Room>
           </Rooms>
-          <ArrivalDestination>AR</ArrivalDestination>
+          <DepartureDestination>BUE</DepartureDestination>
+          <ArrivalDestination>SLA</ArrivalDestination>
           <FareCurrency>ARS</FareCurrency>
           <Outlet>1</Outlet>
           <PackageType>ALL</PackageType>
@@ -66,8 +68,8 @@ class SoapController extends Controller
             ]);
              // Obtener el XML desde la request
         $xmlContent = $response->getBody();
-
         // Crear un XMLReader
+
         $reader = new XMLReader();
         $reader->XML($xmlContent);
 
@@ -80,70 +82,60 @@ class SoapController extends Controller
         $currentElement = null;
         $data = [];
 
-        // Recorrer el XML en modo streaming
+        $packageFares = [];
+
         while ($reader->read()) {
-            if ($reader->nodeType == XMLReader::ELEMENT) {
-                array_push($data, $reader->localName);  // Alternativa con función
+            if ($reader->nodeType == XMLReader::ELEMENT
+                && $reader->localName == 'GetPackagesFaresResponse'
+                && $reader->namespaceURI == 'http://aws-qa1.ola.com.ar/qa/wsola/endpoint') {
 
-                switch ($reader->localName) {
-                    case 'Package':
-                        $currentPackage = []; // Inicializar un nuevo paquete
-                        break;
-                    case 'Code':
-                    case 'Type':
-                    case 'Name':
-                    case 'Nights':
-                    case 'Description':
-                        $currentElement = $reader->name;
-                        break;
-                    case 'Origin':
-                        $currentElement = 'Origin';
-                        $currentPackage['Origin'] = [
-                            'Code' => $reader->getAttribute('Code'),
-                            'City' => null, // Se completará en el siguiente paso
-                        ];
-                        break;
-                    case 'Picture':
-                        $currentElement = 'Picture';
-                        if (!isset($currentPackage['Pictures'])) {
-                            $currentPackage['Pictures'] = [];
-                        }
-                        $currentPackage['Pictures'][] = [
-                            'Found' => $reader->getAttribute('Found'),
-                            'Url' => null, // Se completará en el siguiente paso
-                        ];
-                        break;
-                }
-            } elseif ($reader->nodeType == XMLReader::TEXT && $currentElement) {
-                switch ($currentElement) {
-                    case 'Code':
-                    case 'Type':
-                    case 'Name':
-                    case 'Nights':
-                    case 'Description':
-                        $currentPackage[$currentElement] = trim($reader->value);
-                        break;
-                    case 'Origin':
-                        $currentPackage['Origin']['City'] = trim($reader->value);
-                        break;
-                    case 'Picture':
-                        // Obtener el último índice agregado en Pictures y completar la URL
-                        $lastIndex = count($currentPackage['Pictures']) - 1;
-                        $currentPackage['Pictures'][$lastIndex]['Url'] = trim($reader->value);
-                        break;
-                }
-            }
+                $node = $reader->expand();
+                $dom = new DOMDocument();
+                $domNode = $dom->importNode($node, true);
+                $dom->appendChild($domNode);
 
-            // Cuando se cierre un Package, lo agregamos al array final
-            if ($reader->nodeType == XMLReader::END_ELEMENT && $reader->name == 'Package') {
-                $packages[] = $currentPackage;
+                $xml = simplexml_import_dom($dom);
+                $innerXmlString = (string)$xml->Response;
+                $innerXml = simplexml_load_string($innerXmlString);
+                // Ejemplo de extracción de datos
+                $packageFares = [
+                    'prices' => [
+                        'min' => (string)$xml->Summary->Prices->Min,
+                        'max' => (string)$xml->Summary->Prices->Max,
+                        'currency' => (string)$xml->Summary->Prices['Currency']
+                    ],
+                    'flights' => [],
+                    'hotels' => []
+                ];
+
+                // Procesar vuelos
+                foreach ($xml->PackageFare->Flight->Trips->Trip as $trip) {
+                    $packageFares['flights'][] = [
+                        'departure' => (string)$trip->DepartureCity,
+                        'arrival' => (string)$trip->ArrivalCity,
+                        'date' => (string)$trip->DepartureDate
+                    ];
+                }
+
+                // Procesar hoteles
+                foreach ($xml->PackageFare->Descriptions->Description as $desc) {
+                    if ((string)$desc->Type == 'HOTEL') {
+                        $packageFares['hotels'][] = [
+                            'name' => (string)$desc->Name,
+                            'nights' => (int)$desc->Nights,
+                            'class' => (int)$desc->HotelClass
+                        ];
+                    }
+                }
+
+                break;
             }
         }
 
-        // Cerrar el XMLReader
         $reader->close();
 
-        return response()->json($data);
+        // Usar $packageFares en tu lógica
+        dd($packageFares);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -154,4 +146,148 @@ class SoapController extends Controller
         return json_decode($json, true);
     }
 
+    public function parsePackageFares(XMLReader $reader)
+    {
+
+        $result = [
+            'package' => [],
+            'flight' => [],
+            'hotel' => [],
+            'prices' => [],
+            'taxes' => [],
+            'cancellation_policies' => []
+        ];
+
+        while ($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT) {
+                // Manejar namespaces
+                $nodeName = $reader->localName;
+
+                switch ($nodeName) {
+                    case 'GetPackagesFaresResponse':
+                        $this->parseGetPackagesFaresResponse($reader, $result);
+                        break;
+                }
+            }
+        }
+
+        $reader->close();
+
+        return response()->json($result);
+
+    }
+    private function parseGetPackagesFaresResponse($reader, &$result)
+    {
+        while ($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT) {
+                $nodeName = $reader->localName;
+
+                switch ($nodeName) {
+                    case 'PackageFare':
+                        $this->parsePackageFare($reader, $result);
+                        break;
+
+                    case 'Prices':
+                        if ($reader->getAttribute('Currency') == 'ARS') {
+                            $result['prices'] = [
+                                'min' => $this->readNextValue($reader, 'Min'),
+                                'max' => $this->readNextValue($reader, 'Max')
+                            ];
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
+    private function parsePackageFare($reader, &$result)
+    {
+        while ($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT) {
+                $nodeName = $reader->localName;
+
+                switch ($nodeName) {
+                    case 'Code':
+                        $result['package']['code'] = $reader->readString();
+                        break;
+
+                    case 'Nights':
+                        $result['package']['nights'] = $reader->readString();
+                        break;
+
+                    case 'Flight':
+                        $this->parseFlight($reader, $result);
+                        break;
+
+                    case 'Description':
+                        if ($reader->getAttribute('Type') == 'HOTEL') {
+                            $result['hotel']['name'] = $this->readNextValue($reader, 'Name');
+                            $result['hotel']['class'] = $this->readNextValue($reader, 'HotelClass');
+                        }
+                        break;
+
+                    case 'Tax':
+                        $result['taxes'][] = [
+                            'name' => $this->readNextValue($reader, 'Name'),
+                            'value' => $this->readNextValue($reader, 'Value')
+                        ];
+                        break;
+
+                    case 'Policy':
+                        $result['cancellation_policies'][] = [
+                            'from' => $reader->getAttribute('From'),
+                            'to' => $reader->getAttribute('To'),
+                            'amount' => $reader->readString()
+                        ];
+                        break;
+                }
+            }
+
+            if ($reader->nodeType == XMLReader::END_ELEMENT && $reader->localName == 'PackageFare') {
+                break;
+            }
+        }
+    }
+
+    private function parseFlight($reader, &$result)
+    {
+        $flight = [];
+
+        while ($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT) {
+                $nodeName = $reader->localName;
+
+                switch ($nodeName) {
+                    case 'Code':
+                        $flight['code'] = $reader->readString();
+                        break;
+
+                    case 'DepartureDate':
+                        $flight['departure_date'] = $reader->readString();
+                        break;
+
+                    case 'DepartureAirport':
+                        $flight['departure_airport'] = $reader->getAttribute('Iata');
+                        break;
+                }
+            }
+
+            if ($reader->nodeType == XMLReader::END_ELEMENT && $reader->localName == 'Flight') {
+                $result['flight'] = $flight;
+                break;
+            }
+        }
+    }
+
+    private function readNextValue($reader, $tagName)
+    {
+        while ($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT && $reader->localName == $tagName) {
+                return $reader->readString();
+            }
+        }
+        return null;
+    }
 }
+
+

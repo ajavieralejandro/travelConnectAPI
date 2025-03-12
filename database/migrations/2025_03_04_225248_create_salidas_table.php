@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->string('salida_externo_id')->unique()   ;
             $table->boolean('venta_online');
             $table->integer('cupos');
+            $table->date('fecha_viaje')->nullable();
+
             $table->date('fecha_desde')->nullable();
             $table->date('fecha_hasta')->nullable();
             $table->boolean('info_tramos')->default(false);
