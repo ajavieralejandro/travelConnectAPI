@@ -21,6 +21,10 @@ Route::get('/buscar', function () {
 })->name('paquetes.form');
 
 
+//Mover A Admin
+Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name('dashboard');
+
+
 Route::middleware('is_admin')->group(function () {
     Route::get('/register', [TenantController::class, 'showRegistrationForm'])->name('register');
 

@@ -18,4 +18,8 @@ class Tenant extends Model
     ];
 
     // Other model methods and properties can be added here
+    public function agencia()
+    {
+        return $this->hasOne(Agencia::class);
+    }
 }
