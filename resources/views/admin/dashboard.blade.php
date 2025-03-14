@@ -28,10 +28,49 @@
         </div>
 
         <!-- Contenido principal -->
-        <div class="flex-1 p-10 md:ml-64">
+        <div class="flex-1 p-10 ">
             <button class="mb-4 md:hidden" onclick="toggleSidebar()">☰</button>
-            <h1 class="text-2xl font-bold">Bienvenido al Panel de Administración</h1>
-            <p class="mt-4">Selecciona una opción del menú lateral para comenzar.</p>
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold">Lista de Agencias</h2>
+                <a href="{{ route('agencias.create') }}" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                    + Nueva Agencia
+                </a>
+            </div>
+
+            <table class="min-w-full overflow-hidden bg-white border border-gray-300 rounded-lg shadow-md">
+                <thead class="text-white bg-gray-900">
+                    <tr>
+                        <th class="px-4 py-2 text-left">Nombre</th>
+                        <th class="px-4 py-2 text-left">Fecha de Alta</th>
+                        <th class="px-4 py-2 text-left">Estado</th>
+                        <th class="px-4 py-2 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($agencias as $agencia)
+                        <tr class="border-b hover:bg-gray-100">
+                            <td class="px-4 py-2">{{ $agencia->nombre }}</td>
+                            <td class="px-4 py-2">{{ $agencia->created_at->format('d/m/Y') }}</td>
+                            <td class="px-4 py-2">
+                                <span class="px-2 py-1 rounded-full text-white {{ $agencia->estado ? 'bg-green-500' : 'bg-red-500' }}">
+                                    {{ $agencia->estado ? 'Activo' : 'Inactivo' }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-2 space-x-2 text-center">
+                                <a class="text-blue-600 hover:underline">Editar</a>
+                                <form method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿Estás seguro de eliminar esta agencia?')">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
         </div>
     </div>
 

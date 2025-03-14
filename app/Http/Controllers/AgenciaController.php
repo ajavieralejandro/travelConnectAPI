@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agencia;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use App\Models\Agencia;
+use App\Models\Tenant;
+use App\Models\User;
 
 class AgenciaController extends Controller
 {
@@ -14,17 +17,21 @@ class AgenciaController extends Controller
         return response()->json(Agencia::all());
     }
 
-    public function store(Request $request)
-    {
+
+
+public function store(Request $request)
+{
+    try {
+        DB::beginTransaction(); // Inicia la transacción
+        // Validar los datos de la solicitud
         $data = $request->validate([
-            'tenant_id' => 'required|exists:tenants,id',
-            'estado' => 'required|boolean',
-            'nombre' => 'required|string|max:255',
+            'subdomain' => 'required|string|unique:tenants,subdomain',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'dominio' => 'required|string|unique:agencias',
-            'quienes_somos_es' => 'required|string',
-            'quienes_somos_en' => 'required|string',
-            'quienes_somos_pt' => 'required|string',
+
+            'estado' => 'required|boolean',
+
             'color_principal' => 'required|string',
             'color_secundario' => 'required|string',
             'color_barra_superior' => 'required|string',
@@ -33,17 +40,58 @@ class AgenciaController extends Controller
             'nombre_de_contacto' => 'required|string',
             'direccion' => 'required|string',
             'whatsapp' => 'required|string',
-            'mail' => 'required|string|email',
             'telefono' => 'required|string',
-            'info_contacto_es' => 'required|string',
-            'info_contacto_en' => 'required|string',
-            'info_contacto_pt' => 'required|string',
+
         ]);
 
-        $data['password'] = Hash::make($data['password']);
+        // Crear el tenant
+        $tenant = Tenant::create([
+            'subdomain' => $request->subdomain,
+            'template' => 'default', // Puedes personalizar esto
+        ]);
+
+        // Crear el usuario asociado al tenant
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'tenant_id' => $tenant->id,
+        ]);
+
+        // Asociar el tenant al request
+        $data['tenant_id'] = $tenant->id;
+
+        // Subir imágenes si existen
+        if ($request->hasFile('favicon')) {
+            $data['favicon'] = $request->file('favicon')->store('agencias', 'public');
+        }
+
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store('agencias', 'public');
+        }
+
+        if ($request->hasFile('fondo_1')) {
+            $data['fondo_1'] = $request->file('fondo_1')->store('agencias', 'public');
+        }
+
+        if ($request->hasFile('fondo_2')) {
+            $data['fondo_2'] = $request->file('fondo_2')->store('agencias', 'public');
+        }
+        $data['nombre']=$data['name'];
+        $data['dominio']=$data['subdomain'];
+        $data['mail']=$data['email'];
+        // Crear la agencia con los datos procesados
         $agencia = Agencia::create($data);
-        return response()->json($agencia, 201);
+
+        DB::commit(); // Confirma la transacción
+        return redirect()->route('admin.dashboard')->with('success', 'Agencia y Tenant creados exitosamente.');
+
+    } catch (\Exception $e) {
+        DB::rollBack(); // Revierte la transacción en caso de error
+        dd("Error al guardar la agencia y el tenant: " . $e->getMessage());
     }
+}
+
 
     public function show(Agencia $agencia)
     {
@@ -54,6 +102,10 @@ class AgenciaController extends Controller
     {
         $agencia->update($request->all());
         return response()->json($agencia);
+    }
+
+    public function createAgencia(){
+        return view('admin.create_agencia');
     }
 
     public function destroy(Agencia $agencia)

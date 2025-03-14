@@ -47,7 +47,7 @@ class TenantController extends Controller
 
     // Verificar si el subdominio está registrado en la base de datos
     $tenant = Tenant::where('subdomain', $subdomain)->first();
-
+    $tenants = Tenant::all();
     if (!$tenant) {
         abort(404, 'Subdominio no encontrado');
     }

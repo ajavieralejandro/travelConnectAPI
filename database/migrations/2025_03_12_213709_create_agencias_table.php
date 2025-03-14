@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->string('nombre');
             $table->string('password');
             $table->string('dominio');
-            $table->text('quienes_somos_es');
-            $table->text('quienes_somos_en');
-            $table->text('quienes_somos_pt');
+            $table->text('quienes_somos_es')->nullable();
+            $table->text('quienes_somos_en')->nullable();
+            $table->text('quienes_somos_pt')->nullable();
             $table->string('favicon')->nullable();
             $table->string('logo')->nullable();
             $table->string('fondo_1')->nullable();
@@ -36,9 +36,9 @@ return new class extends Migration {
             $table->string('whatsapp');
             $table->string('mail');
             $table->string('telefono');
-            $table->text('info_contacto_es');
-            $table->text('info_contacto_en');
-            $table->text('info_contacto_pt');
+            $table->text('info_contacto_es')->nullable();
+            $table->text('info_contacto_en')->nullable();
+            $table->text('info_contacto_pt')->nullable();
             $table->timestamps();
         });
     }
