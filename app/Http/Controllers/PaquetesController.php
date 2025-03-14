@@ -20,7 +20,6 @@ class PaquetesController extends Controller
 
     public function getPaquetes(){
         $paquetes = Paquete::select(
-            'nombre',
             'fecha_desde',
             'fecha_hasta',
             'pais',
@@ -35,7 +34,6 @@ class PaquetesController extends Controller
         // Formateamos la respuesta para agrupar los precios
         $paquetesFormateados = $paquetes->map(function ($paquete) {
             return [
-                'nombre' => $paquete->nombre,
                 'fecha_desde' => $paquete->fecha_desde,
                 'fecha_hasta' => $paquete->fecha_hasta,
                 'pais' =>$paquete->pais,
