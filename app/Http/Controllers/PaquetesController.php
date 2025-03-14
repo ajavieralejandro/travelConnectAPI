@@ -19,57 +19,20 @@ class PaquetesController extends Controller
     }
 
     public function getPaquetes(){
-        $paquetes = Paquete::select(
-            'fecha_desde',
-            'fecha_hasta',
-            'pais',
-            'ciudad',
-            'imagen_principal',
-            'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
-            'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
-            'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
-            'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
-        )->paginate(30);
+        $paquetes = Paquete::with(['salidas' => function ($query) {
+            $query->select(
+                'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
+                'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
+                'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
+                'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
+                'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
+            );
+        }])->get();
 
-        // Formateamos la respuesta para agrupar los precios
-        $paquetesFormateados = $paquetes->map(function ($paquete) {
-            return [
-                'fecha_desde' => $paquete->fecha_desde,
-                'fecha_hasta' => $paquete->fecha_hasta,
-                'pais' =>$paquete->pais,
-                'ciudad'=>$paquete->ciudad,
-                'imagen'=>$paquete->imagen_principal,
-                'precios' => [
-                    'single' => [
-                        'precio' => $paquete->single_precio,
-                        'impuesto' => $paquete->single_impuesto,
-                        'otro' => $paquete->single_otro,
-                        'otro2' => $paquete->single_otro2,
-                    ],
-                    'doble' => [
-                        'precio' => $paquete->doble_precio,
-                        'impuesto' => $paquete->doble_impuesto,
-                        'otro' => $paquete->doble_otro,
-                        'otro2' => $paquete->doble_otro2,
-                    ],
-                    'triple' => [
-                        'precio' => $paquete->triple_precio,
-                        'impuesto' => $paquete->triple_impuesto,
-                        'otro' => $paquete->triple_otro,
-                        'otro2' => $paquete->triple_otro2,
-                    ],
-                    'cuadruple' => [
-                        'precio' => $paquete->cuadruple_precio,
-                        'impuesto' => $paquete->cuadruple_impuesto,
-                        'otro' => $paquete->cuadruple_otro,
-                        'otro2' => $paquete->cuadruple_otro2,
-                    ],
-                ]
-            ];
-        });
+        // Convertir a array
+        $paquetesArray = $paquetes->toArray();
 
-        return response()->json($paquetesFormateados->toArray());
-    }
+        return response()->json($paquetesArray);}
     public function obtenerPaquetesPorDestino(Request $request)
 {
     // Obtener los parámetros de destino desde la solicitud (Request)

@@ -64,6 +64,6 @@ class Salida extends Model
 
     public function paquete()
     {
-        return $this->belongsTo(Paquete::class);
+        return $this->belongsTo(Paquete::class, 'paquete_id', 'id');
     }
 }

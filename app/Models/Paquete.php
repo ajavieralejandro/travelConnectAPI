@@ -45,7 +45,7 @@ class Paquete extends Model
     ];
 
     public function salidas()
-{
-    return $this->hasMany(Salida::class);
-}
+    {
+        return $this->hasMany(Salida::class, 'paquete_id', 'id');
+    }
 }

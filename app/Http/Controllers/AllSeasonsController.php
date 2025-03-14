@@ -34,7 +34,6 @@ class AllSeasonsController extends Controller
         $salida->venta_online = isset($nueva_salida['venta_online']) ? ($nueva_salida['venta_online'] == 'si') : false;
         $salida->cupos = $nueva_salida['cupos'] ?? 0;
         $salida->info_tramos = isset($nueva_salida['info_tramos']) ? ($nueva_salida['info_tramos'] == 'si') : false;
-
         $salida->fecha_desde = $this->computarFecha($nueva_salida['fecha_desde']);
         $salida->fecha_hasta = $this->computarFecha($nueva_salida['fecha_hasta']);
         $salida->fecha_viaje = $this->computarFecha($nueva_salida['fecha_viaje']);
@@ -94,7 +93,6 @@ $salida->familia_2_otro = $this->computarArreglo($nueva_salida['familia_2_otro']
 $salida->familia_2_otro2 = $this->computarArreglo($nueva_salida['familia_2_otro2'] ?? null);
 
 $salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas'] ?? null);
-
 
         $salida->save();
 
@@ -202,6 +200,8 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
                 'fecha_modificacion' => $paquete['fecha_modificacion'] ?? null,
                 'usuario' => $paquete['usuario'] ?? null,
                 'usuario_id' => $paquete['usuario_id'] ?? null,
+
+
                 'fecha_vigencia_desde' => $paquete['fecha_vigencia_desde'] ?? null,
                 'fecha_vigencia_hasta' => $paquete['fecha_vigencia_hasta'] ?? null,
                 'fecha_desde' => $paquete['fecha_desde'] ?? null,
