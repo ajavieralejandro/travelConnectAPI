@@ -35,39 +35,45 @@ class PaquetesController extends Controller
         return response()->json($paquetesArray);}
     public function obtenerPaquetesPorDestino(Request $request)
 {
-    // Obtener los parámetros de destino desde la solicitud (Request)
-    $pais = $request->input('pais');
-    $ciudad = $request->input('ciudad');
-    $ciudadIATA = $request->input('ciudad_iata');
+    // Obtener los parámetros desde la solicitud (Request)
+    $ciudadOrigen = $request->input('ciudadOrigen');
+    $destino = $request->input('destino');
+    $fechaSalida = $request->input('fechaSalida');
+    $viajeros = $request->input('viajeros');
 
     // Iniciar la consulta base para obtener los paquetes
     $query = Paquete::query();
 
-    // Filtrar por país si está presente
-    if ($pais) {
-        $query->where('pais', 'like', '%' . $pais . '%');
+    // Filtrar por ciudadOrigen si está presente
+    if ($ciudadOrigen) {
+        $query->where('ciudad_origen', 'like', '%' . $ciudadOrigen . '%');
     }
 
-    // Filtrar por ciudad si está presente
-    if ($ciudad) {
-        $query->where('ciudad', 'like', '%' . $ciudad . '%');
+    // Filtrar por destino si está presente
+    if ($destino) {
+        $query->where('destino', 'like', '%' . $destino . '%');
     }
 
-    // Filtrar por ciudad_iata si está presente
-    if ($ciudadIATA) {
-        $query->where('ciudad_iata', 'like', '%' . $ciudadIATA . '%');
+    // Filtrar por fechaSalida si está presente
+    if ($fechaSalida) {
+        $query->whereDate('fecha_salida', '=', $fechaSalida);  // Asegúrate que el formato de fecha sea correcto
     }
 
-  // Obtener los paquetes con las relaciones filtradas
-$paquetes = $query->with(['salidas' => function ($query) {
-    $query->select(
-        'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
-        'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
-        'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
-        'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
-        'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
-    );
-}])->get();
+    // Filtrar por viajeros si está presente
+    if ($viajeros) {
+        $query->where('viajeros', '=', $viajeros);
+    }
+
+    // Obtener los paquetes con las relaciones filtradas
+    $paquetes = $query->with(['salidas' => function ($query) {
+        $query->select(
+            'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
+            'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
+            'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
+            'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
+            'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
+        );
+    }])->get();
 
     // Verificar si se encontraron paquetes
     if ($paquetes->isEmpty()) {
