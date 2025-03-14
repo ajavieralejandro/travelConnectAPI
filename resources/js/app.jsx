@@ -36,7 +36,7 @@ function App() {
 
     return (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
-            <h1>🚀 ¡React en Laravel funcionando! 🎉</h1>
+            <h1>🚀 ¡React en Laravel hola! 🎉</h1>
             <p>Esta es una aplicación de React renderizada en Laravel.</p>
             {loading ? (
                 <p>Cargando...</p>
@@ -47,6 +47,7 @@ function App() {
             ) : (
                 <p>No se encontró el tenant.</p>
             )}
+                <p>Pepe</p>
 
         </div>
     );
