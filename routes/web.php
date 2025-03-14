@@ -49,7 +49,8 @@ Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
 Route::get('/agencia',[AgenciaController::class,'getAgencia'])->name('agencia.get');
 
 Route::get('/seasons', [AllSeasonsController::class, 'getSeasons']);
-Route::post('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPorDestino']);
+Route::post('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPorDestino'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+;
 
 // Luego, la ruta general
 Route::get('/', function () {
