@@ -58,8 +58,16 @@ class PaquetesController extends Controller
         $query->where('ciudad_iata', 'like', '%' . $ciudadIATA . '%');
     }
 
-    // Obtener los paquetes que cumplen con los filtros
-    $paquetes = $query->get();
+  // Obtener los paquetes con las relaciones filtradas
+$paquetes = $query->with(['salidas' => function ($query) {
+    $query->select(
+        'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
+        'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
+        'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
+        'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
+        'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
+    );
+}])->get();
 
     // Verificar si se encontraron paquetes
     if ($paquetes->isEmpty()) {

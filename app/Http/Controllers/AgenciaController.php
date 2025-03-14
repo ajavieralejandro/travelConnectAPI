@@ -93,6 +93,14 @@ public function store(Request $request)
 }
 
 
+    public function getAgencia(Request $request){
+        $host = $request->getHost(); // Obtiene el host completo (subdominio.dominio.com)
+        $subdominio = explode('.', $host)[0];
+        $agencia = Agencia::where('dominio','=',$subdominio)->get();
+        return response()->json($agencia);
+    }
+
+
     public function show(Agencia $agencia)
     {
         return response()->json($agencia);

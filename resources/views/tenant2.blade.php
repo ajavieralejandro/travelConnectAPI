@@ -24,8 +24,9 @@
               colorTerciarioAgencia: "#2A9D8F", // Verde desierto
 
               header: {
-                imagenBackground: "/desierto.jpg",
-                imagenBackgroundOpacidad: 0.9
+                imagenBackground: '{{
+            preg_replace('/^https?:\/\/([^\/]+)\//', 'http://tudominio.com/', asset($agencia->fondo_1))
+        }}',                imagenBackgroundOpacidad: 0.9
               },
 
               buscador: {
@@ -275,6 +276,7 @@
           };
 
           window.__DATOS_AGENCIA__ = simulaciones[idAgencia] || simulaciones["001"];
+
           window.dispatchEvent(new Event("cambioSimulacion"));
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Models\Agencia;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 
@@ -51,12 +52,13 @@ class TenantController extends Controller
     if (!$tenant) {
         abort(404, 'Subdominio no encontrado');
     }
-
-    if($tenant->default){
+    $agencia = Agencia::where('tenant_id',$tenant->id)->first();
+        if($tenant->default){
         // Pasar los datos a la vista de React
     return view('tenant', [
         'tenantData' => $tenant,
         'subdomain' => $subdomain,
+        'agencia'=>$agencia
     ]);
     }
 
@@ -65,6 +67,8 @@ class TenantController extends Controller
         return view('tenant2', [
             'tenantData' => $tenant,
             'subdomain' => $subdomain,
+            'agencia'=>$agencia
+
         ]);
     }
 

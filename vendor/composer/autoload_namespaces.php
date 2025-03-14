@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Barryvdh' => array($vendorDir . '/barryvdh/reflection-docblock/src'),
     'Artisaninweb\\SoapWrapper' => array($vendorDir . '/artisaninweb/laravel-soap/src'),
 );

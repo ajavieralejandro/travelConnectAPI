@@ -33,7 +33,7 @@ Route::middleware('is_admin')->group(function () {
     Route::post('/register', [TenantController::class, 'register']);    });
 
 
-    Route::domain('{subdomain}.triptest.com.ar')->group(function () {
+    Route::domain('{subdomain}.localhost')->group(function () {
         Route::get('/', [TenantController::class, 'show']);
     });
 Route::get('/send-soap-request', [SoapController::class, 'sendSoapRequest']);
@@ -46,7 +46,7 @@ Route::get('/tenant-check', function () {
 });
 
 Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
-
+Route::get('/agencia',[AgenciaController::class,'getAgencia'])->name('agencia.get');
 
 Route::get('/seasons', [AllSeasonsController::class, 'getSeasons']);
 Route::get('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPorDestino']);
