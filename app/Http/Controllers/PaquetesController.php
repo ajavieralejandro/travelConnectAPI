@@ -39,53 +39,62 @@ class PaquetesController extends Controller
     $ciudadOrigen = $request->input('ciudadOrigen');
     $destino = $request->input('destino');
     $fechaSalida = $request->input('fechaSalida');
-    $viajeros = $request->input('viajeros');
-    // Iniciar la consulta base para obtener los paquetes
-    $query = Paquete::query();
 
-    // Filtrar por ciudadOrigen si está presente
-    if ($ciudadOrigen) {
-        $query->where('ciudad', 'like', '%' . $ciudadOrigen . '%');
+        $viajeros = $request->input('viajeros');
+        // Iniciar la consulta base para obtener los paquetes
+        $paquetes = Paquete::whereHas('salidas', function ($query ) use ($request) {
+            if (request()->filled('fechaSalida')) {
+                $fechaSalida = $request->input('fechaSalida');
+                // Solo tomar la parte de la fecha, eliminando cualquier dato extra (zona horaria)
+                $fechaSalida = preg_replace('/(GMT.*)/', '', $fechaSalida);
 
-    }
+                // Ahora crear la fecha con Carbon
+                $fechaSalida = Carbon::parse($fechaSalida);
 
-    // Filtrar por destino si está presente
-    if ($destino) {
-        $query->where('pais', 'like', '%' . $destino . '%');
-    }
+                $query->whereDate('fecha_desde', '>', $fechaSalida->toDateString());                return response()->json($fechaSalida);
 
-    // Filtrar por fechaSalida si está presente
-    if ($fechaSalida) {
-        $query->whereDate('fecha_salida', '<', $fechaSalida);  // Asegúrate que el formato de fecha sea correcto
-    }
-
-    // Filtrar por viajeros si está presente
-    if ($viajeros) {
-        if ($viajeros == 1) {
-            // Si es un solo viajero, solo mostrar si hay precio en single
-            $query->where('single_precio', '>', 0);
-        } elseif ($viajeros == 2) {
-            // Si son dos viajeros, buscar precios en doble
-            $query->where('doble_precio', '>', 0);
-        } elseif ($viajeros == 3) {
-            // Si son tres viajeros, buscar precios en triple
-            $query->where('triple_precio', '>', 0);
-        } elseif ($viajeros == 4) {
-            // Si son cuatro viajeros, buscar precios en cuádruple
-            $query->where('cuadruple_precio', '>', 0);
         }
-    }
 
-    // Obtener los paquetes con las relaciones filtradas
-    $paquetes = $query->with(['salidas' => function ($query) {
+        if (request()->filled('viajeros')) {
+            $viajeros = request('viajeros');
+            switch ($viajeros) {
+                case 1:
+                    $query->where('single_precio', '>', 0);
+                    break;
+                case 2:
+                    $query->where('doble_precio', '>', 0);
+                    break;
+                case 3:
+                    $query->where('triple_precio', '>', 0);
+                    break;
+                case 4:
+                    $query->where('cuadruple_precio', '>', 0);
+                    break;
+            }
+        }
+
+        if (request()->filled('ciudadOrigen')) {
+            $query->where('ciudad', 'like', '%' . request('ciudadOrigen') . '%');
+        }
+
+        if (request()->filled('destino')) {
+            $query->where(function ($q) {
+                $q->where('pais', 'like', '%' . request('destino') . '%')
+                  ->orWhere('ciudad', 'like', '%' . request('destino') . '%');
+            });
+        }
+    })
+    ->with(['salidas' => function ($query) {
         $query->select(
             'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
+            'ciudad', 'pais',
             'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
             'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
             'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
             'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
         );
-    }])->get();
+    }])
+    ->get();
 
     // Verificar si se encontraron paquetes
     if ($paquetes->isEmpty()) {
