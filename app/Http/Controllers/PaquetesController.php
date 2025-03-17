@@ -40,28 +40,40 @@ class PaquetesController extends Controller
     $destino = $request->input('destino');
     $fechaSalida = $request->input('fechaSalida');
     $viajeros = $request->input('viajeros');
-
     // Iniciar la consulta base para obtener los paquetes
     $query = Paquete::query();
 
     // Filtrar por ciudadOrigen si está presente
     if ($ciudadOrigen) {
-        $query->where('ciudad_origen', 'like', '%' . $ciudadOrigen . '%');
+        $query->where('ciudad', 'like', '%' . $ciudadOrigen . '%');
+
     }
 
     // Filtrar por destino si está presente
     if ($destino) {
-        $query->where('destino', 'like', '%' . $destino . '%');
+        $query->where('pais', 'like', '%' . $destino . '%');
     }
 
     // Filtrar por fechaSalida si está presente
     if ($fechaSalida) {
-        $query->whereDate('fecha_salida', '=', $fechaSalida);  // Asegúrate que el formato de fecha sea correcto
+        $query->whereDate('fecha_salida', '<', $fechaSalida);  // Asegúrate que el formato de fecha sea correcto
     }
 
     // Filtrar por viajeros si está presente
     if ($viajeros) {
-        $query->where('viajeros', '=', $viajeros);
+        if ($viajeros == 1) {
+            // Si es un solo viajero, solo mostrar si hay precio en single
+            $query->where('single_precio', '>', 0);
+        } elseif ($viajeros == 2) {
+            // Si son dos viajeros, buscar precios en doble
+            $query->where('doble_precio', '>', 0);
+        } elseif ($viajeros == 3) {
+            // Si son tres viajeros, buscar precios en triple
+            $query->where('triple_precio', '>', 0);
+        } elseif ($viajeros == 4) {
+            // Si son cuatro viajeros, buscar precios en cuádruple
+            $query->where('cuadruple_precio', '>', 0);
+        }
     }
 
     // Obtener los paquetes con las relaciones filtradas
@@ -91,6 +103,7 @@ public function buscarPaquetes(Request $request)
      $fechaDesde = $request->input('fecha_desde');
      $fechaHasta = $request->input('fecha_hasta');
      $cantidadPasajeros = $request->input('cantidad_pasajeros');
+     return response()->json('hola');
      // Iniciar la consulta base para obtener los paquetes
      $query = Paquete::query();
 

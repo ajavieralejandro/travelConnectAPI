@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Box, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
 import { useHeader, useDatosGenerales } from "../../contextos/DatosAgenciaContext";
+import { useAgencia } from "../../servicios/especificos/obtenerDatosAgencia";
 
 const Header: React.FC = () => {
   const header = useHeader();
@@ -12,6 +13,15 @@ const Header: React.FC = () => {
     return null;
   }
 
+  const agencia = useAgencia();
+
+  // Verificamos que la URL de fondo_1 esté disponible antes de usarla
+  const fondoImagen = agencia?.fondo_1 ? `url(${agencia.fondo_1})` : "none";
+  const logo = agencia?.logo ? `${agencia.logo}` : "none";
+
+  console.log("La agencia es :", agencia);
+  console.log("el logo es : ",logo);
+
   /** 🔥 Normalizamos la opacidad para evitar valores incorrectos */
   const opacidad = header?.imagenBackgroundOpacidad ?? 1;
   const opacidadNormalizada = opacidad >= 0 && opacidad <= 1 ? opacidad : 1;
@@ -20,7 +30,7 @@ const Header: React.FC = () => {
     <AppBar
       position="absolute"
       sx={{
-        backgroundImage: header?.imagenBackground ? `url(${header.imagenBackground})` : "none",
+        backgroundImage: fondoImagen,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -51,7 +61,7 @@ const Header: React.FC = () => {
             height: "100%",
             background: `linear-gradient(rgba(0,0,0,${opacidadNormalizada}), rgba(0,0,0,${
               opacidadNormalizada * 0.5
-            }))`, 
+            }))`,
             zIndex: 1,
           }}
         />
@@ -77,10 +87,10 @@ const Header: React.FC = () => {
           transition={{ duration: 1 }}
           whileHover={{ scale: 1.2 }}
         >
-          {datosGenerales.logoAgencia && (
+          {agencia && (
             <Box
               component="img"
-              src={datosGenerales.logoAgencia}
+              src={logo}
               alt="Logo Agencia"
               onError={(e) => (e.currentTarget.style.display = "none")}
               sx={{

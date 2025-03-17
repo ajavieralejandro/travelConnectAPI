@@ -8,6 +8,7 @@ use App\Http\Controllers\SoapController;
 use App\Http\Controllers\AllSeasonsController;
 use App\Http\Controllers\JuliaController;
 use App\Http\Controllers\PaquetesController;
+use App\Http\Controllers\PaqueteAgenciaController;
 
 
 Route::get('/paquetes', [JuliaController::class, 'getPaquetes']);
@@ -26,6 +27,7 @@ Route::get('/buscar', function () {
 Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/create_agencia',[AgenciaController::class,'createAgencia'])->name('agencias.create');
 Route::post('/store_agencia',[AgenciaController::class,'store'])->name('agencias.store');
+Route::get('/create_paquete',[PaqueteAgenciaController::class,'create'])->name('paquete.create');
 
 Route::middleware('is_admin')->group(function () {
     Route::get('/register', [TenantController::class, 'showRegistrationForm'])->name('register');
@@ -33,7 +35,7 @@ Route::middleware('is_admin')->group(function () {
     Route::post('/register', [TenantController::class, 'register']);    });
 
 
-    Route::domain('{subdomain}.triptest.com.ar')->group(function () {
+    Route::domain('{subdomain}.localhost')->group(function () {
         Route::get('/', [TenantController::class, 'show']);
     });
 Route::get('/send-soap-request', [SoapController::class, 'sendSoapRequest']);

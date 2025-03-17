@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import { DatosAgencia } from "../interfaces/datosAgencia";
-
+import { useAgencia } from "../servicios/especificos/obtenerDatosAgencia";
 /** Definimos el tipo del contexto */
 interface DatosAgenciaContextType {
   datosAgencia: DatosAgencia | null;
@@ -20,9 +20,10 @@ export const DatosAgenciaProvider = ({ children }: { children: ReactNode }) => {
 
   /** 📌 Escuchar cambios en la simulación */
   useEffect(() => {
+
     const handleCambioSimulacion = () => {
       setTimeout(() => {
-        const nuevosDatos = window.__DATOS_AGENCIA__ || null; // 🔥 Asegura que no haya `undefined`
+        const nuevosDatos = window.__DATOS_AGENCIA__ || null;
         if (nuevosDatos !== datosAgencia) {
           setDatosAgencia(nuevosDatos);
           setCargando(false);

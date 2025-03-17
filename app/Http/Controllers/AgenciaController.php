@@ -97,7 +97,10 @@ public function store(Request $request)
         $host = $request->getHost(); // Obtiene el host completo (subdominio.dominio.com)
         $subdominio = explode('.', $host)[0];
         $agencia = Agencia::where('dominio','=',$subdominio)->first();
+        if(isset($agencia['fondo_1']))
         $agencia['fondo_1']= (request()->getSchemeAndHttpHost() . '/storage/' . ltrim($agencia->fondo_1, '/'));
+        if(isset($agencia['logo']))
+        $agencia['logo']= (request()->getSchemeAndHttpHost() . '/storage/' . ltrim($agencia->logo, '/'));
         return response()->json($agencia);
     }
 
