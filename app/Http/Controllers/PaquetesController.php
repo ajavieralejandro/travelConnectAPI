@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Paquete;
-use App\Models\Salida;
-
 use App\Models\PaqueteJulia;
 use Carbon\Carbon;
 
@@ -36,60 +34,64 @@ class PaquetesController extends Controller
 
         return response()->json($paquetesArray);}
         public function obtenerPaquetesPorDestino(Request $request)
-{
-    $query = Salida::query();
+        {
+            $ciudadOrigen = $request->input('ciudadOrigen');
+            $destino = $request->input('destino');
+            $fechaSalida = $request->input('fechaSalida');
+            $viajeros = $request->input('viajeros');
 
-    // 1. Filtros en Salidas
-    if ($request->filled('fechaSalida')) {
-        $fechaSalida = Carbon::parse(preg_replace('/(GMT.*)/', '', $request->fechaSalida));
-        $query->whereDate('fecha_desde', '>', $fechaSalida->toDateString());
-    }
+            $paquetes = Paquete::whereHas('salidas', function ($query) {
+                if (request()->filled('fechaSalida')) {
+                    $fechaSalida = Carbon::parse(request('fechaSalida'));
+                    $query->whereDate('fecha_desde', '>', $fechaSalida->toDateString());
+                }
 
-    if ($request->filled('viajeros')) {
-        $campoPrecio = match ((int)$request->viajeros) {
-            1 => 'single_precio',
-            2 => 'doble_precio',
-            3 => 'triple_precio',
-            4 => 'cuadruple_precio',
-            default => null
-        };
+                if (request()->filled('viajeros')) {
+                    $viajeros = request('viajeros');
+                    switch ($viajeros) {
+                        case 1:
+                            $query->where('single_precio', '>', 0);
+                            break;
+                        case 2:
+                            $query->where('doble_precio', '>', 0);
+                            break;
+                        case 3:
+                            $query->where('triple_precio', '>', 0);
+                            break;
+                        case 4:
+                            $query->where('cuadruple_precio', '>', 0);
+                            break;
+                    }
+                }
 
-        if ($campoPrecio) {
-            $query->where($campoPrecio, '>', 0);
+                if (request()->filled('ciudadOrigen')) {
+                    $query->where('ciudad', 'like', '%' . request('ciudadOrigen') . '%');
+                }
+
+                if (request()->filled('destino')) {
+                    $query->where(function ($q) {
+                        $q->where('pais', 'like', '%' . request('destino') . '%')
+                          ->orWhere('ciudad', 'like', '%' . request('destino') . '%');
+                    });
+                }
+            })
+            ->with(['salidas' => function ($query) {
+                $query->select(
+                    'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
+                    'ciudad', 'pais',
+                    'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
+                    'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
+                    'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
+                    'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
+                );
+            }])
+            ->get();
+
+
+            return $paquetes->isEmpty()
+                ? response()->json(['message' => 'No se encontraron paquetes.'], 404)
+                : response()->json($paquetes);
         }
-    }
-
-    // 2. Filtros en Paquete (relación)
-    if ($request->filled('ciudadOrigen')) {
-        $query->whereHas('paquete', function ($q) use ($request) {
-            $q->where('ciudad', 'like', '%' . $request->ciudadOrigen . '%');
-        });
-    }
-
-    if ($request->filled('destino')) {
-        $query->whereHas('paquete', function ($q) use ($request) {
-            $q->where('pais', 'like', '%' . $request->destino . '%')
-              ->orWhere('ciudad', 'like', '%' . $request->destino . '%');
-        });
-    }
-
-    // 3. Cargar relación Paquete con datos necesarios
-    $salidas = $query->with(['paquete' => function ($q) {
-        $q->select('id', 'nombre', 'ciudad', 'pais'); // Columnas de Paquete
-    }])->get();
-
-    // 4. Formatear respuesta
-    $resultado = $salidas->map(function ($salida) {
-        return [
-            'salida' => $salida->only(['id', 'fecha_desde', 'fecha_hasta', 'ciudad', 'pais']),
-            'paquete' => $salida->paquete,
-        ];
-    });
-
-    return $resultado->isEmpty()
-        ? response()->json(['message' => 'No hay resultados'], 404)
-        : response()->json($resultado);
-}
 
 public function buscarPaquetes(Request $request)
 {
