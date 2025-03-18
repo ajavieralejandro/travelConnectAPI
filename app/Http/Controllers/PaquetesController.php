@@ -34,64 +34,72 @@ class PaquetesController extends Controller
 
         return response()->json($paquetesArray);}
         public function obtenerPaquetesPorDestino(Request $request)
-        {
-            $ciudadOrigen = $request->input('ciudadOrigen');
-            $destino = $request->input('destino');
-            $fechaSalida = $request->input('fechaSalida');
-            $viajeros = $request->input('viajeros');
+{
+    $ciudadOrigen = $request->input('ciudadOrigen');
+    $destino = $request->input('destino');
+    $fechaSalida = $request->input('fechaSalida');
+    $viajeros = $request->input('viajeros');
 
-            $paquetes = Paquete::whereHas('salidas', function ($query) {
-                if (request()->filled('fechaSalida')) {
-                    $fechaSalida = Carbon::parse(request('fechaSalida'));
-                    $query->whereDate('fecha_desde', '>', $fechaSalida->toDateString());
-                }
+    $paquetes = Paquete::query();
 
-                if (request()->filled('viajeros')) {
-                    $viajeros = request('viajeros');
-                    switch ($viajeros) {
-                        case 1:
-                            $query->where('single_precio', '>', 0);
-                            break;
-                        case 2:
-                            $query->where('doble_precio', '>', 0);
-                            break;
-                        case 3:
-                            $query->where('triple_precio', '>', 0);
-                            break;
-                        case 4:
-                            $query->where('cuadruple_precio', '>', 0);
-                            break;
-                    }
-                }
+    // Filtros para el modelo Paquete (destino)
+    if ($destino) {
+        $paquetes->where(function ($query) use ($destino) {
+            $query->where('pais', 'like', "%{$destino}%")
+                  ->orWhere('ciudad', 'like', "%{$destino}%");
+        });
+    }
 
-                if (request()->filled('ciudadOrigen')) {
-                    $query->where('ciudad', 'like', '%' . request('ciudadOrigen') . '%');
-                }
-
-                if (request()->filled('destino')) {
-                    $query->where(function ($q) {
-                        $q->where('pais', 'like', '%' . request('destino') . '%')
-                          ->orWhere('ciudad', 'like', '%' . request('destino') . '%');
-                    });
-                }
-            })
-            ->with(['salidas' => function ($query) {
-                $query->select(
-                    'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
-                    'ciudad', 'pais',
-                    'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
-                    'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
-                    'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
-                    'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
-                );
-            }])
-            ->get();
-
-
-            return $paquetes->isEmpty()
-                ? response()->json(['message' => 'No se encontraron paquetes.'], 404)
-                : response()->json($paquetes);
+    // Filtros para la relación Salidas
+    $paquetes->whereHas('salidas', function ($query) use ($ciudadOrigen, $fechaSalida, $viajeros) {
+        // Ciudad de Origen (pertenece a Salidas)
+        if ($ciudadOrigen) {
+            $query->where('ciudad', 'like', "%{$ciudadOrigen}%");
         }
+
+        // Fecha de Salida
+        if ($fechaSalida) {
+            $fecha = Carbon::parse($fechaSalida);
+            $query->whereDate('fecha_desde', '>', $fecha->toDateString());
+        }
+
+        // Número de Viajeros
+        if ($viajeros) {
+            switch ($viajeros) {
+                case 1:
+                    $query->where('single_precio', '>', 0);
+                    break;
+                case 2:
+                    $query->where('doble_precio', '>', 0);
+                    break;
+                case 3:
+                    $query->where('triple_precio', '>', 0);
+                    break;
+                case 4:
+                    $query->where('cuadruple_precio', '>', 0);
+                    break;
+            }
+        }
+    });
+
+    // Cargar relaciones con campos específicos
+    $paquetes->with(['salidas' => function ($query) {
+        $query->select(
+            'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
+            'ciudad', 'pais',
+            'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
+            'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
+            'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
+            'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
+        );
+    }]);
+
+    $resultados = $paquetes->get();
+
+    return $resultados->isEmpty()
+        ? response()->json(['message' => 'No se encontraron paquetes.'], 404)
+        : response()->json($resultados);
+}
 
 public function buscarPaquetes(Request $request)
 {
