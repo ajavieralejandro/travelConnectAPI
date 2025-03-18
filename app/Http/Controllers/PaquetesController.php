@@ -44,9 +44,12 @@ class PaquetesController extends Controller
 
     // Filtros para el modelo Paquete (destino)
     if ($destino) {
-        $paquetes->where(function ($query) use ($destino) {
-            $query->where('pais', 'like', "%{$destino}%")
-                  ->orWhere('ciudad', 'like', "%{$destino}%");
+        $ciudadPrincipal = trim(explode(' - ', $destino)[0]);
+
+        $paquetes->where(function ($query) use ($ciudadPrincipal) {
+            $query->where('pais', 'like', "%{$ciudadPrincipal}%")
+                  ->orWhere('ciudad', 'like', "%{$ciudadPrincipal}%")
+                  ->orWhere('ciudad_iata', 'like', "%{$ciudadPrincipal}%");
         });
     }
 
@@ -114,6 +117,7 @@ public function buscarPaquetes(Request $request)
 
      // Filtrar por destino (país o ciudad)
      if ($destino) {
+
          $query->where(function ($q) use ($destino) {
              $q->where('pais', 'like', '%' . $destino . '%')
                ->orWhere('ciudad', 'like', '%' . $destino . '%');
