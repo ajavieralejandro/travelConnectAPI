@@ -53,6 +53,8 @@ Route::get('/agencia',[AgenciaController::class,'getAgencia'])->name('agencia.ge
 Route::get('/seasons', [AllSeasonsController::class, 'getSeasons']);
 Route::post('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPorDestino'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 ;
+Route::post('/paquetes2/filtrar2', [PaquetesController::class, 'obtenerPaquetesPorDestino'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+;
 
 // Luego, la ruta general
 Route::get('/', function () {
