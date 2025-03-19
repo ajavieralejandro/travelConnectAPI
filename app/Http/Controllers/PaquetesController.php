@@ -63,7 +63,7 @@ class PaquetesController extends Controller
         // Fecha de Salida
         if ($fechaSalida) {
             $fecha = Carbon::parse($fechaSalida);
-            $query->whereDate('fecha_desde', '>', $fecha->toDateString());
+            $query->whereDate('fecha_viaje', '>', $fecha->toDateString());
         }
 
         // Número de Viajeros
@@ -93,7 +93,8 @@ class PaquetesController extends Controller
             'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
             'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
             'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
-            'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
+            'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2',
+            'fecha_viaje'
         );
     }]);
 
