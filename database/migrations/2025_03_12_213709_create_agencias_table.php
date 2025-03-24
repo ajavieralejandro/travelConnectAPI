@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,23 +21,77 @@ return new class extends Migration {
             $table->string('fondo_1')->nullable();
             $table->string('fondo_2')->nullable();
             $table->string('color_principal');
-            $table->string('color_secundario');
             $table->string('color_barra_superior');
             $table->boolean('filtro_imagen_1');
             $table->boolean('filtro_imagen_2');
-            $table->string('facebook')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('youtube')->nullable();
-            $table->string('linkedin')->nullable();
-            $table->string('nombre_de_contacto');
-            $table->string('direccion');
-            $table->string('whatsapp');
-            $table->string('mail');
-            $table->string('telefono');
-            $table->text('info_contacto_es')->nullable();
-            $table->text('info_contacto_en')->nullable();
-            $table->text('info_contacto_pt')->nullable();
+
+            // Datos Generales
+            $table->string('tipografia_agencia')->nullable();
+            $table->string('color_tipografia_agencia')->nullable();
+            $table->string('color_fondo_app')->nullable();
+            $table->string('color_primario')->nullable();
+            $table->string('color_secundario')->nullable();
+            $table->string('color_terciario')->nullable();
+
+            // Header
+            $table->string('header_imagen_background')->nullable();
+            $table->decimal('header_imagen_background_opacidad', 5, 2)->nullable();
+            $table->string('header_video_background')->nullable();
+            $table->decimal('header_video_background_opacidad', 5, 2)->nullable();
+
+            // Buscador
+            $table->string('buscador_tipografia')->nullable();
+            $table->string('buscador_tipografia_color')->nullable();
+            $table->string('buscador_tipografia_color_label')->nullable();
+            $table->string('buscador_color_primario')->nullable();
+            $table->string('buscador_color_secundario')->nullable();
+            $table->string('buscador_color_terciario')->nullable();
+
+            // Publicidad Cliente
+            $table->boolean('publicidad_existe');
+            $table->string('publicidad_titulo')->nullable();
+            $table->string('publicidad_tipografia_color')->nullable();
+            $table->string('publicidad_color_primario')->nullable();
+            $table->string('publicidad_color_secundario')->nullable();
+            $table->string('publicidad_color_terciario')->nullable();
+            $table->string('publicidad_imagen_1')->nullable();
+            $table->string('publicidad_imagen_2')->nullable();
+            $table->string('publicidad_imagen_3')->nullable();
+
+            // Tarjetas
+            $table->string('tarjetas_titulo')->nullable();
+            $table->string('tarjetas_tipografia')->nullable();
+            $table->string('tarjetas_tipografia_color')->nullable();
+            $table->string('tarjetas_tipografia_color_titulo')->nullable();
+            $table->string('tarjetas_tipografia_color_contenido')->nullable();
+            $table->string('tarjetas_color_primario')->nullable();
+            $table->string('tarjetas_color_secundario')->nullable();
+            $table->string('tarjetas_color_terciario')->nullable();
+
+            // Banner de Registro
+            $table->string('banner_registro_titulo')->nullable();
+            $table->string('banner_registro_tipografia_color')->nullable();
+            $table->string('banner_registro_color_primario')->nullable();
+            $table->string('banner_registro_color_secundario')->nullable();
+            $table->string('banner_registro_color_terciario')->nullable();
+
+            // Footer
+            $table->string('footer_texto')->nullable();
+            $table->string('footer_tipografia')->nullable();
+            $table->string('footer_tipografia_color')->nullable();
+            $table->string('footer_color_primario')->nullable();
+            $table->string('footer_color_secundario')->nullable();
+            $table->string('footer_color_terciario')->nullable();
+            $table->string('footer_facebook')->nullable();
+            $table->string('footer_twitter')->nullable();
+            $table->string('footer_instagram')->nullable();
+            $table->string('footer_whatsapp')->nullable();
+            $table->string('footer_telefono')->nullable();
+            $table->string('footer_email')->nullable();
+            $table->string('footer_direccion')->nullable();
+            $table->string('footer_ciudad')->nullable();
+            $table->string('footer_pais')->nullable();
+
             $table->timestamps();
         });
     }

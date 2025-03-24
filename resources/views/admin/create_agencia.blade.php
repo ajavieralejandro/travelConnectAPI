@@ -36,13 +36,13 @@
             <!-- Paso 2: Información de la Agencia -->
             <div x-show="step === 2">
                 <label class="block font-semibold">¿Quiénes somos? (ES):</label>
-                <textarea name="quienes_somos_es" class="w-full p-2 mb-3 border-gray-300 rounded"></textarea>
+                <textarea  name="content" class="w-full p-2 mb-3 border-gray-300 rounded"></textarea>
 
                 <label class="block font-semibold">¿Quiénes somos? (EN):</label>
-                <textarea name="quienes_somos_en" class="w-full p-2 mb-3 border-gray-300 rounded"></textarea>
+                <textarea name="content2" class="w-full p-2 mb-3 border-gray-300 rounded"></textarea>
 
                 <label class="block font-semibold">¿Quiénes somos? (PT):</label>
-                <textarea name="quienes_somos_pt" class="w-full p-2 mb-3 border-gray-300 rounded"></textarea>
+                <textarea name="content" class="w-full p-2 mb-3 border-gray-300 rounded"></textarea>
             </div>
 
             <!-- Paso 3: Diseño y Colores -->
@@ -131,4 +131,12 @@
         </form>
     </div>
 </div>
+
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+<script>
+    CKEDITOR.replace( 'content' );
+    CKEDITOR.replace( 'content2' );
+
+</script>
 @endsection

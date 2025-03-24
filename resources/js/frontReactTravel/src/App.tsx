@@ -6,13 +6,15 @@ import AppRoutes from "./routers"; // 🚀 Importamos las rutas
 
 const App: React.FC = () => {
   const datosGenerales = useDatosGenerales();
+  console.log("Datos generales es :",datosGenerales);
 
   if (!datosGenerales) {
+    console.log(window.__DATOS_AGENCIA__);
     return <Box sx={{ textAlign: "center", mt: 4 }}>No se pudieron cargar los datos de la agencia.</Box>;
   }
 
   /** 🔥 Aplicamos el color de fondo desde `Datos Generales` */
-  const fondoColor = datosGenerales.colorFondoAgencia || "#F5F5F5"; // ✅ Fallback a color gris claro
+  const fondoColor = datosGenerales.colorFondoApp|| "#F5F5F5"; // ✅ Ahora usa `colorFondoApp`
 
   return (
     <Router>
@@ -31,7 +33,7 @@ const App: React.FC = () => {
 
       <Box
         sx={{
-          backgroundColor: fondoColor, // ✅ Ahora usa `colorFondoAgencia`
+          backgroundColor: fondoColor, // ✅ Ahora usa `colorFondoApp`
           minHeight: "100vh",
           width: "100%",
           display: "flex",

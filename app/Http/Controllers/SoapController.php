@@ -26,15 +26,15 @@ class SoapController extends Controller
           <SOAP-ENV:Body>
             <tns:GetPackagesFares xmlns:tns="http://aws-qa1.ola.com.ar/qa/wsola/endpoint">
               <Request xsi:type="xsd:string"><![CDATA[
-                <GetPackagesFaresRequest>
+              <GetPackagesFaresRequest>
           <GeneralParameters>
             <Username>BUETRIPNOWWEB</Username>
             <Password>e3fab5ef81210da49bee83c32bce283ebcb19dfa8b27596130959a3a6fa55232</Password>
-            <CustomerIp>181.231.247.65</CustomerIp>
+            <CustomerIp>181.228.60.154</CustomerIp>
           </GeneralParameters>
           <DepartureDate>
-            <From>2025-04-01</From>
-            <To>2025-04-30</To>
+            <From>2025-04-12</From>
+            <To>2025-10-30</To>
           </DepartureDate>
           <Rooms>
             <Room>
@@ -97,6 +97,19 @@ class SoapController extends Controller
                 $xml = simplexml_import_dom($dom);
                 $innerXmlString = (string)$xml->Response;
                 $innerXml = simplexml_load_string($innerXmlString);
+                // Recorremos cada elemento del arreglo "PackageFare"
+    foreach ($innerXml->PackageFare as $package) {
+        // Aquí puedes acceder a las propiedades de cada elemento SimpleXMLElement
+        // Por ejemplo, si el elemento tiene una propiedad "price":
+        $arrayData = $this->xmlToArray($package);
+
+        // Devolver JSON
+        return response()->json([
+            'success' => true,
+            'data' => $arrayData
+        ], 200, [], JSON_UNESCAPED_UNICODE);
+    }
+
                 // Ejemplo de extracción de datos
                 $packageFares = [
                     'prices' => [

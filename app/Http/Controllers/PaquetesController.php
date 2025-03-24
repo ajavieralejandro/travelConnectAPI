@@ -39,7 +39,6 @@ class PaquetesController extends Controller
     $destino = $request->input('destino');
     $fechaSalida = $request->input('fechaSalida');
     $viajeros = $request->input('viajeros');
-    return response()->json($fechaSalida);
     $paquetes = Paquete::query();
 
     // Filtros para el modelo Paquete (destino)

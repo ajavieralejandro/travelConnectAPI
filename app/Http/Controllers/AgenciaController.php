@@ -61,22 +61,27 @@ public function store(Request $request)
         // Asociar el tenant al request
         $data['tenant_id'] = $tenant->id;
 
-        // Subir imágenes si existen
-        if ($request->hasFile('favicon')) {
-            $data['favicon'] = $request->file('favicon')->store('agencias', 'public');
-        }
+       // Crear una subcarpeta con el nombre de la agencia si no existe
+    $folderPath = 'agencias/' . $nombreAgencia;
+    Storage::disk('public')->makeDirectory($folderPath);
 
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('agencias', 'public');
-        }
+    // Subir imágenes si existen
+    if ($request->hasFile('favicon')) {
+        // Guardar el archivo en la subcarpeta específica
+        $data['favicon'] = $request->file('favicon')->store($folderPath, 'public');
+    }
 
-        if ($request->hasFile('fondo_1')) {
-            $data['fondo_1'] = $request->file('fondo_1')->store('agencias', 'public');
-        }
+    if ($request->hasFile('logo')) {
+        $data['logo'] = $request->file('logo')->store($folderPath, 'public');
+    }
 
-        if ($request->hasFile('fondo_2')) {
-            $data['fondo_2'] = $request->file('fondo_2')->store('agencias', 'public');
-        }
+    if ($request->hasFile('fondo_1')) {
+        $data['fondo_1'] = $request->file('fondo_1')->store($folderPath, 'public');
+    }
+
+    if ($request->hasFile('fondo_2')) {
+        $data['fondo_2'] = $request->file('fondo_2')->store($folderPath, 'public');
+    }
         $data['nombre']=$data['name'];
         $data['dominio']=$data['subdomain'];
         $data['mail']=$data['email'];
@@ -97,10 +102,14 @@ public function store(Request $request)
         $host = $request->getHost(); // Obtiene el host completo (subdominio.dominio.com)
         $subdominio = explode('.', $host)[0];
         $agencia = Agencia::where('dominio','=',$subdominio)->first();
-        if(isset($agencia['fondo_1']))
-        $agencia['fondo_1']= (request()->getSchemeAndHttpHost() . '/storage/' . ltrim($agencia->fondo_1, '/'));
-        if(isset($agencia['logo']))
-        $agencia['logo']= (request()->getSchemeAndHttpHost() . '/storage/' . ltrim($agencia->logo, '/'));
+        if(!$agencia){
+            $agencia = Agencia::all()->first();
+            return response()->json($agencia);
+        }
+        //if(isset($agencia['fondo_1']))
+        //$agencia['fondo_1']= (request()->getSchemeAndHttpHost() . '/storage/' . ltrim($agencia->fondo_1, '/'));
+        //if(isset($agencia['logo']))
+        //$agencia['logo']= (request()->getSchemeAndHttpHost() . '/storage/' . ltrim($agencia->logo, '/'));
         return response()->json($agencia);
     }
 

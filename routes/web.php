@@ -9,6 +9,7 @@ use App\Http\Controllers\AllSeasonsController;
 use App\Http\Controllers\JuliaController;
 use App\Http\Controllers\PaquetesController;
 use App\Http\Controllers\PaqueteAgenciaController;
+use App\Http\Controllers\HotelTravelGate;
 
 
 Route::get('/paquetes', [JuliaController::class, 'getPaquetes']);
@@ -22,10 +23,14 @@ Route::get('/buscar', function () {
     return view('buscar_paquetes');
 })->name('paquetes.form');
 
+use App\Http\Controllers\GeolocationController;
 
+Route::get('/geolocation', [GeolocationController::class, 'getCoordinates']);
 //Mover A Admin
 Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/create_agencia',[AgenciaController::class,'createAgencia'])->name('agencias.create');
+Route::get('/destinos',[HotelTravelGate::class,'getAllDestinations'])->name('hotel.destinations');
+
 Route::post('/store_agencia',[AgenciaController::class,'store'])->name('agencias.store');
 Route::get('/create_paquete',[PaqueteAgenciaController::class,'create'])->name('paquete.create');
 
@@ -47,6 +52,7 @@ Route::get('/tenant-check', function () {
     ]);
 });
 
+Route::get('/search-hotels-2', [HotelTravelGate::class, 'searchHotelsGeo']);
 Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
 Route::get('/agencia',[AgenciaController::class,'getAgencia'])->name('agencia.get');
 
@@ -55,6 +61,9 @@ Route::post('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPor
 ;
 Route::post('/paquetes2/filtrar2', [PaquetesController::class, 'obtenerPaquetesPorDestino'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 ;
+
+
+Route::post('/hotels/search', [HotelTravelGate::class, 'searchHotels'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 
 // Luego, la ruta general
 Route::get('/', function () {
