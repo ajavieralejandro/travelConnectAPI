@@ -23,7 +23,7 @@ class AgenciaSeeder extends Seeder
             'quienes_somos_pt' => 'Sobre nós em português...',
             'favicon' => '/favicon.ico',
             'logo' => '/logo1.png',
-            'fondo_1' => '/fondo1.jpg',
+            'fondo_1' => 'video2.mp4',
             'fondo_2' => '/fondo2.jpg',
             'color_principal' => '#1E88E5',
             'color_secundario' => '#90CAF9',
