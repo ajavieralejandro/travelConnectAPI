@@ -155,7 +155,7 @@ $salida->vuelta_escalas = $this->computarArreglo($nueva_salida['vuelta_escalas']
     }
 
     // Convertir XML a array
-    $xml = new SimpleXMLElement($response->body());
+    $xml = simplexml_load_string($response->body(), "SimpleXMLElement", LIBXML_NOCDATA);
     $json = json_encode($xml);
     $paquetesArray = json_decode($json, true);
 
@@ -194,13 +194,18 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
         $categoriasArray = $paquete['categorias']['categoria'] ?? [];
         $categorias = is_array($categoriasArray) ? implode(',', array_column($categoriasArray, 'categoria_id')) : (string) $categoriasArray;
         // Guardar en la base de datos
-        $nuevo_paquete = Paquete::updateOrCreate(
-            ['paquete_externo_id' => $paquete['paquete_externo_id']],
+        $incluye = trim($paquete['incluye']); // Eliminar espacios y saltos de línea al principio y al final
+        $descripcion = htmlspecialchars($incluye); // Convertir caracteres especiales en entidades HTML
+                $nuevo_paquete = Paquete::updateOrCreate(
+                    ['paquete_externo_id' => $paquete['paquete_externo_id']], // Clave única
             [
+                'titulo'=>$paquete['titulo'],
+                'paquete_externo_id'=>$paquete['paquete_externo_id'],
+                'hoteles'=>$this->cargarHoteles($paquete),
                 'fecha_modificacion' => $paquete['fecha_modificacion'] ?? null,
-                'usuario' => $paquete['usuario'] ?? null,
+                'usuario' => 'allSeasons',
                 'usuario_id' => $paquete['usuario_id'] ?? null,
-
+                'descripcion'=>'hola nena',
 
                 'fecha_vigencia_desde' => $paquete['fecha_vigencia_desde'] ?? null,
                 'fecha_vigencia_hasta' => $paquete['fecha_vigencia_hasta'] ?? null,
@@ -221,7 +226,8 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
                 'categorias' => $categorias,
             ]
         );
-
+        $nuevo_paquete['descripcion']=$descripcion;
+        $nuevo_paquete->save();
         //Guardo las salidas asociadas a los paquetes
         foreach ($paquete['salidas'] as $salidaData) {
             if(!isset($salidaData['salida_id']))
@@ -237,7 +243,24 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
     // Retornar respuesta con paquetes guardados
     return response()->json(['message' => 'Paquetes guardados correctamente', 'total' => count($paquetes)]);
     }
+    public function cargarHoteles($paquete)
+    {
+        $hoteles = $paquete['hoteles'];
 
+        foreach ($hoteles as &$hotel) { // Usamos '&' para pasar el valor por referencia
+            // Decodificar el nombre del hotel
+            if (isset($hotel['nombre'])) {
+                // Eliminar espacios y decodificar el nombre
+                $hotel['nombre'] = json_decode('"' . trim($hotel['nombre']) . '"');
+            } else {
+                // Manejo de errores si 'nombre' no está presente
+                $hotel['nombre'] = 'Nombre no disponible';
+            }
+        }
+
+        // El array '$hoteles' ha sido modificado con los nombres decodificados
+        return $hoteles;
+    }
 
 
 }

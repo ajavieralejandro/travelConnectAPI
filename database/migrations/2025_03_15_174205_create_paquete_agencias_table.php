@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('tipo_producto');
             $table->json('componentes');
             $table->json('categorias');
+            $table->json('hoteles');
             $table->string('tipo_moneda');
             $table->boolean('activo');
             $table->string('imagen_principal')->nullable();

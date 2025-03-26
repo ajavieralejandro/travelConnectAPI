@@ -31,10 +31,14 @@ class Paquete extends Model
         'galeria_imagenes',
         'edad_menores',
         'transporte',
+        'titulo',
         'descuento',
+        'hoteles'
     ];
 
     protected $casts = [
+        'hoteles' => 'array', // Convierte el JSON de la BD a array y viceversa
+
         'fecha_modificacion' => 'date',
         'fecha_vigencia_desde' => 'date',
         'fecha_vigencia_hasta' => 'date',
