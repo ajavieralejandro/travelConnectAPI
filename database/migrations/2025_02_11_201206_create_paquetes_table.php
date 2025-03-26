@@ -30,7 +30,7 @@ return new class extends Migration {
             $table->integer('edad_menores')->nullable();
             $table->string('transporte')->nullable();
             $table->json('hoteles')->nullable();
-            $table->string('descripcion')->nullable();
+            $table->longText('descripcion')->nullable();
             $table->decimal('descuento', 8, 2)->nullable();
             $table->timestamps();
         });
