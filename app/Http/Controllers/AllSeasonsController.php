@@ -226,7 +226,7 @@ $ciudadIATA = is_array($ciudadIATA) ? (isset($ciudadIATA[0]) ? (string)$ciudadIA
                 'categorias' => $categorias,
             ]
         );
-        $nuevo_paquete['descripcion']=$descripcion;
+        $nuevo_paquete['descripcion']=html_entity_decode($descripcion);
         $nuevo_paquete->save();
         //Guardo las salidas asociadas a los paquetes
         foreach ($paquete['salidas'] as $salidaData) {
