@@ -9,16 +9,20 @@ use Carbon\Carbon;
 use Exception;
 use SimpleXMLElement;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Http;
+use App\Models\Paquete;
 
 class JuliaController extends Controller
 {
-    public function getPaquetes()
+    public function getPaquetes(Request $request)
     {
         $url = 'http://ycixweb.juliatours.com.ar/WSJULIADEMO/WSJULIA.asmx';
         $soapAction = 'http://ycix.sytes.net/WS_jw_PAQUETES_CABECERA';
 
-        $xml = $this->buildSoapRequest();
-        $client = new Client(['timeout' => 30]);
+        $xml = $this->buildSoapRequest($request);
+
+        $client = new Client(['timeout' => 300]);
 
         try {
             $response = $client->post($url, [
@@ -31,7 +35,6 @@ class JuliaController extends Controller
 
             $xmlResponse = $response->getBody()->getContents();
             Log::debug('Raw XML Response:', ['xml' => $xmlResponse]);
-
             return $this->processXmlResponse($xmlResponse);
 
         } catch (RequestException $e) {
@@ -46,19 +49,11 @@ class JuliaController extends Controller
     private function processXmlResponse(string $xmlResponse)
     {
         try {
-            $xml = new SimpleXMLElement($xmlResponse);
-            $this->registerNamespaces($xml);
 
-            if ($this->hasSoapFault($xml)) {
-                $error = $this->extractFaultString($xml);
-                Log::error('SOAP Fault:', ['error' => $error]);
-                throw new Exception($error);
-            }
+            $xml = simplexml_load_string($xmlResponse, "SimpleXMLElement", LIBXML_NOCDATA);
+            $processed = $this->processRows(json_decode(json_encode($xml), true));
 
-            $rows = $this->extractDataRows($xml);
-            Log::info('Rows extracted:', ['count' => count($rows)]);
 
-            $processed = $this->processRows($rows);
 
             return response()->json([
                 'success' => true,
@@ -95,59 +90,64 @@ class JuliaController extends Controller
         $fault = $xml->xpath('//*[local-name()="faultstring"]');
         return $fault ? (string)$fault[0] : 'Unknown SOAP Error';
     }
-
     private function extractDataRows(SimpleXMLElement $xml): array
     {
-        // XPath genérico para diferentes estructuras
-        return $xml->xpath('
-            //*[local-name()="Table"] |
-            //*[local-name()="NewDataSet"]/* |
-            //*[local-name()="diffgram"]/*/* |
-            //*[contains(local-name(), "Result")]//*
-        ') ?: [];
+        // Obtener todos los namespaces del XML
+        $namespaces = $xml->getNamespaces(true);
+
+        // Registrar manualmente el namespace SOAP si existe
+        $soapNamespace = null;
+        foreach ($namespaces as $prefix => $uri) {
+            if (strpos($uri, 'schemas.xmlsoap.org/soap/envelope/') !== false) {
+                $soapNamespace = $uri;
+                $xml->registerXPathNamespace('soap', $uri);
+                break;
+            }
+        }
+
+        // Registrar los demás namespaces dinámicamente
+        foreach ($namespaces as $prefix => $uri) {
+            if ($prefix === '') {
+                $prefix = 'ns'; // Asignar un prefijo por defecto si no tiene
+            }
+            $xml->registerXPathNamespace($prefix, $uri);
+        }
+
+        // Construir la consulta XPath de manera más robusta
+        $query = '
+            //*[local-name()="Body"]
+            //*[local-name()="Table" or
+               local-name()="NewDataSet" or
+               local-name()="diffgram" or
+               contains(local-name(), "Result")]
+            //*[not(namespace-uri()) or namespace-uri() = ""]
+        ';
+
+        $rows = $xml->xpath($query);
+
+        return $rows ?: [];
     }
 
-    private function processRows(array $rows): array
+
+    private function processRows( $rows): array
     {
+
         $processed = [];
+        $rows = $rows['Row'];
         foreach ($rows as $row) {
             try {
-                $rowData = $this->parseRow($row);
-                $this->savePackage($rowData);
-                $processed[] = $rowData;
+                $package = $this->savePackage($row);
+
+                $processed[] = $package;
             } catch (Exception $e) {
                 Log::error('Error processing row:', [
-                    'error' => $e->getMessage(),
-                    'row' => $row->asXML()
+                    'error' => $e->getMessage()
                 ]);
             }
         }
         return $processed;
     }
 
-    private function buildSoapRequest(): string
-{
-    return <<<XML
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ycix="http://ycix.sytes.net">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ycix:WS_jw_PAQUETES_CABECERA>
-                <ycix:Token>B956AA63-DA4B-4A94-AE18-A8CFD6785C3E</ycix:Token>
-                <ycix:Origen>B</ycix:Origen>
-                <ycix:DestinoIZPais>BR</ycix:DestinoIZPais>
-                <ycix:DestinoIZCiudad>RIO</ycix:DestinoIZCiudad>
-                <ycix:Ocupacion>0200</ycix:Ocupacion>
-                <ycix:VigenciaDesde>2025-05-10</ycix:VigenciaDesde>
-                <ycix:VigenciaHasta>2025-10-10</ycix:VigenciaHasta>
-                <ycix:IDPaquete>0</ycix:IDPaquete>
-                <ycix:Nombre></ycix:Nombre>
-                <ycix:OrdenadoPor>1</ycix:OrdenadoPor>
-                <ycix:AscDes>D</ycix:AscDes>
-            </ycix:WS_jw_PAQUETES_CABECERA>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    XML;
-}
 
     private function parseRow(SimpleXMLElement $row): array
     {
@@ -184,30 +184,31 @@ class JuliaController extends Controller
         ];
     }
 
-    private function savePackage(array $rowData): void
+    private function savePackage( $rowData)
     {
-        PaqueteJulia::updateOrCreate(
-            ['paquete_externo_id' => $rowData['IDPAQUETE']],
-            [
-                'nombre' => $rowData['NOMBRE'],
-                'id_destino' => $rowData['IDDESTINO'],
-                'cant_noches' => $rowData['CANTNOCHES'],
-                'tipo_producto' => $this->mapTipoProducto($rowData['TIPOPAQUETE']),
-                'tipo_moneda' => $rowData['IZMONEDA'],
-                'fecha_vigencia_desde' => $rowData['VIGENCIADESDE'],
-                'fecha_vigencia_hasta' => $rowData['VIGENCIAHASTA'],
-                'fecha_modificacion' => now(),
-                'activo' => $rowData['RESERVAHABILITADA'],
-                'pais' => 'BR',
-                'ciudad' => 'RIO',
-                'ciudad_iata' => $this->getIataCode('RIO'),
-                'componentes' => $this->extraerComponentes($rowData['DESCRIPCION']),
-                'categorias' => $this->determinarCategorias($rowData),
-                'transporte' => $this->determinarTransporte($rowData['NOMBRE']),
-                'usuario' => 'API Julia',
-                'usuario_id' => 1
-            ]
-        );
+       $packege = $package = Paquete::updateOrCreate(
+        ['paquete_externo_id' => $rowData['IDPAQUETE'] . '_julia'],
+        [
+            'titulo' => $rowData['NOMBRE'],
+            'id_destino' => $rowData['IDDESTINO'],
+            'cant_noches' => $rowData['CANTNOCHES'],
+            'tipo_producto' => $this->mapTipoProducto($rowData['TIPOPAQUETE']),
+            'tipo_moneda' => $rowData['IZMONEDA'],
+            'fecha_vigencia_desde' => Carbon::parse($rowData['VIGENCIADESDE']),
+            'fecha_vigencia_hasta' => Carbon::parse($rowData['VIGENCIAHASTA']),
+            'fecha_modificacion' => now(),
+            'activo' => $rowData['RESERVAHABILITADA'] === 'V', // Asumimos que 'V' es verdadero
+            'pais' => 'BR',
+            'ciudad' => 'RIO',
+            'ciudad_iata' => $this->getIataCode('RIO'),
+            'componentes' => $this->extraerComponentes($rowData['DESCRIPCION']),
+            'categorias' => $this->determinarCategorias($rowData),
+            'transporte' => $this->determinarTransporte($rowData['NOMBRE']),
+            'usuario' => 'Julia',
+            'usuario_id' => 1
+        ]
+    );
+        return $packege;
     }
 
     private function handleSoapError(RequestException $e): \Illuminate\Http\JsonResponse
@@ -284,4 +285,90 @@ class JuliaController extends Controller
             'MIA' => 'MIA'
         ][strtoupper($ciudad)] ?? '';
     }
+
+
+function obtenerCodigosPorDestino($destino) {
+    if (!$destino) {
+        return null;
+    }
+
+    // Extraer la ciudad del destino ("CIUDAD - PAÍS" → "CIUDAD")
+    $ciudadPrincipal = trim(explode(' - ', $destino)[0]);
+
+    $response =  DB::table('ciudadesJulia')
+        ->select('codigo_ciudad', 'codigo_pais')
+        ->where(function ($query) use ($ciudadPrincipal) {
+
+            $query->where('nombre_pais', 'like', "%{$ciudadPrincipal}%")
+                ->orWhere('nombre_ciudad', 'like', "%{$ciudadPrincipal}%")
+                ->orWhere('codigo_ciudad', 'like', "%{$ciudadPrincipal}%");
+        })
+        ->first();
+        return $response;
+
+}
+
+public function enviarPaquetes(Request $request)
+    {
+        // URL del servicio SOAP
+        $url = 'http://ycixweb.juliatours.com.ar/WSJULIADEMO/WSJULIA.asmx/WS_jw_PAQUETES_CABECERA';
+
+        // Datos a enviar
+        $origenCodigo = $this->obtenerCodigoPorOrigen($request->origen)?->codigo ?? '';
+        $destinoCodigos = $this->obtenerCodigosPorDestino($request->destino);
+
+        // Suponiendo que `obtenerCodigosPorDestino` devuelve un arreglo con las claves 'pais' y 'ciudad'.
+        $destinoPais = $destinoCodigos->codigo_pais?? '';
+        $destinoCiudad = $destinoCodigos->codigo_ciudad ?? '';
+        // Ahora se reemplaza en el arreglo $data
+        $data = [
+            'Token' => '865EF1C9-CC67-4F78-A9B4-220F983DC375',
+            'Origen' => $origenCodigo,
+            'DestinoIZPais' => $destinoPais,
+            'DestinoIZCiudad' => $destinoCiudad,
+            'Ocupacion' => '0200',
+            'VigenciaDesde' => '2025-02-10',
+            'VigenciaHasta' => '2025-10-02',
+            'IDPaquete' => '0',
+            'Nombre' => '',
+            'OrdenadoPor' => '1',
+            'AscDes' => 'A',
+        ];
+
+        // Hacer la solicitud POST
+        $response = Http::asForm()->post($url, $data);
+        $xmlResponse = $response->getBody()->getContents();
+        return $this->processXmlResponse($xmlResponse);
+
+        // Obtener la respuesta
+        if ($response->successful()) {
+            // Si la solicitud fue exitosa, procesamos la respuesta
+            $respuesta = $response->body(); // O puedes usar ->json() si la respuesta es JSON
+            return response()->json([
+                'success' => true,
+                'data' => $respuesta,
+            ]);
+        } else {
+            // Si hubo un error, lo manejamos
+            return response()->json([
+                'success' => false,
+                'error' => $response->status(),
+                'message' => $response->body(),
+            ]);
+        }
+    }
+
+function obtenerCodigoPorOrigen($origen) {
+    if (!$origen) {
+        return null;
+    }
+    // Extraer la parte principal antes de " - " y normalizar
+    $ciudadPrincipal = strtoupper(trim(explode(' - ', $origen)[0]));
+
+    $response =  DB::table('origenJulia')
+        ->select('codigo')
+        ->where('ciudad', 'like', "%{$ciudadPrincipal}%")
+        ->first();
+        return $response;
+}
 }

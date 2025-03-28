@@ -12,7 +12,10 @@ use App\Http\Controllers\PaqueteAgenciaController;
 use App\Http\Controllers\HotelTravelGate;
 
 
-Route::get('/paquetes', [JuliaController::class, 'getPaquetes']);
+Route::get ('/paquetes', [JuliaController::class, 'getPaquetes']);
+
+Route::get ('/paquetes2', [JuliaController::class, 'enviarPaquetes']);
+
 Route::get('/get_paquetes2',[PaquetesController::class,'index']);
 Route::get('/get_paquetes', [PaquetesController::class, 'getPaquetes'])->name('paquetes.get');
 
@@ -52,7 +55,7 @@ Route::get('/tenant-check', function () {
     ]);
 });
 
-Route::get('/search-hotels-2', [HotelTravelGate::class, 'searchHotelsGeo']);
+Route::post('/search-hotels-2', [HotelTravelGate::class, 'searchHotelsGeo'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
 Route::get('/agencia',[AgenciaController::class,'getAgencia'])->name('agencia.get');
 

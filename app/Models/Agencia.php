@@ -28,4 +28,8 @@ class Agencia extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
+    public function apis()
+    {
+        return $this->belongsToMany(Api::class, 'agencia_api');
+    }
 }

@@ -18,18 +18,46 @@ class PaquetesController extends Controller
         return view('paquetes.index', compact('paquetes', 'tarjetasJulia'));
     }
 
+    public function importar(Request $request)
+    {
+        $agencia = $request->agencia; // La agencia viene del middleware
+
+        // APIs habilitadas de la agencia (ejemplo: ['julia', 'otra_api'])
+        $apisHabilitadas = $agencia->apis_habilitadas ?? [];
+
+        $resultados = [];
+
+        if (in_array('julia', $apisHabilitadas)) {
+            $resultados['julia'] = $this->importarDesdeJulia();
+        }
+
+        if (in_array('otra_api', $apisHabilitadas)) {
+            $resultados['otra_api'] = $this->importarDesdeOtraAPI();
+        }
+
+        return response()->json([
+            'message' => 'Importación completada',
+            'detalles' => $resultados
+        ]);
+    }
+
+    private function importarDesdeJulia()
+    {
+        // Lógica específica para importar desde Julia
+        return 'Importación desde Julia ejecutada';
+    }
+
+    private function importarDesdeOtraAPI()
+    {
+        // Lógica específica para otra API
+        return 'Importación desde otra API ejecutada';
+    }
+
+
+
     public function getPaquetes()
     {
-        $paquetes = Paquete::with(['salidas' => function ($query) {
-            $query->select(
-                'id', 'paquete_id', 'fecha_desde', 'fecha_hasta',
-                'single_precio', 'single_impuesto', 'single_otro', 'single_otro2',
-                'doble_precio', 'doble_impuesto', 'doble_otro', 'doble_otro2',
-                'triple_precio', 'triple_impuesto', 'triple_otro', 'triple_otro2',
-                'cuadruple_precio', 'cuadruple_impuesto', 'cuadruple_otro', 'cuadruple_otro2'
-            );
-        }])->get();
-
+        $paquetes = Paquete::all();
         return response()->json($paquetes->toArray());
     }
 
@@ -97,7 +125,7 @@ class PaquetesController extends Controller
 
             if ($fechaSalida) {
                 $fecha = Carbon::parse($fechaSalida)->startOfDay(); // Obtener solo la fecha (sin hora)
-                $query->whereDate('fecha_desde', '>=', $fecha->toDateString());
+                $query->whereDate('fecha_desde', '>=', $fecha->toDateString())->orWhereDate('fecha_viaje', '>=', $fecha->toDateString());
             }
 
             if ($viajeros) {
