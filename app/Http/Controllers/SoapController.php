@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 use SimpleXMLElement;
 use XMLReader;
 use DOMDocument;
+use App\Models\Paquete;
+use Carbon\Carbon;
 
 class SoapController extends Controller
 {
@@ -16,6 +18,12 @@ class SoapController extends Controller
         $url = "https://aws-qa1.ola.com.ar/qa/wsola/endpoint";
 
         // Definir el XML de la solicitud
+        $fechaDesde = '2025-04-12';
+        $fechaHasta = '2025-10-30';
+        $origen = 'BUE';
+        $destino = 'SLA';
+
+        // Construir el XML con los valores dinámicos
         $xmlRequest = <<<XML
         <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
                            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -33,8 +41,8 @@ class SoapController extends Controller
             <CustomerIp>181.228.60.154</CustomerIp>
           </GeneralParameters>
           <DepartureDate>
-            <From>2025-04-12</From>
-            <To>2025-10-30</To>
+            <From>$fechaDesde</From>
+            <To>$fechaHasta</To>
           </DepartureDate>
           <Rooms>
             <Room>
@@ -42,8 +50,8 @@ class SoapController extends Controller
               <Passenger Type="ADL"/>
             </Room>
           </Rooms>
-          <DepartureDestination>BUE</DepartureDestination>
-          <ArrivalDestination>SLA</ArrivalDestination>
+          <DepartureDestination>$origen</DepartureDestination>
+          <ArrivalDestination>$destino</ArrivalDestination>
           <FareCurrency>ARS</FareCurrency>
           <Outlet>1</Outlet>
           <PackageType>ALL</PackageType>
@@ -98,17 +106,19 @@ class SoapController extends Controller
                 $innerXmlString = (string)$xml->Response;
                 $innerXml = simplexml_load_string($innerXmlString);
                 // Recorremos cada elemento del arreglo "PackageFare"
+                $toR = [];
     foreach ($innerXml->PackageFare as $package) {
         // Aquí puedes acceder a las propiedades de cada elemento SimpleXMLElement
         // Por ejemplo, si el elemento tiene una propiedad "price":
         $arrayData = $this->xmlToArray($package);
+        $toR = $this->mapearDesdeExterno($arrayData);
 
-        // Devolver JSON
-        return response()->json([
-            'success' => true,
-            'data' => $arrayData
-        ], 200, [], JSON_UNESCAPED_UNICODE);
     }
+     // Devolver JSON
+     return response()->json([
+        'success' => true,
+        'data' => $toR,
+    ], 200, [], JSON_UNESCAPED_UNICODE);
 
                 // Ejemplo de extracción de datos
                 $packageFares = [
@@ -290,6 +300,67 @@ class SoapController extends Controller
                 break;
             }
         }
+    }
+
+    public static function mapearDesdeExterno(array $datosExternos)
+    {
+        return Paquete::updateOrCreate([
+            'paquete_externo_id' => $datosExternos['Package']['Code'] ?? null,
+            'fecha_modificacion' => now(), // Current timestamp since modified_date isn't in the JSON
+            'usuario' => 'Ola',
+            'usuario_id' => null, // Not present in JSON
+            'pais' => 'Argentina', // From ArrivalCountry in flight data
+            'ciudad' => $datosExternos['Package']['Name'] ?? null, // "SALTA" from Package Name
+            'ciudad_iata' => 'SLA', // From ArrivalAirport code (extracted from "AEROP. INTL. MARTíN M. DE GüEMES")
+            'fecha_vigencia_desde' => isset($datosExternos['Flight']['VencimientoEmision'])
+                ? Carbon::parse($datosExternos['Flight']['VencimientoEmision'])
+                : null,
+            'fecha_vigencia_hasta' => isset($datosExternos['Flight']['VencimientoNomina'])
+                ? Carbon::parse($datosExternos['Flight']['VencimientoNomina'])
+                : null,
+            'titulo' => $datosExternos['Package']['Name'] ?? null, // "SALTA"
+            'cant_noches' => $datosExternos['Package']['Nights'] ?? 0, // "5"
+            'tipo_producto' => $datosExternos['Package']['Type'] ?? 'Paquete estándar', // "PKG"
+            'componentes' => [
+                'vuelo' => [
+                    'aerolinea' => $datosExternos['Flight']['Supplier']['Name'] ?? null,
+                    'numero_vuelo' => $datosExternos['Flight']['Trips']['Trip'][0]['Segments']['Segment']['FlightNumber'] ?? null,
+                    'clase' => $datosExternos['Flight']['Trips']['Trip'][0]['Segments']['Segment']['FlightClass'] ?? null,
+                    'fecha_salida' => $datosExternos['Flight']['Trips']['Trip'][0]['DepartureDate'] ?? null,
+                    'fecha_regreso' => $datosExternos['Flight']['Trips']['Trip'][1]['DepartureDate'] ?? null
+                ],
+                'hotel' => [
+                    'nombre' => $datosExternos['Descriptions']['Description']['Name'] ?? null,
+                    'categoria' => $datosExternos['Descriptions']['Description']['HotelClass'] ?? null,
+                    'tipo_habitacion' => $datosExternos['Descriptions']['Description']['FareDescriptions']['FareDescription'][0] ?? null,
+                    'regimen' => $datosExternos['Descriptions']['Description']['FareDescriptions']['FareDescription'][1] ?? null
+                ],
+                'traslados' => [
+                    'llegada' => $datosExternos['Paxs']['Pax'][0]['FareComponents']['FareComponent'][2]['Name'] ?? null,
+                    'salida' => $datosExternos['Paxs']['Pax'][0]['FareComponents']['FareComponent'][3]['Name'] ?? null
+                ],
+                'excursiones' => [
+                    $datosExternos['Paxs']['Pax'][0]['FareComponents']['FareComponent'][4]['Name'] ?? null
+                ]
+            ],
+            'categorias' => [], // Not present in JSON
+            'tipo_moneda' => $datosExternos['FareTotal']['Currency'] ?? 'ARS', // "ARS"
+            'activo' => true, // Assuming active if we're processing it
+            'imagen_principal' => $datosExternos['Descriptions']['Description']['Pictures']['Picture'][0] ?? null,
+            'galeria_imagenes' => $datosExternos['Descriptions']['Description']['Pictures']['Picture'] ?? [],
+            'edad_menores' => 12, // Default value since not specified
+            'transporte' => 'Aéreo', // From flight data
+            'hoteles' => [
+                [
+                    'nombre' => $datosExternos['Descriptions']['Description']['Name'] ?? null,
+                    'categoria' => $datosExternos['Descriptions']['Description']['HotelClass'] ?? null,
+                    'direccion' => null, // Not present in JSON
+                    'imagenes' => $datosExternos['Descriptions']['Description']['Pictures']['Picture'] ?? []
+                ]
+            ],
+            'descripcion' => $datosExternos['Descriptions']['Description']['Description'] ?? '',
+            'descuento' => 0.00 // No discount information in JSON
+        ]);
     }
 
     private function readNextValue($reader, $tagName)
