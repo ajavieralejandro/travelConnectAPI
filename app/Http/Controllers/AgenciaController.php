@@ -93,6 +93,8 @@ public function store(Request $request)
             "footer_direccion" => "nullable|string",
             "footer_ciudad" => "nullable|string",
             "footer_pais" => "nullable|string",
+            "fondo_1" => "required|mimes:jpeg,png,mp4,mov,avi|max:51200", // Hasta 50MB, admite imagen o video
+"logo" => "required|image|mimes:jpeg,png,svg|max:10240"
         ]);
 
 
