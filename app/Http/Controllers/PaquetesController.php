@@ -8,6 +8,7 @@ use App\Models\Paquete;
 use App\Models\Salida;
 use App\Models\PaqueteJulia;
 use Carbon\Carbon;
+use App\Http\Providers\JuliaServiceProvider;
 
 class PaquetesController extends Controller
 {
@@ -41,15 +42,23 @@ class PaquetesController extends Controller
         ]);
     }
 
-    private function importarDesdeJulia()
+    private function importarDesdeJulia(Request $request)
     {
-        // Lógica específica para importar desde Julia
-        return 'Importación desde Julia ejecutada';
+        try {
+            $response = $this->juliaService->enviarPaquetes($request);
+            return response()->json($response);
+        } catch (\Exception $e) {
+            Log::error('Error en enviarPaquetes:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'error' => 'Error al enviar paquetes',
+                'message' => $e->getMessage()
+            ], 500);}
     }
 
     private function importarDesdeOtraAPI()
     {
         // Lógica específica para otra API
+
         return 'Importación desde otra API ejecutada';
     }
 

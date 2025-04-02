@@ -57,7 +57,9 @@ Route::get('/tenant-check', function () {
 
 Route::post('/search-hotels-2', [HotelTravelGate::class, 'searchHotelsGeo'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
+//Agencias
 Route::get('/agencia',[AgenciaController::class,'getAgencia'])->name('agencia.get');
+Route::get('/agencias',[AgenciaController::class,'index'])->name('agencia.index');
 
 Route::get('/seasons', [AllSeasonsController::class, 'getSeasons']);
 Route::post('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPorDestino'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
