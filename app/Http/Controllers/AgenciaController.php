@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Agencia;
 use App\Models\Tenant;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+
 
 class AgenciaController extends Controller
 {
