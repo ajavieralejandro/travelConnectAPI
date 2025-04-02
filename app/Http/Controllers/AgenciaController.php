@@ -121,6 +121,8 @@ public function store(Request $request)
         if ($request->hasFile('logo')) {
             $data['logo'] = $request->file('logo')->store($folderPath, 'public');
         }
+
+        return response()->json($request->hash_file('fondo_1'));
         try {
             if (!$request->hasFile('fondo_1')) {
                 \Log::error('No se recibió fondo_1 en la petición');
