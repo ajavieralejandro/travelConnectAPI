@@ -125,6 +125,7 @@ public function store(Request $request)
         try {
             if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
                 $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
+                return response()->json($data['fondo_1']);
             } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
                 $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
             }
