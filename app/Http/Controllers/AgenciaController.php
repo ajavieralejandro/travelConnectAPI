@@ -29,7 +29,7 @@ public function store(Request $request)
             'estado' => 'required|boolean',
             'nombre' => 'required|string|max:255',
             'password' => 'required|string|min:6',
-            'dominio' => 'required|string|unique:tenants,dominio',
+            'dominio' => 'required|string|unique:tenants,subdomain',
 
             // Textos opcionales
             'quienes_somos_es' => 'nullable|string',
@@ -279,7 +279,7 @@ public function store(Request $request)
 
             return response()->json($response);
         }
-        return response()->json($agencia['fondo_1']);
+
         if (!empty($agencia['fondo_1'])) {
             // Construir la ruta relativa en storage
             $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['fondo_1']}";
