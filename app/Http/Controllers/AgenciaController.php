@@ -34,7 +34,7 @@ public function store(Request $request)
             }
         }
 
-        return response()->json($request->has_file('fondo_1'));
+        return response()->json($request->hasFile('fondo_1'));
 
 
         DB::beginTransaction(); // Inicia la transacción
