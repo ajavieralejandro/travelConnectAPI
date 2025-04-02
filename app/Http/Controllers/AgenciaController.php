@@ -18,96 +18,84 @@ class AgenciaController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        try {
-            DB::beginTransaction(); // Inicia la transacción
 
-            // Validar los datos de la solicitud
-            $data = $request->validate([
-                'subdomain' => 'required|string|unique:tenants,subdomain',
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|unique:users,email',
-                'password' => 'required|string|min:6',
-                'estado' => 'required|boolean',
-                'color_principal' => 'required|string',
-                'color_secundario' => 'required|string',
-                'color_barra_superior' => 'required|string',
-                'filtro_imagen_1' => 'required|boolean',
-                'filtro_imagen_2' => 'required|boolean',
-                'nombre_de_contacto' => 'required|string',
-                'direccion' => 'required|string',
-                'whatsapp' => 'required|string',
-                'telefono' => 'required|string',
-                'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'fondo_1' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:51200', // 50MB máximo
-                'fondo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+public function store(Request $request)
+{
+    try {
+        DB::beginTransaction(); // Inicia la transacción
 
-            // Crear el tenant
-            $tenant = Tenant::create([
-                'subdomain' => $request->subdomain,
-                'template' => 'default', // Personalizable
-            ]);
+        // Validar los datos de la solicitud
+        $data = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+            'dominio' => 'required|string|unique:tenants,dominio',
+            'estado' => 'required|boolean',
+            'color_principal' => 'required|string',
+            'color_barra_superior' => 'required|string',
+            'filtro_imagen_1' => 'required|boolean',
+            'filtro_imagen_2' => 'required|boolean',
+            'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'fondo_1' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:51200', // 50MB máximo
+            'fondo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-            // Crear el usuario asociado al tenant
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'tenant_id' => $tenant->id,
-            ]);
+        // Crear el tenant
+        $tenant = Tenant::create([
+            'dominio' => $request->dominio,
+            'estado' => $request->estado,
+        ]);
 
-            // Asociar el tenant al request
-            $data['tenant_id'] = $tenant->id;
-            $nombreAgencia = $request->name;
+        // Crear el usuario asociado al tenant
+        $user = User::create([
+            'nombre' => $request->nombre,
+            'password' => Hash::make($request->password),
+            'tenant_id' => $tenant->id,
+        ]);
 
-            // Crear la subcarpeta con el nombre de la agencia si no existe
-            $folderPath = 'agencias/' . $nombreAgencia;
-            Storage::disk('public')->makeDirectory($folderPath);
+        // Asociar el tenant al request
+        $data['tenant_id'] = $tenant->id;
+        $nombreAgencia = $request->nombre;
 
-            // Subir imágenes y videos si existen
-            if ($request->hasFile('favicon')) {
-                $data['favicon'] = $request->file('favicon')->store($folderPath, 'public');
-            }
+        // Crear la subcarpeta con el nombre de la agencia si no existe
+        $folderPath = 'agencias/' . $nombreAgencia;
+        Storage::disk('public')->makeDirectory($folderPath);
 
-            if ($request->hasFile('logo')) {
-                $data['logo'] = $request->file('logo')->store($folderPath, 'public');
-            }
-
-            if ($request->hasFile('fondo_1')) {
-                $file = $request->file('fondo_1');
-                $extension = $file->getClientOriginalExtension();
-
-                // Determinar si es imagen o video y almacenarlo
-                if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
-                    $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
-                } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
-                    $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
-                }
-            }
-
-            if ($request->hasFile('fondo_2')) {
-                $data['fondo_2'] = $request->file('fondo_2')->store($folderPath, 'public');
-            }
-
-            $data['nombre'] = $data['name'];
-            $data['dominio'] = $data['subdomain'];
-            $data['mail'] = $data['email'];
-
-            // Crear la agencia con los datos procesados
-            $agencia = Agencia::create($data);
-
-            DB::commit(); // Confirma la transacción
-            return redirect()->route('admin.dashboard')->with('success', 'Agencia y Tenant creados exitosamente.');
-
-        } catch (\Exception $e) {
-            DB::rollBack(); // Revierte la transacción en caso de error
-            dd("Error al guardar la agencia y el tenant: " . $e->getMessage());
+        // Subir imágenes y videos si existen
+        if ($request->hasFile('favicon')) {
+            $data['favicon'] = $request->file('favicon')->store($folderPath, 'public');
         }
-    }
 
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store($folderPath, 'public');
+        }
+
+        if ($request->hasFile('fondo_1')) {
+            $file = $request->file('fondo_1');
+            $extension = $file->getClientOriginalExtension();
+
+            // Determinar si es imagen o video y almacenarlo
+            if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
+                $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
+            } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
+                $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
+            }
+        }
+
+        if ($request->hasFile('fondo_2')) {
+            $data['fondo_2'] = $request->file('fondo_2')->store($folderPath, 'public');
+        }
+
+        // Crear la agencia con los datos procesados
+        $agencia = Agencia::create($data);
+
+        DB::commit(); // Confirma la transacción
+        return redirect()->route('admin.dashboard')->with('success', 'Agencia y Tenant creados exitosamente.');
+    } catch (\Exception $e) {
+        DB::rollBack(); // Revierte la transacción en caso de error
+        return back()->with('error', 'Error al guardar la agencia y el tenant: ' . $e->getMessage());
+    }
+}
 
 
     public function getAgencia(Request $request){
