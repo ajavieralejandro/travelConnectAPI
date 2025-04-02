@@ -122,17 +122,24 @@ public function store(Request $request)
             $data['logo'] = $request->file('logo')->store($folderPath, 'public');
         }
 
-        if ($request->hasFile('fondo_1')) {
-            $file = $request->file('fondo_1');
-            $extension = $file->getClientOriginalExtension();
-
-            // Determinar si es imagen o video y almacenarlo
+        try {
             if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
                 $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
             } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
                 $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
             }
+
+            return response()->json(['success' => true, 'path' => $data['fondo_1']]);
+        } catch (\Exception $e) {
+            \Log::error('Error al subir fondo_1: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al subir el archivo',
+                'error' => $e->getMessage()
+            ]);
         }
+
 
         if ($request->hasFile('fondo_2')) {
             $data['fondo_2'] = $request->file('fondo_2')->store($folderPath, 'public');
