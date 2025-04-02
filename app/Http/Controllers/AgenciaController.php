@@ -26,7 +26,7 @@ public function store(Request $request)
     try {
         DB::beginTransaction(); // Inicia la transacción
 
-        $data = json_decode($request->input('data'), true); // Decodificar JSON
+        $data = json_decode($request->data, true); // Decodificar JSON
         return response()->json($data);
     // Validar que 'data' exista y que los archivos sean correctos
     $request->validate([
