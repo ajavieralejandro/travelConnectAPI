@@ -121,16 +121,39 @@ public function store(Request $request)
         if ($request->hasFile('logo')) {
             $data['logo'] = $request->file('logo')->store($folderPath, 'public');
         }
-
         try {
-            if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
-                $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
-                return response()->json($data['fondo_1']);
-            } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
-                $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
+            if (!$request->hasFile('fondo_1')) {
+                \Log::error('No se recibió fondo_1 en la petición');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No se encontró el archivo fondo_1 en la petición'
+                ]);
             }
 
-            return response()->json(['success' => true, 'path' => $data['fondo_1']]);
+            $file = $request->file('fondo_1');
+            $extension = strtolower($file->getClientOriginalExtension());
+
+            \Log::info('Extensión detectada: ' . $extension);
+
+            if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
+                $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
+            } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
+                $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
+            } else {
+                \Log::error('Extensión no permitida: ' . $extension);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Tipo de archivo no permitido',
+                    'extension' => $extension
+                ]);
+            }
+
+            \Log::info('Archivo guardado en: ' . $data['fondo_1']);
+
+            return response()->json([
+                'success' => true,
+                'path' => $data['fondo_1']
+            ]);
         } catch (\Exception $e) {
             \Log::error('Error al subir fondo_1: ' . $e->getMessage());
 
@@ -140,7 +163,6 @@ public function store(Request $request)
                 'error' => $e->getMessage()
             ]);
         }
-
 
         if ($request->hasFile('fondo_2')) {
             $data['fondo_2'] = $request->file('fondo_2')->store($folderPath, 'public');
