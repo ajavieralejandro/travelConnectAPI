@@ -39,7 +39,7 @@ public function store(Request $request)
             "estado" => "required|boolean",
             "nombre" => "required|string|max:255",
             "password" => "required|string|min:8",
-            "dominio" => "required|string|unique:tenants,dominio|max:255",
+            "dominio" => "required|string|unique:tenants,subdomain|max:255",
             "quienes_somos_es" => "nullable|string",
             "quienes_somos_en" => "nullable|string",
             "quienes_somos_pt" => "nullable|string",
