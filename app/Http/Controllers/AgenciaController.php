@@ -24,20 +24,31 @@ class AgenciaController extends Controller
 public function store(Request $request)
 {
     try {
+        $booleanFields = [
+            'estado', 'filtro_imagen_1', 'filtro_imagen_2', 'publicidad_existe'
+        ];
+
+        foreach ($booleanFields as $field) {
+            if ($request->has($field)) {
+                $request->merge([$field => filter_var($request->input($field), FILTER_VALIDATE_BOOLEAN)]);
+            }
+        }
+
         DB::beginTransaction(); // Inicia la transacción
         $data = $request->validate([
             "estado" => "required|boolean",
             "nombre" => "required|string|max:255",
             "password" => "required|string|min:8",
-            "dominio" => "required|string|unique:empresas,dominio|max:255",
+            "dominio" => "required|string|unique:tenants,dominio|max:255",
             "quienes_somos_es" => "nullable|string",
             "quienes_somos_en" => "nullable|string",
             "quienes_somos_pt" => "nullable|string",
-            "color_principal" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
             "color_barra_superior" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
             "filtro_imagen_1" => "required|boolean",
             "filtro_imagen_2" => "required|boolean",
             "tipografia_agencia" => "nullable|string",
+            "color_principal" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
             "color_tipografia_agencia" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
             "color_fondo_app" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
             "color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
