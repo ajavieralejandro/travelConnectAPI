@@ -34,8 +34,6 @@ public function store(Request $request)
             }
         }
 
-        return response()->json($request);
-
 
         DB::beginTransaction(); // Inicia la transacción
         $data = $request->validate([
@@ -181,6 +179,60 @@ public function store(Request $request)
         return response()->json($e->getmessage());
         DB::rollBack(); // Revierte la transacción en caso de error
         return back()->with('error', 'Error al guardar la agencia y el tenant: ' . $e->getMessage());
+    }
+}
+
+public function guardarVideo(Request $request)
+{
+    // Validar que se haya enviado un archivo
+    if (!$request->hasFile('fondo_1')) {
+        Log::error('No se recibió fondo_1 en la petición');
+        return response()->json([
+            'success' => false,
+            'message' => 'No se encontró el archivo fondo_1 en la petición'
+        ], 400);
+    }
+
+    // Obtener el nombre de la agencia (asegurar que venga en la solicitud)
+    $nombreAgencia = $request->input('nombre_agencia');
+    if (!$nombreAgencia) {
+        return response()->json([
+            'success' => false,
+            'message' => 'El nombre de la agencia es requerido'
+        ], 400);
+    }
+
+    // Crear la carpeta de la agencia si no existe
+    $folderPath = 'agencias/' . $nombreAgencia;
+    Storage::disk('public')->makeDirectory($folderPath);
+
+    try {
+        $file = $request->file('fondo_1');
+        $extension = strtolower($file->getClientOriginalExtension());
+        Log::info('Extensión detectada: ' . $extension);
+
+        if (in_array($extension, ['mp4', 'mov', 'avi'])) {
+            $path = $file->store($folderPath . '/videos', 'public');
+            return response()->json([
+                'success' => true,
+                'message' => 'Video subido correctamente',
+                'path' => $path
+            ]);
+        } else {
+            Log::error('Extensión no permitida: ' . $extension);
+            return response()->json([
+                'success' => false,
+                'message' => 'Tipo de archivo no permitido',
+                'extension' => $extension
+            ], 400);
+        }
+    } catch (\Exception $e) {
+        Log::error('Error al subir fondo_1: ' . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'Error al subir el archivo',
+            'error' => $e->getMessage()
+        ], 500);
     }
 }
 
