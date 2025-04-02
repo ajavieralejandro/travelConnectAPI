@@ -19,7 +19,7 @@ class Agencia extends Model
         'filtro_imagen_1', 'filtro_imagen_2',
         'facebook', 'instagram', 'twitter', 'youtube', 'linkedin',
         'nombre_de_contacto', 'direccion', 'whatsapp', 'mail', 'telefono',
-        'info_contacto_es', 'info_contacto_en', 'info_contacto_pt'
+        'info_contacto_es', 'info_contacto_en', 'info_contacto_pt','publicidad_existe'
     ];
 
     protected $hidden = ['password'];

@@ -34,7 +34,7 @@ Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name(
 Route::get('/create_agencia',[AgenciaController::class,'createAgencia'])->name('agencias.create');
 Route::get('/destinos',[HotelTravelGate::class,'getAllDestinations'])->name('hotel.destinations');
 
-Route::post('/store_agencia',[AgenciaController::class,'store'])->name('agencias.store');
+Route::post('/store_agencia',[AgenciaController::class,'store'])->name('agencias.store')->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 Route::get('/create_paquete',[PaqueteAgenciaController::class,'create'])->name('paquete.create');
 
 Route::middleware('is_admin')->group(function () {

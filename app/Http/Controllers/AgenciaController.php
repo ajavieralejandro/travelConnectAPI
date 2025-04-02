@@ -26,32 +26,99 @@ public function store(Request $request)
 
         // Validar los datos de la solicitud
         $data = $request->validate([
+            'estado' => 'required|boolean',
             'nombre' => 'required|string|max:255',
             'password' => 'required|string|min:6',
             'dominio' => 'required|string|unique:tenants,dominio',
-            'estado' => 'required|boolean',
+
+            // Textos opcionales
+            'quienes_somos_es' => 'nullable|string',
+            'quienes_somos_en' => 'nullable|string',
+            'quienes_somos_pt' => 'nullable|string',
+
+            // Configuración de colores y diseño
             'color_principal' => 'required|string',
             'color_barra_superior' => 'required|string',
             'filtro_imagen_1' => 'required|boolean',
             'filtro_imagen_2' => 'required|boolean',
+            'tipografia_agencia' => 'nullable|string',
+            'color_tipografia_agencia' => 'nullable|string',
+            'color_fondo_app' => 'nullable|string',
+            'color_primario' => 'nullable|string',
+            'color_secundario' => 'nullable|string',
+            'color_terciario' => 'nullable|string',
+
+            // Header
+            'header_imagen_background' => 'nullable|string',
+            'header_imagen_background_opacidad' => 'nullable|numeric|min:0|max:1',
+            'header_video_background' => 'nullable|string',
+            'header_video_background_opacidad' => 'nullable|numeric|min:0|max:1',
+
+            // Buscador
+            'buscador_tipografia' => 'nullable|string',
+            'buscador_tipografia_color' => 'nullable|string',
+            'buscador_tipografia_color_label' => 'nullable|string',
+            'buscador_color_primario' => 'nullable|string',
+            'buscador_color_secundario' => 'nullable|string',
+            'buscador_color_terciario' => 'nullable|string',
+
+            // Publicidad
+            'publicidad_existe' => 'required|boolean',
+            'publicidad_titulo' => 'nullable|string',
+            'publicidad_tipografia_color' => 'nullable|string',
+            'publicidad_color_primario' => 'nullable|string',
+            'publicidad_color_secundario' => 'nullable|string',
+            'publicidad_color_terciario' => 'nullable|string',
+
+            // Tarjetas
+            'tarjetas_titulo' => 'nullable|string',
+            'tarjetas_tipografia' => 'nullable|string',
+            'tarjetas_tipografia_color' => 'nullable|string',
+            'tarjetas_tipografia_color_titulo' => 'nullable|string',
+            'tarjetas_tipografia_color_contenido' => 'nullable|string',
+            'tarjetas_color_primario' => 'nullable|string',
+            'tarjetas_color_secundario' => 'nullable|string',
+            'tarjetas_color_terciario' => 'nullable|string',
+
+            // Banner de Registro
+            'banner_registro_titulo' => 'nullable|string',
+            'banner_registro_tipografia_color' => 'nullable|string',
+            'banner_registro_color_primario' => 'nullable|string',
+            'banner_registro_color_secundario' => 'nullable|string',
+            'banner_registro_color_terciario' => 'nullable|string',
+
+            // Footer
+            'footer_texto' => 'nullable|string',
+            'footer_tipografia' => 'nullable|string',
+            'footer_tipografia_color' => 'nullable|string',
+            'footer_color_primario' => 'nullable|string',
+            'footer_color_secundario' => 'nullable|string',
+            'footer_color_terciario' => 'nullable|string',
+            'footer_facebook' => 'nullable|string',
+            'footer_twitter' => 'nullable|string',
+            'footer_instagram' => 'nullable|string',
+            'footer_whatsapp' => 'nullable|string',
+            'footer_telefono' => 'nullable|string',
+            'footer_email' => 'nullable|string|email',
+            'footer_direccion' => 'nullable|string',
+            'footer_ciudad' => 'nullable|string',
+            'footer_pais' => 'nullable|string',
+
+            // Archivos
             'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'fondo_1' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:51200', // 50MB máximo
             'fondo_2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+
+
         // Crear el tenant
         $tenant = Tenant::create([
-            'dominio' => $request->dominio,
+            'subdomain' => $request->dominio,
             'estado' => $request->estado,
         ]);
 
-        // Crear el usuario asociado al tenant
-        $user = User::create([
-            'nombre' => $request->nombre,
-            'password' => Hash::make($request->password),
-            'tenant_id' => $tenant->id,
-        ]);
 
         // Asociar el tenant al request
         $data['tenant_id'] = $tenant->id;
@@ -90,8 +157,9 @@ public function store(Request $request)
         $agencia = Agencia::create($data);
 
         DB::commit(); // Confirma la transacción
-        return redirect()->route('admin.dashboard')->with('success', 'Agencia y Tenant creados exitosamente.');
+        return response()->json($agencia);
     } catch (\Exception $e) {
+        return response()->json($e->getmessage());
         DB::rollBack(); // Revierte la transacción en caso de error
         return back()->with('error', 'Error al guardar la agencia y el tenant: ' . $e->getMessage());
     }
