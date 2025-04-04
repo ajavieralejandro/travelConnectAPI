@@ -44,7 +44,7 @@ Route::middleware('is_admin')->group(function () {
     Route::post('/register', [TenantController::class, 'register']);    });
 
 
-    Route::domain('{subdomain}.localhost')->group(function () {
+    Route::domain('{subdomain}.triptest.com.ar')->group(function () {
         Route::get('/', [TenantController::class, 'show']);
     });
 Route::get('/send-soap-request', [SoapController::class, 'sendSoapRequest']);
