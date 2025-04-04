@@ -76,7 +76,9 @@ class PaquetesController extends Controller
         $destino = $request->input('destino');
         $fechaSalida = $request->input('fechaSalida');
         $viajeros = $request->input('viajeros');
-
+        $id = $request->input('id');
+        if($id)
+            return response()->json(Paquete::find($id));
         // Empezamos la consulta de Paquetes
         $paquetes = Paquete::query();
 

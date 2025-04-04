@@ -33,6 +33,7 @@ Route::get('/geolocation', [GeolocationController::class, 'getCoordinates']);
 Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/create_agencia',[AgenciaController::class,'createAgencia'])->name('agencias.create');
 Route::get('/destinos',[HotelTravelGate::class,'getAllDestinations'])->name('hotel.destinations');
+Route::post('/video_agencia',[AgenciaController::class,'guardarVideo'])->name('agencias.video')->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 
 Route::post('/store_agencia',[AgenciaController::class,'store'])->name('agencias.store')->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 Route::get('/create_paquete',[PaqueteAgenciaController::class,'create'])->name('paquete.create');
@@ -60,6 +61,7 @@ Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
 //Agencias
 Route::get('/agencia',[AgenciaController::class,'getAgencia'])->name('agencia.get');
 Route::get('/agencias',[AgenciaController::class,'index'])->name('agencia.index');
+Route::delete('/agencias/{id}', [AgenciaController::class, 'destroy'])->name('agencias.destroy')->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);;
 
 Route::get('/seasons', [AllSeasonsController::class, 'getSeasons']);
 Route::post('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPorDestino'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);

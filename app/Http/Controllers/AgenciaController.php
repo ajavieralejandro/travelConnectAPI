@@ -33,7 +33,7 @@ public function store(Request $request)
                 $request->merge([$field => filter_var($request->input($field), FILTER_VALIDATE_BOOLEAN)]);
             }
         }
-
+        return response()->json($request);
 
         DB::beginTransaction(); // Inicia la transacción
         $data = $request->validate([
@@ -380,9 +380,35 @@ public function guardarVideo(Request $request)
         return view('admin.create_agencia');
     }
 
-    public function destroy(Agencia $agencia)
+    public function destroy($id)
     {
-        $agencia->delete();
-        return response()->json(['message' => 'Agencia eliminada']);
+        try {
+            DB::beginTransaction();
+
+            // 1. Encontrar la agencia
+            $agencia = Agencia::findOrFail($id);
+
+            // 2. Encontrar y eliminar el tenant asociado
+            $tenant = Tenant::where('subdomain','=',$agencia->domain)->first();
+
+            if ($tenant) {
+                // Eliminar base de datos del tenant (si aplica)
+                //$tenant->database()->manager()->deleteDatabase($tenant);
+
+                // Eliminar tenant
+                $tenant->delete();
+            }
+
+            // 3. Eliminar la agencia
+            $agencia->delete();
+
+            DB::commit();
+
+            return response()->json(['message' => 'Agencia y tenant eliminados correctamente']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
