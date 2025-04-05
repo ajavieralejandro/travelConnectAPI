@@ -21,167 +21,147 @@ class AgenciaController extends Controller
 
 
 
-public function store(Request $request)
-{
-    try {
-        $booleanFields = [
-            'estado', 'filtro_imagen_1', 'filtro_imagen_2', 'publicidad_existe'
-        ];
-
-        foreach ($booleanFields as $field) {
-            if ($request->has($field)) {
-                $request->merge([$field => filter_var($request->input($field), FILTER_VALIDATE_BOOLEAN)]);
-            }
-        }
-        return response()->json($request);
-
-        DB::beginTransaction(); // Inicia la transacción
-        $data = $request->validate([
-            "estado" => "required|boolean",
-            "nombre" => "required|string|max:255",
-            "password" => "required|string|min:8",
-            "dominio" => "required|string|unique:tenants,subdomain|max:255",
-            "quienes_somos_es" => "nullable|string",
-            "quienes_somos_en" => "nullable|string",
-            "quienes_somos_pt" => "nullable|string",
-            "color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_barra_superior" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "filtro_imagen_1" => "boolean",
-            "filtro_imagen_2" => "boolean",
-            "tipografia_agencia" => "nullable|string",
-            "color_principal" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_tipografia_agencia" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_fondo_app" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "header_imagen_background_opacidad" => "numeric|between:0,1",
-            "header_video_background_opacidad" => "numeric|between:0,1",
-            "buscador_tipografia" => "nullable|string",
-            "buscador_tipografia_color" => "
-            string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_tipografia_color_label" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_existe" => "boolean",
-            "publicidad_titulo" => "nullable|string",
-            "publicidad_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_titulo" => "nullable|string",
-            "tarjetas_tipografia" => "nullable|string",
-            "tarjetas_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_tipografia_color_titulo" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_tipografia_color_contenido" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "banner_registro_titulo" => "nullable|string",
-            "banner_registro_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "banner_registro_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "banner_registro_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "banner_registro_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "footer_texto" => "nullable|string",
-            "footer_tipografia" => "nullable|string",
-            "footer_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "footer_facebook" => "nullable|string",
-            "footer_twitter" => "nullable|string",
-            "footer_instagram" => "nullable|string",
-            "footer_whatsapp" => "nullable|string",
-            "footer_telefono" => "nullable|string",
-            "footer_email" => "nullable|email",
-            "footer_direccion" => "nullable|string",
-            "footer_ciudad" => "nullable|string",
-            "footer_pais" => "nullable|string",
-            "fondo_1" => "mimes:jpeg,png,mp4,mov,avi|max:51200", // Hasta 50MB, admite imagen o video
-"logo" => "image|mimes:jpeg,png,svg|max:10240"
-        ]);
-
-
-        // Crear el tenant
-        $tenant = Tenant::create([
-            'subdomain' => $request->dominio,
-            'estado' => $request->estado,
-        ]);
-
-
-        // Asociar el tenant al request
-        $data['tenant_id'] = $tenant->id;
-        $nombreAgencia = $request->nombre;
-
-        // Crear la subcarpeta con el nombre de la agencia si no existe
-        $folderPath = 'agencias/' . $nombreAgencia;
-        Storage::disk('public')->makeDirectory($folderPath);
-
-        // Subir imágenes y videos si existen
-        if ($request->hasFile('favicon')) {
-            $data['favicon'] = $request->file('favicon')->store($folderPath, 'public');
-        }
-
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store($folderPath, 'public');
-        }
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
 
         try {
-            if (!$request->hasFile('fondo_1')) {
-                \Log::error('No se recibió fondo_1 en la petición');
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No se encontró el archivo fondo_1 en la petición'
-                ]);
+            // Parseo booleanos
+            $booleanFields = ['estado', 'filtro_imagen_1', 'filtro_imagen_2', 'publicidad_existe'];
+            foreach ($booleanFields as $field) {
+                if ($request->has($field)) {
+                    $request->merge([$field => filter_var($request->input($field), FILTER_VALIDATE_BOOLEAN)]);
+                }
             }
 
-            $file = $request->file('fondo_1');
-            $extension = strtolower($file->getClientOriginalExtension());
+            $data = $request->validate([
+                // Requeridos
+                "estado" => "required|boolean",
+                "nombre" => "required|string|max:255",
+                "password" => "required|string|min:8",
+                "dominio" => "required|string|unique:tenants,subdomain|max:255",
+                "logo" => "required|image|mimes:jpeg,png,svg|max:10240", // 10MB
 
-            \Log::info('Extensión detectada: ' . $extension);
+                // Opcionales y colores
+                "quienes_somos_es" => "nullable|string",
+                "quienes_somos_en" => "nullable|string",
+                "quienes_somos_pt" => "nullable|string",
 
-            if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
-                $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
-            } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
-                $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
-            } else {
-                \Log::error('Extensión no permitida: ' . $extension);
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Tipo de archivo no permitido',
-                    'extension' => $extension
-                ]);
-            }
+                "color_primario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "color_barra_superior" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "color_principal" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "color_tipografia_agencia" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "color_fondo_app" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "color_secundario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "color_terciario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
 
-            \Log::info('Archivo guardado en: ' . $data['fondo_1']);
+                // Booleanos
+                "filtro_imagen_1" => "boolean",
+                "filtro_imagen_2" => "boolean",
+                "publicidad_existe" => "boolean",
 
-            return response()->json([
-                'success' => true,
-                'path' => $data['fondo_1']
+                // Header
+                "header_imagen_background_opacidad" => "nullable|numeric|between:0,1",
+                "header_video_background_opacidad" => "nullable|numeric|between:0,1",
+
+                // Tipografía
+                "tipografia_agencia" => "nullable|string",
+                "buscador_tipografia" => "nullable|string",
+
+                // Colores del buscador
+                "buscador_tipografia_color" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "buscador_tipografia_color_label" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "buscador_color_primario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "buscador_color_secundario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "buscador_color_terciario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+
+                // Publicidad
+                "publicidad_titulo" => "nullable|string",
+                "publicidad_tipografia_color" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "publicidad_color_primario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "publicidad_color_secundario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "publicidad_color_terciario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+
+                // Tarjetas
+                "tarjetas_titulo" => "nullable|string",
+                "tarjetas_tipografia" => "nullable|string",
+                "tarjetas_tipografia_color" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "tarjetas_tipografia_color_titulo" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "tarjetas_tipografia_color_contenido" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "tarjetas_color_primario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "tarjetas_color_secundario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "tarjetas_color_terciario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+
+                // Banner de registro
+                "banner_registro_titulo" => "nullable|string",
+                "banner_registro_tipografia_color" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "banner_registro_color_primario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "banner_registro_color_secundario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "banner_registro_color_terciario" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+
+                // Footer
+                "footer_texto" => "nullable|string",
+                "footer_tipografia" => "nullable|string",
+                "footer_tipografia_color" => "nullable|string|regex:/^#[A-Fa-f0-9]{6}$/",
+                "footer_facebook" => "nullable|string",
+                "footer_twitter" => "nullable|string",
+                "footer_instagram" => "nullable|string",
+                "footer_whatsapp" => "nullable|string",
+                "footer_telefono" => "nullable|string",
+                "footer_email" => "nullable|email",
+                "footer_direccion" => "nullable|string",
+                "footer_ciudad" => "nullable|string",
+                "footer_pais" => "nullable|string",
+
+                // Archivos multimedia
+                "fondo_1" => "nullable|mimes:jpeg,png,mp4,mov,avi|max:51200", // 50MB imagen o video
+                "favicon" => "nullable|image|mimes:jpeg,png,svg|max:5120", // 5MB
+                "fondo_2" => "nullable|mimes:jpeg,png,mp4,mov,avi|max:51200",
             ]);
+
+            // Crear Tenant
+            $tenant = Tenant::create([
+                'subdomain' => $request->dominio,
+                'estado' => $request->estado,
+            ]);
+            $data['tenant_id'] = $tenant->id;
+
+            // Crear carpeta
+            $folderPath = 'agencias/' . $request->nombre;
+            Storage::disk('public')->makeDirectory($folderPath);
+
+            // Subir archivos
+            if ($request->hasFile('favicon')) {
+                $data['favicon'] = $request->file('favicon')->store($folderPath, 'public');
+            }
+            if ($request->hasFile('logo')) {
+                $data['logo'] = $request->file('logo')->store($folderPath, 'public');
+            }
+            if ($request->hasFile('fondo_1')) {
+                $file = $request->file('fondo_1');
+                $extension = strtolower($file->getClientOriginalExtension());
+
+                if (in_array($extension, ['jpeg', 'png', 'jpg', 'gif'])) {
+                    $data['fondo_1'] = $file->store($folderPath . '/imagenes', 'public');
+                } elseif (in_array($extension, ['mp4', 'mov', 'avi'])) {
+                    $data['fondo_1'] = $file->store($folderPath . '/videos', 'public');
+                } else {
+                    throw new \Exception("Tipo de archivo no permitido: $extension");
+                }
+            }
+
+            // Crear agencia
+            $agencia = Agencia::create($data);
+
+            DB::commit();
+            return response()->json($agencia);
+
         } catch (\Exception $e) {
-            \Log::error('Error al subir fondo_1: ' . $e->getMessage());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al subir el archivo',
-                'error' => $e->getMessage()
-            ]);
+            DB::rollBack();
+            \Log::error('Error al crear agencia: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        if ($request->hasFile('fondo_2')) {
-            $data['fondo_2'] = $request->file('fondo_2')->store($folderPath, 'public');
-        }
-
-        // Crear la agencia con los datos procesados
-        $agencia = Agencia::create($data);
-
-        DB::commit(); // Confirma la transacción
-        return response()->json($agencia);
-    } catch (\Exception $e) {
-        return response()->json($e->getmessage());
-        DB::rollBack(); // Revierte la transacción en caso de error
-        return back()->with('error', 'Error al guardar la agencia y el tenant: ' . $e->getMessage());
     }
-}
 
 public function guardarVideo(Request $request)
 {
