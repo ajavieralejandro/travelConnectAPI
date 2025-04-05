@@ -44,47 +44,48 @@ public function store(Request $request)
             "quienes_somos_es" => "nullable|string",
             "quienes_somos_en" => "nullable|string",
             "quienes_somos_pt" => "nullable|string",
-            "color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_barra_superior" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "filtro_imagen_1" => "required|boolean",
-            "filtro_imagen_2" => "required|boolean",
+            "color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "color_barra_superior" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "filtro_imagen_1" => "boolean",
+            "filtro_imagen_2" => "boolean",
             "tipografia_agencia" => "nullable|string",
-            "color_principal" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_tipografia_agencia" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_fondo_app" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_secundario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "color_terciario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "header_imagen_background_opacidad" => "required|numeric|between:0,1",
-            "header_video_background_opacidad" => "required|numeric|between:0,1",
+            "color_principal" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "color_tipografia_agencia" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "color_fondo_app" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "header_imagen_background_opacidad" => "numeric|between:0,1",
+            "header_video_background_opacidad" => "numeric|between:0,1",
             "buscador_tipografia" => "nullable|string",
-            "buscador_tipografia_color" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_tipografia_color_label" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_color_secundario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "buscador_color_terciario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_existe" => "required|boolean",
+            "buscador_tipografia_color" => "
+            string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "buscador_tipografia_color_label" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "buscador_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "buscador_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "buscador_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "publicidad_existe" => "boolean",
             "publicidad_titulo" => "nullable|string",
-            "publicidad_tipografia_color" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_color_secundario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "publicidad_color_terciario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "publicidad_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "publicidad_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "publicidad_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "publicidad_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
             "tarjetas_titulo" => "nullable|string",
             "tarjetas_tipografia" => "nullable|string",
-            "tarjetas_tipografia_color" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_tipografia_color_titulo" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_tipografia_color_contenido" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_color_secundario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "tarjetas_color_terciario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "tarjetas_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "tarjetas_tipografia_color_titulo" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "tarjetas_tipografia_color_contenido" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "tarjetas_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "tarjetas_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "tarjetas_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
             "banner_registro_titulo" => "nullable|string",
-            "banner_registro_tipografia_color" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "banner_registro_color_primario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "banner_registro_color_secundario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
-            "banner_registro_color_terciario" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "banner_registro_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "banner_registro_color_primario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "banner_registro_color_secundario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "banner_registro_color_terciario" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
             "footer_texto" => "nullable|string",
             "footer_tipografia" => "nullable|string",
-            "footer_tipografia_color" => "required|string|regex:/^#[A-Fa-f0-9]{6}$/",
+            "footer_tipografia_color" => "string|regex:/^#[A-Fa-f0-9]{6}$/",
             "footer_facebook" => "nullable|string",
             "footer_twitter" => "nullable|string",
             "footer_instagram" => "nullable|string",
@@ -94,8 +95,8 @@ public function store(Request $request)
             "footer_direccion" => "nullable|string",
             "footer_ciudad" => "nullable|string",
             "footer_pais" => "nullable|string",
-            "fondo_1" => "required|mimes:jpeg,png,mp4,mov,avi|max:51200", // Hasta 50MB, admite imagen o video
-"logo" => "required|image|mimes:jpeg,png,svg|max:10240"
+            "fondo_1" => "mimes:jpeg,png,mp4,mov,avi|max:51200", // Hasta 50MB, admite imagen o video
+"logo" => "image|mimes:jpeg,png,svg|max:10240"
         ]);
 
 
@@ -236,6 +237,24 @@ public function guardarVideo(Request $request)
     }
 }
 
+    public function getaAgencia(Request $request){
+
+        $agencia = Agencia::where('nombre','=',)->first();
+        if(!$agencia){
+            $agencia = Agencia::all()->first();
+            if (!empty($agencia['fondo_1'])) {
+                // Construir la ruta relativa en storage
+                $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['fondo_1']}";
+                // Generar la URL accesible públicamente
+                $agencia['fondo_1'] = asset("storage/{$customPath}");
+            }
+
+
+            return response()->json($agencia);
+        }
+
+    }
+
 
     public function getAgencia(Request $request){
         $host = $request->getHost(); // Obtiene el host completo (subdominio.dominio.com)
@@ -347,14 +366,12 @@ public function guardarVideo(Request $request)
                     ],
                 ],
             ];
-
             return response()->json($response);
         }
 
         if (!empty($agencia['fondo_1'])) {
             // Construir la ruta relativa en storage
             $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['fondo_1']}";
-            return response()->json(asset("storage/{$customPath}"));
             // Generar la URL accesible públicamente
             $agencia['fondo_1'] = asset("storage/{$customPath}");
         }

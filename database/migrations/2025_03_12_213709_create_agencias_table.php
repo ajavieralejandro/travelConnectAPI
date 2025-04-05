@@ -6,6 +6,33 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
+
+        /**
+         *
+                // === Datos Principales ===
+
+
+                // === Datos Generales ===
+
+                // === Header ===
+
+
+                // === Buscador ===
+
+
+                // === Publicidad Cliente ===
+
+
+
+                // === Tarjetas ===
+
+
+
+
+
+
+
+         */
         Schema::create('agencias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
@@ -20,10 +47,10 @@ return new class extends Migration {
             $table->string('logo')->nullable();
             $table->string('fondo_1')->nullable();
             $table->string('fondo_2')->nullable();
-            $table->string('color_principal');
-            $table->string('color_barra_superior');
-            $table->boolean('filtro_imagen_1');
-            $table->boolean('filtro_imagen_2');
+            $table->string('color_principal')->nullable();
+            $table->string('color_barra_superior')->nullable();
+            $table->boolean('filtro_imagen_1')->nullable();
+            $table->boolean('filtro_imagen_2')->nullable();
 
             // Datos Generales
             $table->string('tipografia_agencia')->nullable();
@@ -46,6 +73,7 @@ return new class extends Migration {
             $table->string('buscador_color_primario')->nullable();
             $table->string('buscador_color_secundario')->nullable();
             $table->string('buscador_color_terciario')->nullable();
+            $table->string('buscador_inputFondoColor')->nullable();
 
             // Publicidad Cliente
             $table->boolean('publicidad_existe');

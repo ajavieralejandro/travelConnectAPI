@@ -102,9 +102,22 @@ class PaquetesController extends Controller
 
             // Filtrar por fecha de salida
             if ($fechaSalida) {
-                $fecha = Carbon::parse($fechaSalida)->startOfDay(); // Obtener solo la fecha (sin hora)
-            $query->whereDate('fecha_desde', '>=', $fecha->toDateString());
+                $fecha = Carbon::parse($fechaSalida)->startOfDay();
+
+                $query->where(function($subQuery) use ($fecha) {
+                    $subQuery->where(function($q) use ($fecha) {
+                        $q->whereNotNull('fecha_viaje')
+                          ->whereDate('fecha_viaje', '>=', $fecha->toDateString());
+                    })
+                    ->orWhere(function($q) use ($fecha) {
+                        $q->whereNull('fecha_viaje')
+                          ->whereDate('fecha_desde', '<=', $fecha->toDateString())
+                          ->whereDate('fecha_hasta', '>=', $fecha->toDateString());
+                    });
+                });
             }
+
+
 
             // Filtro por viajeros y precios correspondientes
             if ($viajeros) {
@@ -135,9 +148,21 @@ class PaquetesController extends Controller
             }
 
             if ($fechaSalida) {
-                $fecha = Carbon::parse($fechaSalida)->startOfDay(); // Obtener solo la fecha (sin hora)
-                $query->whereDate('fecha_desde', '>=', $fecha->toDateString())->orWhereDate('fecha_viaje', '>=', $fecha->toDateString());
+                $fecha = Carbon::parse($fechaSalida)->startOfDay();
+
+                $query->where(function($subQuery) use ($fecha) {
+                    $subQuery->where(function($q) use ($fecha) {
+                        $q->whereNotNull('fecha_viaje')
+                          ->whereDate('fecha_viaje', '>=', $fecha->toDateString());
+                    })
+                    ->orWhere(function($q) use ($fecha) {
+                        $q->whereNull('fecha_viaje')
+                          ->whereDate('fecha_desde', '<=', $fecha->toDateString())
+                          ->whereDate('fecha_hasta', '>=', $fecha->toDateString());
+                    });
+                });
             }
+
 
             if ($viajeros) {
                 $query->where(function ($q) use ($viajeros) {
