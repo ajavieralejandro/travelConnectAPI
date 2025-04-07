@@ -14,7 +14,7 @@ class PaquetesController extends Controller
 {
     public function index()
     {
-        $paquetes = Paquete::paginate(50);
+        $paquetes = Paquete::with('salidas')->paginate;
         $tarjetasJulia = [];
         return view('paquetes.index', compact('paquetes', 'tarjetasJulia'));
     }
@@ -66,8 +66,21 @@ class PaquetesController extends Controller
 
     public function getPaquetes()
     {
-        $paquetes = Paquete::all();
-        return response()->json($paquetes->toArray());
+        $paquetes = Paquete::with('salidas')->get();
+
+    $paquetes->transform(function ($paquete) {
+        // Verificamos si tiene salidas
+        if ($paquete->salidas->isNotEmpty()) {
+            // Tomamos el doble_precio de la primera salida (podés cambiar a la que necesites)
+            $paquete->precio = $paquete->salidas->first()->doble_precio;
+        } else {
+            $paquete->precio = null;
+        }
+
+        return $paquete;
+    });
+
+    return response()->json($paquetes);
     }
 
     public function obtenerPaquetesPorDestino(Request $request)

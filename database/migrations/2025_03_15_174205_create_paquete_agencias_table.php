@@ -45,6 +45,7 @@ return new class extends Migration
             $table->integer('edad_menores')->nullable();
             $table->string('transporte');
             $table->decimal('descuento', 8, 2);
+            $table->integer('cupo');
             $table->timestamps();
         });
     }
