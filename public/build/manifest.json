@@ -1,11 +1,12 @@
 {
-  "__commonjsHelpers-BosuxZz1.js": {
-    "file": "assets/_commonjsHelpers-BosuxZz1.js",
-    "name": "_commonjsHelpers"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-B0FQyX-Q.css",
+    "file": "assets/app-CmitHCl6.css",
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/styles.css": {
+    "file": "assets/styles-CIAd9sNL.css",
+    "src": "resources/css/styles.css",
     "isEntry": true
   },
   "resources/js/app.js": {
@@ -15,51 +16,9 @@
     "isEntry": true
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-D0gXPWUk.js",
+    "file": "assets/app-BYSGoOrp.js",
     "name": "app",
     "src": "resources/js/app.jsx",
-    "isEntry": true,
-    "imports": [
-      "__commonjsHelpers-BosuxZz1.js"
-    ]
-  },
-  "resources/js/frontReactTravel/node_modules/slick-carousel/slick/ajax-loader.gif": {
-    "file": "assets/ajax-loader-BcnMEykj.gif",
-    "src": "resources/js/frontReactTravel/node_modules/slick-carousel/slick/ajax-loader.gif"
-  },
-  "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.eot": {
-    "file": "assets/slick-Bi9J8BMx.eot",
-    "src": "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.eot"
-  },
-  "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.svg": {
-    "file": "assets/slick-BlzDm7g2.svg",
-    "src": "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.svg"
-  },
-  "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.ttf": {
-    "file": "assets/slick-DWzRxEMf.ttf",
-    "src": "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.ttf"
-  },
-  "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.woff": {
-    "file": "assets/slick-BlUtDIuC.woff",
-    "src": "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.woff"
-  },
-  "resources/js/frontReactTravel/src/main.tsx": {
-    "file": "assets/main-C9X4BRZz.js",
-    "name": "main",
-    "src": "resources/js/frontReactTravel/src/main.tsx",
-    "isEntry": true,
-    "imports": [
-      "__commonjsHelpers-BosuxZz1.js"
-    ],
-    "css": [
-      "assets/main-DkBSsmpK.css"
-    ],
-    "assets": [
-      "assets/ajax-loader-BcnMEykj.gif",
-      "assets/slick-Bi9J8BMx.eot",
-      "assets/slick-BlUtDIuC.woff",
-      "assets/slick-DWzRxEMf.ttf",
-      "assets/slick-BlzDm7g2.svg"
-    ]
+    "isEntry": true
   }
 }

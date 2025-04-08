@@ -1,0 +1,923 @@
+body {
+            font-family: 'Arial', sans-serif;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+         .container {
+    width: 90%; /* Hace que el contenedor sea más ancho que el predeterminado */
+    max-width: 1200px; /* Máximo ancho para el contenedor */
+    margin: 0 auto;
+
+}
+
+        .carousel-item img {
+    height: 800px; /* Ajusta la altura que desees */
+    object-fit: cover; /* Esto asegura que la imagen se recorte si es necesario para llenar el contenedor sin distorsionarse */
+}
+
+/* General styles */
+.welcome-section {
+    padding: 100px 20px;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+}
+/* Background Image */
+.welcome-section .background-image {
+    background: url('https://img.freepik.com/foto-gratis/persona-trabajando-html-computadora_23-2150038860.jpg?ga=GA1.1.834113625.1722871812&semt=ais_hybrid') no-repeat center center/cover;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(5px);
+}
+/* Text Animations */
+.animate-title {
+    animation: fadeInDown 1.5s ease-in-out;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.animate-text {
+    animation: fadeInUp 2s ease-in-out;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+/* Sección contenedora */
+.transformacion-negocio {
+  padding: 50px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ac0e10;
+}
+
+/* Contenedor de imagen y texto */
+.content-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  /* Permite que los elementos se acomoden en varias filas */
+}
+
+/* Contenedor de las imágenes */
+.image-container {
+  position: relative;
+  width: 50%;
+  height: 400px;
+  overflow: hidden;
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeInOut 9s infinite;
+}
+
+.image:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.image:nth-child(2) {
+  animation-delay: 3s;
+}
+
+.image:nth-child(3) {
+  animation-delay: 6s;
+}
+
+/* Contenedor de texto */
+.text-content {
+  width: 50%;
+  text-align: justify;
+  display: block;
+}
+/* Estilos para la sección transformacion-negocio-viajes */
+.transformacion-negocio-viajes {
+    padding: 50px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+/* Estilos del título principal */
+.transformacion-negocio-viajes h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+/* Estilos para los contenedores de contenido */
+.content-wrapper-viajes,
+.content-wrapper-viajes2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Contenedor de imágenes */
+.image-container-viajes,
+.image-container-viajes2 {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.image-viajes,
+.image-viajes2 {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-viajes:hover,
+.image-viajes2:hover {
+    transform: scale(1.05);
+}
+
+/* Estilo de los textos de contenido */
+.text-content-viajes,
+.text-content-viajes2 {
+    max-width: 600px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    padding: 10px;
+    text-align: justify;
+    margin: 0 auto;
+}
+
+.text-content-viajes p,
+.text-content-viajes2 p {
+    margin-bottom: 20px;
+}
+
+/* Estilo para las imágenes dentro de los contenedores */
+.image-container-viajes img,
+.image-container-viajes2 img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Respuestas responsivas */
+@media (max-width: 768px) {
+    .content-wrapper-viajes,
+    .content-wrapper-viajes2 {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .text-content-viajes,
+    .text-content-viajes2 {
+        font-size: 0.95rem;
+    }
+
+    .transformacion-negocio-viajes h1 {
+        font-size: 2rem;
+    }
+}
+
+
+@media (max-width: 768px) {
+  /* Para la primera parte */
+  .content-wrapper {
+    display: block; /* Dejamos de usar flex para permitir el float */
+  }
+  .image-container {
+    float: left;
+    width: 40%; /* Ajusta según lo deseado */
+    height: auto; /* Elimina la altura fija para que se adapte al contenido */
+    margin-right: 20px;
+  }
+  .text-content {
+    width: 55%; /* El resto del ancho */
+    display: block;
+  }
+  .content-wrapper::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/* Animación de las imágenes */
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+}
+
+/* Sección adicional con las nuevas imágenes y texto */
+.content-wrapper1 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 30px; /* Permite que los elementos se acomoden en varias filas */
+}
+
+.image-container1 {
+  position: relative;
+  width: 50%;
+  height: 400px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.image1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeInOut 9s infinite;
+}
+
+.image1:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.image1:nth-child(2) {
+  animation-delay: 3s;
+}
+
+.image1:nth-child(3) {
+  animation-delay: 6s;
+}
+
+.text-content1 {
+  width: 50%;
+  text-align: justify;
+   display: block;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .content-wrapper1 {
+    display: block;/* Centra los elementos horizontalmente */
+   }
+  .image-container1 {
+    float: left;
+    width: 40%;
+    height: auto;
+    margin-right: 20px;
+  }
+  .text-content1 {
+    width: 55%;
+    display: block;
+  }
+  .content-wrapper1::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+
+
+
+.beneficios{
+    display: none;
+}
+
+
+.caracteristicas {
+    padding: 20px ;
+    background-color: #f4f4f4;
+    width: 100%;
+}
+ .containerCaracterisitcas {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .rowCaracteristicas {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Centra las tarjetas horizontalmente */
+        gap: 20px; /* Espacio entre tarjetas */
+    }
+
+    .custom-feature-container {
+        width: calc(50% - 20px); /* 2 tarjetas por fila en pantallas medianas */
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .custom-feature-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    .custom-feature-item {
+        padding: 15px;
+    }
+
+    /* Responsive: 1 tarjeta por fila en pantallas pequeñas */
+    @media (max-width: 768px) {
+        .custom-feature-container {
+            width: 100%; /* Toma todo el ancho disponible */
+        }
+    }
+
+    /* Pantallas grandes: 3 o 4 tarjetas por fila */
+    @media (min-width: 1024px) {
+        .custom-feature-container {
+            width: calc(25% - 20px); /* 4 tarjetas por fila */
+        }
+    }
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #ee0707;
+
+}
+
+
+.rowCaracteristicas {
+    display: flex;
+    flex-wrap: wrap; /* Para permitir que las tarjetas se ajusten en pantallas más pequeñas */
+    gap: 20px;
+    margin: 10px;
+    padding: 20px;
+    /* Espacio entre las tarjetas */
+}
+/* Estilos personalizados para esta sección de características */
+.custom-feature-container {
+    position: relative;
+    width: 25%; /* Ajusta al tamaño que desees para cada tarjeta */
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+     flex: 1 1 calc(25% - 20px); /* Las tarjetas ocupan un 25% del ancho disponible, con un pequeño espacio entre ellas */
+    box-sizing: border-box;
+     text-align: center;
+ max-height: 400px;
+    min-width: 250px; /* Tamaño mínimo para evitar desbordes */
+    max-width: 300px;
+
+     /* Para que la imagen no sobresalga más allá de su contenedor */
+}
+
+
+/* Imagen fuera del contenedor de la tarjeta */
+.custom-feature-image {
+    position: absolute;
+    top: 10px; /* La imagen se mueve hacia arriba fuera del div */
+    left: 50%;
+    transform: translateX(-50%); /* Centra la imagen horizontalmente */
+    width: 75%; /* La imagen es un 15% más pequeña que la tarjeta */
+    z-index: 1;
+    overflow: hidden;
+
+}
+
+/* Estilo de las imágenes para que se ajusten bien */
+.custom-feature-image img {
+    width: 100%;
+    height: 50%;
+
+   }
+
+
+/* Estilo para la tarjeta */
+.custom-feature-item {
+    background-color: #76b86d;
+    border: 1px solid #faf7f7;
+    padding: 25px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    z-index: 0;
+    position: relative;
+    margin-top: 36%; /* Ajusta el margen superior para la tarjeta */
+    overflow: hidden;
+    height: 400px
+
+    /* Asegura que la tarjeta no se desborde */
+}
+
+/* Estilo para los títulos y los párrafos */
+.custom-feature-item h3,
+.custom-feature-item p
+{
+    z-index: 2;
+    margin-top: 20%;/* Asegura que el texto quede por encima de la imagen */
+}
+
+   .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .animated-text {
+            transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+            transform: translateX(100%);
+            /* Comienza fuera del área visible */
+        }
+          /* Contenedor de las tarjetas */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 20px;
+            background-color: #ac0e10;
+        }
+
+        /* Estilo general para las tarjetas */
+        .card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 50%;
+            width: 350px;
+            height: 350px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            /* Efecto de elevar la tarjeta al pasar el ratón */
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        /* Listado de características dentro de cada tarjeta */
+        .card ul {
+            list-style: none;
+            padding: 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .card ul li {
+            margin: 5px 0;
+        }
+
+        /* Estilo para los botones de precio */
+        .price-btn {
+            position: absolute;
+            top: -40px;
+            /* Coloca el botón fuera de la tarjeta */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 50%;
+            /* Aumentamos el tamaño para que sobresalga */
+            margin-left: -10%;
+            /* Alineamos el botón para que sobresalga */
+        }
+
+        /* Estilo adicional para el botón de precio en la tarjeta 3 */
+        .price-btn-3 {
+            top: -60px;
+            /* Desplazamos 20px más hacia arriba */
+        }
+
+        /* Estilo para el botón de consultar */
+        .consultar-btn {
+            position: absolute;
+            bottom: -20px;
+            /* Coloca el botón fuera de la tarjeta, en la parte inferior */
+            left: 60%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 50%;
+            /* Aumentamos el tamaño para que sobresalga */
+            margin-left: -10%;
+            /* Alineamos el botón para que sobresalga */
+        }
+
+        .consultar-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilo para las tarjetas en zig zag */
+        .card-1 {
+            margin-top: 50px;
+        }
+
+        .card-2 {
+            margin-top: 50px;
+        }
+
+        .card-3 {
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo para el formulario de consulta */
+        #formulario-consulta {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #formulario-consulta form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #formulario-consulta input {
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #formulario-consulta button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #formulario-consulta button:hover {
+            background-color: #45a049;
+        }
+
+ .contacto-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://img.freepik.com/foto-gratis/persona-trabajando-html-computadora_23-2150038860.jpg?ga=GA1.1.834113625.1722871812&semt=ais_hybrid') no-repeat center center/cover;
+            background-size: cover;
+            padding: 50px 20px;
+        }
+        .contacto-form {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .contacto-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .contacto-description {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .form-group div {
+            flex: 1 1 calc(50% - 1rem);
+            min-width: 220px;
+        }
+
+        .form-group div input,
+        .form-group div select,
+        .form-group div textarea {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .form-group div input:focus,
+        .form-group div select:focus,
+        .form-group div textarea:focus {
+            border-color: #3182ce;
+            outline: none;
+        }
+
+        .form-group div input:hover,
+        .form-group div select:hover,
+        .form-group div textarea:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: white;
+            color: #333;
+            padding: 0.75rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border: 2px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            align-self: center;
+        }
+
+        button:hover {
+            background-color: #333;
+            color: white;
+            transform: translateY(-2px);
+        }
+/* Estilos generales del footer */
+.footer {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 40px 0;
+}
+
+.footer .footer-title {
+    font-size: 1.80rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #ecf0f1;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #3498db;
+}
+
+
+/* Redes Sociales */
+.social-section .social-icons a {
+    margin: 0 10px;
+    font-size: 1.75rem;
+    color: #ecf0f1;
+    transition: color 0.3s ease;
+}
+
+.social-section .social-icons a:hover {
+    color: #3498db;
+}
+
+/* Estilo para el menú de secciones */
+.sections ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sections ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.section-item a {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.section-item a:hover {
+    color: #3498db;
+    border-color: #3498db;
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+
+/* Estilo para la información de contacto */
+.contact-info p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+/* Estilo para la información legal */
+.legal-info p {
+    font-size: 0.875rem;
+    margin: 10px 0;
+}
+/* Asegura que el texto dentro de legal-info sea blanco */
+.legal-info {
+    color: #c4f70f;
+}
+
+
+/* Estilo para el enlace de defensa del consumidor */
+.consumer-defense {
+    font-size: 0.875rem;
+}
+
+.consumer-defense a {
+    color: #3498db;
+}
+
+.consumer-defense a:hover {
+    color: #2980b9;
+}
+
+
+
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas */
+}
+
+
+
+/* Asegurarse de que la disposición funcione en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .feature-item {
+        width: calc(50% - 30px); /* Dos tarjetas por fila en pantallas pequeñas */
+    }
+     .custom-feature-container {
+        flex: 1 1 calc(50% - 20px); /* Dos tarjetas por fila en pantallas pequeñas */
+    }
+     .social-section, .sections {
+        text-align: center;
+    }
+
+    .footer {
+        padding: 30px 0;
+    }
+
+    .sections ul li {
+        margin: 5px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .feature-item {
+           width: 100%; /* Una tarjeta por fila en pantallas muy pequeñas (como el iPhone SE) */
+        margin-bottom: 15px; /* Espacio entre tarjetas */ /* Una tarjeta por fila en pantallas muy pequeñas */
+    }
+    .custom-feature-container {
+        flex: 1 1 100%; /* Una tarjeta por fila en pantallas muy pequeñas */
+    }
+}
+
+
+/* Keyframes for animation */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Animación para hacer que el texto entre desde la derecha */
+.animated-text {
+    animation: slideIn 3s ease-in-out forwards;
+    white-space: nowrap;
+    overflow: hidden;
+      font-size: 8rem; /* Asegura que no se desborde */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+
+
+
+    @media (max-width: 1024px) {
+        .animated-text {
+            font-size: 5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .animated-text {
+            font-size: 3rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .animated-text {
+            font-size: 2rem;
+        }
+    }
+
+
+    .cke_notification {
+        display: none !important;
+    }
+/* styles.css */
+.color-rojo {
+    background-color: #ac0e10;
+    color: #ac0e10;
+    border:#ac0e10;
+}
+.color-gris {
+    background-color: #e7e8eb;
+
+}
+
+
