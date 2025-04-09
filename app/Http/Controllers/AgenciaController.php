@@ -207,6 +207,13 @@ public function guardarVideo(Request $request)
                 $agencia['fondo_1'] = asset("storage/{$customPath}");
             }
 
+            if (!empty($agencia['header_video_background'])) {
+                // Construir la ruta relativa en storage
+                $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['header_video_background']}";
+                // Generar la URL accesible públicamente
+                $agencia['header_video_background'] = asset("storage/{$customPath}");
+            }
+
 
             return response()->json($agencia);
         }
@@ -218,13 +225,29 @@ public function guardarVideo(Request $request)
         $host = $request->getHost(); // Obtiene el host completo (subdominio.dominio.com)
         $subdominio = explode('.', $host)[0];
         $agencia = Agencia::where('dominio','=',$subdominio)->first();
-        if(!$agencia){
-            return view('welcome');
+        if($agencia){
             if (!empty($agencia['fondo_1'])) {
                 // Construir la ruta relativa en storage
                 $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['fondo_1']}";
                 // Generar la URL accesible públicamente
                 $agencia['fondo_1'] = asset("storage/{$customPath}");
+                if (!empty($agencia['fondo_1'])) {
+                    // Construir la ruta relativa en storage
+                    $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['fondo_1']}";
+                    // Generar la URL accesible públicamente
+                    $agencia['fondo_1'] = asset("storage/{$customPath}");
+                }
+
+            }
+            if (!empty($agencia->logo)) {
+                // Construir la ruta relativa en storage
+                // Generar la URL accesible públicamente
+                $agencia['logo'] = asset("storage/{$agencia['logo']}");
+            }
+            if (!empty($agencia->header_video_background)) {
+                // Construir la ruta relativa en storage
+                // Generar la URL accesible públicamente
+                $agencia['header_video_background'] = asset("storage/{$agencia['header_video_background']}");
             }
             $response = [
                 'idAgencia' => (string) $agencia->id,
