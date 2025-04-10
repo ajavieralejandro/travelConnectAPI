@@ -1,26 +1,31 @@
 {
-  "__commonjsHelpers-BosuxZz1.js": {
-    "file": "assets/_commonjsHelpers-BosuxZz1.js",
+  "__commonjsHelpers-D6-XlEtG.js": {
+    "file": "assets/_commonjsHelpers-D6-XlEtG.js",
     "name": "_commonjsHelpers"
   },
   "resources/css/app.css": {
-    "file": "assets/app-B0FQyX-Q.css",
+    "file": "assets/app-DtmZAHXF.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
+  "resources/css/styles.css": {
+    "file": "assets/styles-DfteeLbd.css",
+    "src": "resources/css/styles.css",
+    "isEntry": true
+  },
   "resources/js/app.js": {
-    "file": "assets/app-e9C80sKX.js",
+    "file": "assets/app-CUSFVhYG.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-D0gXPWUk.js",
+    "file": "assets/app-ChMYsIlb.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
     "imports": [
-      "__commonjsHelpers-BosuxZz1.js"
+      "__commonjsHelpers-D6-XlEtG.js"
     ]
   },
   "resources/js/frontReactTravel/node_modules/slick-carousel/slick/ajax-loader.gif": {
@@ -44,12 +49,12 @@
     "src": "resources/js/frontReactTravel/node_modules/slick-carousel/slick/fonts/slick.woff"
   },
   "resources/js/frontReactTravel/src/main.tsx": {
-    "file": "assets/main-C9X4BRZz.js",
+    "file": "assets/main-D0A3muVD.js",
     "name": "main",
     "src": "resources/js/frontReactTravel/src/main.tsx",
     "isEntry": true,
     "imports": [
-      "__commonjsHelpers-BosuxZz1.js"
+      "__commonjsHelpers-D6-XlEtG.js"
     ],
     "css": [
       "assets/main-DkBSsmpK.css"

@@ -74,5 +74,5 @@ Route::post('/hotels/search', [HotelTravelGate::class, 'searchHotels'])->without
 
 // Luego, la ruta general
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.home');
 })->name('welcome');

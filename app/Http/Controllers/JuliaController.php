@@ -17,7 +17,7 @@ class JuliaController extends Controller
     public function getPaquetes(Request $request)
     {
         try {
-            $response = $this->juliaService->obtenerPaquetes($request);
+            $response = $this->juliaService->enviarPaquetes($request);
             return response()->json($response);
         } catch (\Exception $e) {
             Log::error('Error en getPaquetes:', ['error' => $e->getMessage()]);

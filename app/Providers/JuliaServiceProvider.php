@@ -25,6 +25,7 @@ class JuliaServiceProvider
 
     public function getPaquetes(string $xml)
     {
+
         try {
             $response = $this->client->post($this->url, [
                 'headers' => [
@@ -168,6 +169,7 @@ class JuliaServiceProvider
             'OrdenadoPor' => '1',
             'AscDes' => 'A',
         ];
+
 
         try {
             // Hacer la solicitud POST
