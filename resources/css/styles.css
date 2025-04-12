@@ -57,7 +57,7 @@ body {
 h1 {
   text-align: center;
   margin-bottom: 30px;
-  color: #ac0e10;
+  color: #0e0d0d;
 }
 
 /* Contenedor de imagen y texto */
@@ -370,79 +370,59 @@ h1 {
 
 }
 
-
-.rowCaracteristicas {
-    display: flex;
-    flex-wrap: wrap; /* Para permitir que las tarjetas se ajusten en pantallas más pequeñas */
-    gap: 20px;
-    margin: 10px;
-    padding: 20px;
-    /* Espacio entre las tarjetas */
-}
-/* Estilos personalizados para esta sección de características */
 .custom-feature-container {
     position: relative;
-    width: 25%; /* Ajusta al tamaño que desees para cada tarjeta */
+    width: 25%;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-     flex: 1 1 calc(25% - 20px); /* Las tarjetas ocupan un 25% del ancho disponible, con un pequeño espacio entre ellas */
+    flex: 1 1 calc(25% - 20px);
     box-sizing: border-box;
-     text-align: center;
- max-height: 400px;
-    min-width: 250px; /* Tamaño mínimo para evitar desbordes */
+    text-align: center;
+    max-height: 400px;
+    min-width: 250px;
     max-width: 300px;
-
-     /* Para que la imagen no sobresalga más allá de su contenedor */
+    /* Se eliminó margin-top aquí */
 }
 
-
-/* Imagen fuera del contenedor de la tarjeta */
+/* Imagen sobresaliendo mitad afuera, mitad adentro */
 .custom-feature-image {
     position: absolute;
-    top: 10px; /* La imagen se mueve hacia arriba fuera del div */
+    top: -40px; /* Cambia este valor según el tamaño real de la imagen */
     left: 50%;
-    transform: translateX(-50%); /* Centra la imagen horizontalmente */
-    width: 75%; /* La imagen es un 15% más pequeña que la tarjeta */
-    z-index: 1;
-    overflow: hidden;
-
+    transform: translateX(-50%);
+    width: 75%;
+    z-index: 2;
 }
 
-/* Estilo de las imágenes para que se ajusten bien */
 .custom-feature-image img {
     width: 100%;
-    height: 50%;
+    height: auto;
+    display: block;
+}
 
-   }
-
-
-/* Estilo para la tarjeta */
+/* Tarjeta */
 .custom-feature-item {
-    background-color: #76b86d;
-    border: 1px solid #faf7f7;
-    padding: 25px;
+    background-color: #f0720c;
+    border: 1px solid #f7f7f7;
+    padding: 90px 25px 25px; /* padding-top más grande para dejar espacio a la imagen */
     text-align: center;
     width: 100%;
-    margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    z-index: 0;
     position: relative;
-    margin-top: 36%; /* Ajusta el margen superior para la tarjeta */
+    z-index: 1;
     overflow: hidden;
-    height: 400px
-
-    /* Asegura que la tarjeta no se desborde */
+    height: 400px;
 }
 
-/* Estilo para los títulos y los párrafos */
+/* Título y párrafo */
 .custom-feature-item h3,
-.custom-feature-item p
-{
-    z-index: 2;
-    margin-top: 20%;/* Asegura que el texto quede por encima de la imagen */
+.custom-feature-item p {
+    margin-top: 10px;
+    z-index: 3;
 }
+
 
    .carousel-caption {
             position: absolute;
@@ -465,7 +445,7 @@ h1 {
             justify-content: space-around;
             gap: 20px;
             margin-top: 20px;
-            background-color: #ac0e10;
+            background-color: #f7f2f2;
         }
 
         /* Estilo general para las tarjetas */
@@ -911,9 +891,9 @@ h1 {
     }
 /* styles.css */
 .color-rojo {
-    background-color: #ac0e10;
-    color: #ac0e10;
-    border:#ac0e10;
+    background-color: #faf7f7;
+    color: #faf9f9;
+    border:#f7f3f3;
 }
 .color-gris {
     background-color: #e7e8eb;

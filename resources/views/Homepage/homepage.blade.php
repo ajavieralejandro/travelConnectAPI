@@ -20,7 +20,7 @@
 
     <!-- Header con Logo -->
     <header class="text-center py-4 ">
-        <img src="/travel/logo.png" alt="Logo">
+        <img src="storage/travel/logo.png" alt="Logo">
 
     </header>
 
@@ -52,13 +52,13 @@
                 </div>
 
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/travel/2.jpg.avif') }}" class="d-block w-100" alt="...">
+                    <img src="{{ asset('storage/travel/3.jpg.avif') }}" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                     </div>
                 </div>
 
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/travel/2jpg.png') }}" class="d-block w-100" alt="...">
+                    <img src="{{ asset('storage/travel/4.jpg.png') }}" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                     </div>
                 </div>
@@ -81,7 +81,7 @@
         <section class="welcome-section position-relative text-black">
             <div class="background-image"></div>
             <div class="container text-center py-5">
-                <h1 class="animate-title">¡Bienvenidos a TravelConnect!</h1>
+                <h1 style="color: #333"><strong>¡Bienvenidos a TravelConnect!</strong></h1>
 
                 @if (isset($textoBienvenida) && isset($textoBienvenida->contenido) && !empty($textoBienvenida->contenido))
                     <p class="animate-text lead mt-3">
@@ -103,11 +103,11 @@
             <div class="content-wrapper-viajes">
                 <div class="image-container-viajes">
 
-                    <img src="{{ asset('/travel/3.jpg.avif') }}" class="image-viajes" alt="Imagen 3">
+                    <img src="{{ asset('storage/travel/3.jpg.avif') }}" class="image-viajes" alt="Imagen 3">
                 </div>
 
                 <div class="text-content-viajes ">
-                    <p>En el pasadooooooooo, las empresas de viajes dependían principalmente de métodos tradicionales
+                    <p>En el pasado, las empresas de viajes dependían principalmente de métodos tradicionales
                         para
                         gestionar sus
                         operaciones, desde la venta manual de boletos hasta la atención al cliente a través de llamadas
@@ -188,7 +188,7 @@
 
         <section class="caracteristicas">
             <div class="containerCaracterisitcas">
-                <h2 class="section-title">Características</h2>
+                <h2 class="section-title" style="color: #333">Características</h2>
                 <div class="rowCaracteristicas">
                     <!-- Contenedor para cada tarjeta e imagen -->
                     <div class="custom-feature-container">
@@ -248,12 +248,13 @@
 
 
 
-        <h1 class="beneficios">Beneficios</h1>
-        <section style="display: flex; justify-content: center; padding: 40px; background-color: #f51a1a;">
-            <div style="display: flex; gap: 40px; max-width: 1200px; width: 100%;">
-                <!-- Columna 1 -->
+
+       <section style="max-width: 1200px; margin: 0 auto; padding: 40px;">
+    <h2 class="section-title" style="color: #333; text-align: center;">Beneficios</h2>
+    <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;">
+        <!-- Columna 1 -->
                 <div
-                    style="flex: 1; background-color: #f51a1a; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    style="flex: 1; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <h3 style="color: #333;">Beneficios principales</h3>
                     <p style="color: #555; font-size: 1.2rem; line-height: 1.6;">
                         Es una plataforma de transformación en donde la emisión automática de aéreos, la web con los
@@ -306,19 +307,20 @@
 
         </section>
 
-        <!-- Script para cambiar las palabras -->
 
 
 
-        <section style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+
+
+        <section style="max-width: 1200px; margin: 0 auto; padding: 40px;">
             <div
-                style="margin-top: 20px; padding: 20px; ; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <h1><strong> Planes</strong></h1>
+                style="margin-top: 20px; padding: 20px; ; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f8f7f7;">
+                <h2 class="section-title" style="color: #333"> Planes</h2>
                 <p>Somos expertos en tecnología para agencias de viajes.</p>
 
-                <div class="cards-container">
+                <div class="cards-container" style="background-color: #c4c5c4; padd">
                     <!-- Tarjeta 1 -->
-                    <div class="card card-1">
+                    <div class="card card-1" " >
                         <button class="price-btn">Precio: $152000</button>
                         <h3>Socio Full</h3>
                         <ul>
@@ -348,8 +350,8 @@
 
                     <!-- Tarjeta 3 -->
                     <div class="card card-3">
-                        <button class="price-btn price-btn-3">Precio: $290000</button>
-                        <h5>Socio <br>con sistema de <br>gestion comercial</h5>
+                        <button class="price-btn ">Precio: $290000</button>
+                        <h3>Socio Comercial</h3>
                         <ul>
                             <li>Sitio web</li>
                             <li>Motor reserva aéreos</li>
@@ -365,7 +367,7 @@
 
                 <!-- Formulario de consulta -->
                 <div id="formulario-consulta" style="display: none;">
-                    <h2>Formulario de consulta</h2>
+                    <h2 class="section-title" style="color: #333">Formulario de consulta</h2>
                     <p id="plan-info">Estás solicitando información por el plan número: <span id="plan-numero"></span>
                     </p>
 
@@ -404,10 +406,34 @@
             </div>
 
         </section>
+
+          <section  style="margin-top: 20px; margin-bottom: 20px; padding: 20px; ; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f8f7f7;">
+        <h2 class="section-title" style="color: #333">Nos acompañan</h2>
+    </div>
+    <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 30px;
+        align-items: center;
+        justify-items: center;
+        max-width: 1000px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        padding: 0 20px;
+    " class="acompanan-grid">
+        <img src="{{ asset('storage/travel/acompañan1.png') }}" alt="Logo 1" style="max-height: 80px; object-fit: contain;">
+        <img src="{{ asset('storage/travel/acompañan2.png') }}" alt="Logo 2" style="max-height: 50px; object-fit: contain;">
+        <img src="{{ asset('storage/travel/acompañan3.png') }}" alt="Logo 3" style="max-height: 50px; object-fit: contain;">
+        <img src="{{ asset('storage/travel/acompañan4.jpg') }}" alt="Logo 4" style="max-height: 80px; object-fit: contain;">
+        <img src="{{ asset('storage/travel/acompañan5.jpg') }}" alt="Logo 5" style="max-height: 80px; object-fit: contain;">
+        <img src="{{ asset('storage/travel/acompañan6.png') }}" alt="Logo 6" style="max-height: 50px; object-fit: contain;">
+        <img src="{{ asset('storage/travel/acompañan7.jpg') }}" alt="Logo 7" style="max-height: 100px; object-fit: contain;">
+    </div>
+</section>
         <section>
             <div class="contacto-container">
                 <div class="contacto-form">
-                    <h1 class="contacto-title">Contacto</h1>
+                    <h2 class="section-title" style="color: #333">Contacto</h2>
                     <p class="contacto-description">Utilizá el siguiente formulario para ponerte en contacto con
                         nosotros. ¡Nos
                         encantaría saber de ti!</p>
@@ -562,7 +588,7 @@
 
         <div class="row text-center contact-info">
             <div class="col-12">
-                <p><i class="fas fa-phone mr-2"></i> (11) 5578 6993</p>
+                <p><i class="fas fa-phone mr-2"></i> +(54) 11 5578 6993</p>
             </div>
         </div>
 
@@ -584,9 +610,8 @@
         <div class="row text-center mt-5">
             <div class="col-12">
                 <p class="text-white">
-                    Diseñado por <strong><a href="mailto:paonovick@hotmail.com" class="text-white">Paola
-                            Novick</a></strong> - <span>Diseñadora Web</span> <br>
-                    <span>&copy; 2024 Idea Original - Todos los derechos reservados</span>
+
+                    <span>&copy; 2025 Idea Original - Todos los derechos reservados</span>
                 </p>
             </div>
         </div>
