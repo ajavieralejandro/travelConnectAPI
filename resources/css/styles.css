@@ -332,7 +332,7 @@ h1 {
 
     .custom-feature-container {
         width: calc(50% - 20px); /* 2 tarjetas por fila en pantallas medianas */
-        background-color: #f9f9f9;
+        background-color: #f9f9f9 !important;
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -366,7 +366,7 @@ h1 {
     font-size: 2rem;
     margin-bottom: 30px;
     font-weight: bold;
-    color: #ee0707;
+    color: #0f0000;
 
 }
 
@@ -404,7 +404,7 @@ h1 {
 
 /* Tarjeta */
 .custom-feature-item {
-    background-color: #f0720c;
+    background-color: #faf7f4;
     border: 1px solid #f7f7f7;
     padding: 90px 25px 25px; /* padding-top más grande para dejar espacio a la imagen */
     text-align: center;

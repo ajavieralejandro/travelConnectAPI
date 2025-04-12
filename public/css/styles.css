@@ -314,7 +314,7 @@ h1 {
 
 .caracteristicas {
     padding: 20px ;
-    background-color: #e70c0c;
+    background-color: #fdfbfb;
     width: 100%;
 }
  .containerCaracterisitcas {
@@ -418,7 +418,7 @@ h1 {
     padding: 90px 25px 25px; /* padding-top más grande para dejar espacio a la imagen */
     text-align: center;
     width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
     position: relative;
     z-index: 1;
     overflow: hidden;
