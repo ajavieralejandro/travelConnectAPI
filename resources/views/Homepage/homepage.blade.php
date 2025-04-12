@@ -271,7 +271,7 @@
 
 
         <section id="QuienesSomos" class="transformacion-negocio-viajes">
-            <h2 style="margin-bottom:30px; font-size: 2rem;"><strong>Transformación del Negocio de los Viajes</strong></h2>
+
 
 
             <div class="content-wrapper-viajes">
@@ -281,8 +281,7 @@
                 </div>
 
                 <div class="text-content-viajes ">
-                    <h2 class="section-title" style="color: #333">Del
-                    Modelo Tradicional al Digital</h2>
+ <h2 style="margin-bottom:30px; font-size: 2rem;"><strong>Transformación del Negocio de los Viajes</strong></h2>
                     <p>En el pasado, las empresas de viajes dependían principalmente de métodos tradicionales
                         para
                         gestionar sus
@@ -315,6 +314,8 @@
                 </div>
 
                 <div class="text-content-viajes2">
+                       <h2 class="section-title" style="color: #333">Del
+                    Modelo Tradicional al Digital</h2>
                     <p>El Futuro del Turismo Está en la Digitalización. La digitalización es el futuro del sector de
                         viajes y
                         turismo, y Travel Connect está aquí para guiar a los agentes de viajes y PYMEs en este proceso
