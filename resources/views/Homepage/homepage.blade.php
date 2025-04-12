@@ -368,38 +368,132 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
 
         <section style="max-width: 1200px; margin: 0 auto; padding: 40px;">
             <h2 class="section-title" style="color: #333; text-align: center;">Beneficios</h2>
-            <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;">
-                <!-- Columna 1 -->
-                <div
-                    style="flex: 1; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                    <h3 style="color: #333;">Beneficios principales</h3>
-                    <p style="color: #555; font-size: 1.2rem; line-height: 1.6;">
-                        Es una plataforma de transformación en donde la emisión automática de aéreos, la web con los
-                        paquetes de hoteles y aéreos, los prospectos de consultas, el CRM y el backoffice te ayudarán a
-                        optimizar la gestión de tus procesos, mejorar la experiencia del cliente, y aumentar la
-                        eficiencia operativa en tu negocio. Todo esto con el objetivo de simplificar y potenciar tu
-                        estrategia en el mercado.
-                    </p>
-                </div>
+          <section class="beneficios-section">
+    <style>
+        .beneficios-section {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: stretch;
+            padding: 80px 40px;
+            background-image: url('https://img.freepik.com/foto-gratis/dos-companeros-trabajo-trabajando-nueva-estrategia-empresarial_329181-17664.jpg?uid=R102197663&ga=GA1.1.1238354021.1740411874&semt=ais_hybrid&w=740'); /* Cambiá esta ruta si es necesario */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            flex-wrap: wrap;
+        }
 
-                <!-- Columna 2 -->
-                <div
-                    style="flex: 1; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                    <h3 style="color: #333;">Beneficios para el asociado</h3>
-                    <p style="color: #555; font-size: 1.2rem; line-height: 1.6;">
-                        Como asociado, tendrás acceso a herramientas innovadoras que facilitarán el crecimiento de tu
-                        agencia y optimizarán los procesos operativos. Entre los beneficios destacados se incluyen:
-                    </p>
-                    <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
-                        <li>Maximizar un modelo de negocios productivo por medio de una fuerte impronta tecnológica.
-                        </li>
-                        <li>Contar con un ecosistema digital integrado con productos y procesos para lograr mejores
-                            resultados comerciales y operativos en el día a día.</li>
-                        <li>Ser parte de una comunidad activa y con fuerza de desarrollo y crecimiento.</li>
-                        <li>Gestionar de manera eficaz, a través de indicadores y variables del negocio.</li>
-                    </ul>
-                </div>
-            </div>
+        .beneficio-columna {
+            background-color: rgba(255, 255, 255, 0.95);
+            flex: 1;
+            min-width: 320px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            color: #333;
+        }
+
+        .beneficio-columna h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .beneficio-columna p,
+        .beneficio-columna ul {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .beneficio-columna ul {
+            padding-left: 20px;
+        }
+
+        .izquierda {
+            animation: slideInLeft 1s forwards;
+        }
+
+        .derecha {
+            animation: slideInRight 1s forwards;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .beneficios-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+
+    <div class="beneficio-columna izquierda">
+        <h3>Para el asociado</h3>
+        <p>
+            Como asociado, tendrás acceso a herramientas innovadoras que facilitarán el crecimiento de tu
+            agencia y optimizarán los procesos operativos. Entre los beneficios destacados se incluyen:
+        </p>
+          <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
+        <li><i class="bi bi-rocket" style="margin-right: 8px; color: #007bff;"></i>Maximizar un modelo de negocios productivo por medio de una fuerte impronta tecnológica.</li>
+        <li><i class="bi bi-layers" style="margin-right: 8px; color: #007bff;"></i>Contar con un ecosistema digital integrado con productos y procesos para lograr mejores resultados comerciales y operativos en el día a día.</li>
+        <li><i class="bi bi-people" style="margin-right: 8px; color: #007bff;"></i>Ser parte de una comunidad activa y con fuerza de desarrollo y crecimiento.</li>
+        <li><i class="bi bi-graph-up" style="margin-right: 8px; color: #007bff;"></i>Gestionar de manera eficaz, a través de indicadores y variables del negocio.</li>
+    </ul>
+    </div>
+
+    <div class="beneficio-columna derecha">
+        <h3>Más ventajas</h3>
+        <p>
+            Es una plataforma de transformación en donde la emisión automática de aéreos, la web con los paquetes de hoteles y aéreos, los prospectos de consultas, el CRM y el backoffice te ayudarán a optimizar la gestión de tus procesos, mejorar la experiencia del cliente, y aumentar la eficiencia operativa en tu negocio. Todo esto con el objetivo de simplificar y potenciar tu estrategia en el mercado.
+        </p>
+      <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
+    <li><i class="bi bi-bar-chart-line" style="margin-right: 8px; color: #007bff;"></i>Potencia tu estrategia en el mercado.</li>
+    <li><i class="bi bi-gear" style="margin-right: 8px; color: #007bff;"></i>Optimiza la gestión comercial.</li>
+    <li><i class="bi bi-robot" style="margin-right: 8px; color: #007bff;"></i>CRM, BackOffice, ChatBot al servicio de tu empresa.</li>
+</ul>
+
+    </div>
+
+    <script>
+        window.addEventListener("scroll", () => {
+            document.querySelectorAll(".beneficio-columna").forEach((col) => {
+                const pos = col.getBoundingClientRect().top;
+                const trigger = window.innerHeight - 100;
+
+                if (pos < trigger) {
+                    col.style.opacity = "1";
+                    col.style.transform = "translateY(0)";
+                }
+            });
+        });
+    </script>
+</section>
+
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
                     const words = ['FIDELIZAR', 'CAPTAR', 'INNOVAR', 'GENERAR'];
