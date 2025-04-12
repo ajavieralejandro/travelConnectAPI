@@ -207,28 +207,6 @@ public function guardarVideo(Request $request)
                 $agencia['fondo_1'] = asset("storage/{$customPath}");
             }
 
-            if (!empty($agencia['logo'])) {
-                // Construir la ruta relativa en storage
-                $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['logo']}";
-                // Generar la URL accesible públicamente
-                $agencia['logo'] = asset("storage/{$customPath}");
-            }
-
-
-            if (!empty($agencia['header_video_background'])) {
-                // Construir la ruta relativa en storage
-                $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['header_video_background']}";
-                // Generar la URL accesible públicamente
-                $agencia['header_video_background'] = asset("storage/{$customPath}");
-            }
-
-
-            if (!empty($agencia['header_image_background'])) {
-                // Construir la ruta relativa en storage
-                $customPath = "agencias/{$agencia['dominio']}/imagenes/{$agencia['header_image_background']}";
-                // Generar la URL accesible públicamente
-                $agencia['header_image_background'] = asset("storage/{$customPath}");
-            }
 
 
             return response()->json($agencia);

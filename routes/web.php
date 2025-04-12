@@ -47,7 +47,7 @@ Route::middleware('is_admin')->group(function () {
     Route::domain('{subdomain}.localhost')->group(function () {
         Route::get('/', [TenantController::class, 'show']);
     });
-Route::get('/send-soap-request', [SoapController::class, 'sendSoapRequest']);
+Route::post('/send-soap-request', [SoapController::class, 'sendSoapRequest'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 Route::get('/tenant-check', function () {
     dd([
         'tenant' => tenant(), // Should return "javier" tenant
