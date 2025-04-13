@@ -214,7 +214,7 @@
                     position: relative;
                     text-align: center;
                     color: white;
-                    height: 4cm;
+                    height: 7cm;
                     overflow: hidden;
                 }
 
