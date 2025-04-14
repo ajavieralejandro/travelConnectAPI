@@ -387,4 +387,152 @@ $response = Http::withHeaders([
             'details' => $response->json()
         ], $response->status());
 }
+
+// Función 1: introspección del esquema
+public function introspect()
+{
+    $query = <<<GQL
+    {
+        __schema {
+            mutationType {
+                fields {
+                    name
+                    args {
+                        name
+                        type {
+                            kind
+                            name
+                            ofType {
+                                kind
+                                name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    GQL;
+
+    $response = Http::withHeaders([
+        'Authorization' => 'Apikey test0000-0000-0000-0000-000000000000',
+        'Content-Type' => 'application/json',
+    ])->post('https://api.travelgatex.com', [
+        'query' => $query
+    ]);
+
+    return response()->json($response->json(), $response->status());
 }
+
+// Función 2: buscar disponibilidad (cuando sepamos la mutación y el input correcto)
+public function searchDisponibility()
+{
+    $query = <<<GRAPHQL
+    query {
+      hotelX {
+        search(
+          criteria: {
+            checkIn: "2023-12-20"
+            checkOut: "2023-12-22"
+            hotels: ["1", "2", "3"]
+            occupancies: [
+              {
+                paxes: [
+                  { age: 30 },
+                  { age: 30 }
+                ]
+              }
+            ]
+            language: "es"
+            nationality: "ES"
+            currency: "EUR"
+            market: "ES"
+          }
+          settings: {
+            client: "demo_client"
+            testMode: true
+            context: "HOTELTEST"
+            suppliers: [
+              {
+                code: "demo_supplier"
+                settings: {
+                  timeout: 15000
+                }
+              }
+            ]
+          }
+        ) {
+          context
+          options {
+            id
+            hotelCode
+            hotelName
+            boardCode
+            price {
+              currency
+              net
+              gross
+            }
+            rooms {
+              code
+              name
+            }
+          }
+          errors {
+            code
+            type
+            description
+          }
+        }
+      }
+    }
+    GRAPHQL;
+
+    $variables = (object)[];
+
+    $response = Http::withHeaders([
+        'Authorization' => 'Apikey test0000-0000-0000-0000-000000000000',
+        'Content-Type' => 'application/json',
+    ])->post('https://api.travelgatex.com', [
+        'query' => $query,
+        'variables' => $variables
+    ]);
+
+    return $response->json();
+}
+
+public function introspectSearchCriteria()
+{
+    $query = <<<GQL
+    {
+        __type(name: "Mutation") {
+            fields {
+                name
+                args {
+                    name
+                    type {
+                        kind
+                        name
+                        ofType {
+                            kind
+                            name
+                        }
+                    }
+                }
+            }
+        }
+    }
+    GQL;
+
+    $response = Http::withHeaders([
+        'Authorization' => 'Apikey test0000-0000-0000-0000-000000000000',
+        'Content-Type' => 'application/json',
+    ])->post('https://api.travelgatex.com', [
+        'query' => $query
+    ]);
+
+    return response()->json($response->json(), $response->status());
+}
+}
+
+

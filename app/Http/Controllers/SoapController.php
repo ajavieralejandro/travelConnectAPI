@@ -18,8 +18,11 @@ class SoapController extends Controller
     {
         $olaService = new OlaServiceProvider();
 
+        $fechaDesde = $request->fecha_desde;
+        $fechaHasta = $request->fecha_hasta;
+        $destino = $olaService->obtenerCodigosPorDestino($request->destino);
 
-        return response()->json($olaService->fetchPackageData('2025-07-24', '2025-07-24', 'BUE', 'BOG'));
+        return response()->json(  $paquetes = $olaService->fetchPackageData($fechaDesde, $fechaHasta, 'BUE', $codigoDestino));
         $url = "https://aws-qa1.ola.com.ar/qa/wsola/endpoint";
 
         // Definir el XML de la solicitud

@@ -56,6 +56,8 @@ Route::get('/tenant-check', function () {
     ]);
 });
 
+Route::get('/graphql/introspect', [HotelTravelGate::class, 'introspect']);
+Route::get('/graphql/search', [HotelTravelGate::class, 'searchDisponibility']); // activar una vez que sepas el nombre correcto
 Route::post('/search-hotels-2', [HotelTravelGate::class, 'searchHotelsGeo'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 Route::get('/tenants/{domain}', [TenantController::class, 'getTenant']);
 //Agencias
@@ -71,6 +73,7 @@ Route::post('/paquetes2/filtrar2', [PaquetesController::class, 'obtenerPaquetesP
 
 
 Route::post('/hotels/search', [HotelTravelGate::class, 'searchHotels'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+Route::get('/graphql/introspect/searchcriteria', [HotelTravelGate::class, 'introspectSearchCriteria']);
 
 // Luego, la ruta general
 Route::get('/', function () {
