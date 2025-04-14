@@ -21,134 +21,142 @@
 <body>
 
     <!-- Header con Logo -->
-  <header class="text-center py-4">
-    <nav class="relative flex items-center justify-between px-4 py-4 bg-white shadow-md">
-        <!-- Logo -->
-        <a class="text-3xl font-bold leading-none" href="index.php?seccion=inicio">
-            <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-32 mx-auto mt-6">
-        </a>
+    <header class="text-center py-4">
+        <nav class="relative flex items-center justify-between px-4 py-4 bg-white shadow-md">
+            <!-- Logo -->
+            <a class="text-3xl font-bold leading-none" href="index.php?seccion=inicio">
+                <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-32 mx-auto mt-6">
+            </a>
 
-        <!-- Botón hamburguesa para móvil -->
-        <div class="lg:hidden">
-            <button class="flex items-center p-3 text-black-600 navbar-burger" onclick="toggleMenu()">
-                <svg class="block w-5 h-5 fill-current" viewBox="0 0 20 20">
-                    <title>Menú</title>
-                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Menú principal -->
-        <ul id="menu" class="absolute hidden lg:flex lg:static lg:translate-x-0 lg:translate-y-0 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 lg:items-center lg:space-x-6 text-sm">
-            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#carouselExampleCaptions">Inicio</a></li>
-            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#QuienesSomos">Quiénes somos</a></li>
-            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Caracteristicas">Características</a></li>
-            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Beneficios">Beneficios</a></li>
-            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Planes">Planes</a></li>
-            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#NosAcompanan">Nos acompañan</a></li>
-            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Contacto">Contacto</a></li>
-        </ul>
-    </nav>
-
-    <!-- Menú lateral para móviles (off-canvas) -->
-    <div id="offcanvasMenu" class="fixed inset-0 z-50 bg-black bg-opacity-25 hidden lg:hidden">
-        <div class="fixed top-0 right-0 z-50 w-64 bg-white shadow-lg p-6 h-full transform translate-x-full transition-all duration-300 ease-in-out" id="sideMenu">
-            <div class="flex items-center mb-8">
-                <a class="mr-auto text-3xl font-bold leading-none" href="#">
-    <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-10 h-auto">
-</a>
-                        <path xmlns="http://www.w3.org/2000/svg" d="M8284 9162 c-2 -207 -55 -427 -161 -667 -147 -333 -404 -644 -733 -886 -81 -59 -247 -169 -256 -169 -3 0 -18 -9 -34 -20 -26 -19 -344 -180 -354 -180 -3 0 -29 -11 -58 -24 -227 -101 -642 -225 -973 -290 -125 -25 -397 -70 -480 -80 -22 -3 -76 -9 -120 -15 -100 -13 -142 -17 -357 -36 -29 -2 -98 -7 -153 -10 -267 -15 -436 -28 -525 -40 -14 -2 -45 -7 -70 -10 -59 -8 -99 -14 -130 -20 -14 -3 -41 -7 -60 -11 -19 -3 -39 -7 -45 -8 -5 -2 -28 -6 -50 -10 -234 -45 -617 -165 -822 -257 -23 -10 -45 -19 -48 -19 -7 0 -284 -138 -340 -170 -631 -355 -1107 -842 -1402 -1432 -159 -320 -251 -633 -308 -1056 -26 -190 -27 -635 -1 -832 3 -19 7 -59 10 -89 4 -30 11 -84 17 -120 6 -36 12 -77 14 -91 7 -43 33 -174 39 -190 3 -8 7 -28 9 -45 6 -35 52 -221 72 -285 7 -25 23 -79 35 -120 29 -99 118 -283 189 -389 67 -103 203 -244 286 -298 75 -49 178 -103 196 -103 16 0 27 16 77 110 124 231 304 529 485 800 82 124 153 227 157 230 3 3 28 36 54 74 116 167 384 497 546 671 148 160 448 450 560 542 14 12 54 45 90 75 88 73 219 172 313 238 42 29 77 57 77 62 0 5 -13 34 -29 66 -69 137 -149 405 -181 602 -7 41 -14 82 -15 90 -1 8 -6 46 -10 83 -3 37 -8 77 -10 88 -2 11 -7 65 -11 122 -3 56 -8 104 -9 107 -2 3 0 12 5 19 6 10 10 8 15 -10 10 -34 167 -346 228 -454 118 -210 319 -515 340 -515 4 0 40 18 80 40 230 128 521 255 787 343 118 40 336 102 395 113 28 5 53 11 105 23 25 5 59 12 75 15 17 3 41 8 55 11 34 7 274 43 335 50 152 18 372 29 565 29 194 0 481 -11 489 -19 2 -3 -3 -6 -12 -6 -9 -1 -20 -2 -24 -3 -33 -8 -73 -16 -98 -21 -61 -10 -264 -56 -390 -90 -649 -170 -1243 -437 -1770 -794 -60 -41 -121 -82 -134 -93 l-24 -18 124 -59 c109 -52 282 -116 404 -149 92 -26 192 -51 220 -55 17 -3 64 -12 105 -21 71 -14 151 -28 230 -41 19 -3 46 -7 60 -10 14 -2 45 -7 70 -10 25 -4 56 -8 70 -10 14 -2 53 -7 88 -10 35 -4 71 -8 81 -10 10 -2 51 -6 92 -9 101 -9 141 -14 147 -21 3 -3 -15 -5 -39 -6 -24 0 -52 -2 -62 -4 -21 -4 -139 -12 -307 -22 -242 -14 -700 -7 -880 13 -41 4 -187 27 -250 39 -125 23 -274 68 -373 111 -43 19 -81 34 -86 34 -4 0 -16 -8 -27 -17 -10 -10 -37 -33 -59 -52 -166 -141 -422 -395 -592 -586 -228 -257 -536 -672 -688 -925 -21 -36 -43 -66 -47 -68 -4 -2 -8 -7 -8 -11 0 -5 -24 -48 -54 -97 -156 -261 -493 -915 -480 -935 2 -3 47 -21 101 -38 54 -18 107 -36 118 -41 58 -25 458 -138 640 -181 118 -34 243 -71 277 -81 20 -4 46 -7 62 -7 24 0 55 -3 89 -9 49 -7 186 -9 237 -4 28 2 47 12 63 28 101 99 277 293 412 470 67 73 127 140 159 152 32 13 104 21 158 17 90 -8 255 -35 338 -59 81 -24 244 -80 366 -123 39 -14 78 -29 88 -33 34 -23 28 -37 -21 -60z" />
+            <!-- Botón hamburguesa para móvil -->
+            <div class="lg:hidden">
+                <button class="flex items-center p-3 text-black-600 navbar-burger" onclick="toggleMenu()">
+                    <svg class="block w-5 h-5 fill-current" viewBox="0 0 20 20">
+                        <title>Menú</title>
+                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
                     </svg>
-                </a>
-                <button class="close-button  m-3" onclick="toggleMenu()">×</button>
+                </button>
             </div>
-         <style>
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
-  }
 
-  .animate-pulse {
-    animation: pulse 1s infinite;
-  }
-</style>
+            <!-- Menú principal -->
+            <ul id="menu"
+                class="absolute hidden lg:flex lg:static lg:translate-x-0 lg:translate-y-0 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 lg:items-center lg:space-x-6 text-sm">
+                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#carouselExampleCaptions">Inicio</a>
+                </li>
+                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#QuienesSomos">Quiénes somos</a></li>
+                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Caracteristicas">Características</a>
+                </li>
+                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Beneficios">Beneficios</a></li>
+                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Planes">Planes</a></li>
+                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#NosAcompanan">Nos acompañan</a></li>
+                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Contacto">Contacto</a></li>
+            </ul>
+        </nav>
 
-<ul class="space-y-6 text-gray-600">
-  <li class="mb-1">
-    <a class="flex items-center font-medium" href="#carouselExampleCaptions">
-      <i class="bi bi-star text-green-600 mr-2 animate-pulse"></i>
-      <span>Inicio</span>
-    </a>
-  </li>
+        <!-- Menú lateral para móviles (off-canvas) -->
+        <div id="offcanvasMenu" class="fixed inset-0 z-50 bg-black bg-opacity-25 hidden lg:hidden">
+            <div class="fixed top-0 right-0 z-50 w-64 bg-white shadow-lg p-6 h-full transform translate-x-full transition-all duration-300 ease-in-out"
+                id="sideMenu">
+                <div class="flex items-center mb-8">
+                    <a class="mr-auto text-3xl font-bold leading-none" href="#">
+                        <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-10 h-auto">
+                    </a>
+                    <path xmlns="http://www.w3.org/2000/svg"
+                        d="M8284 9162 c-2 -207 -55 -427 -161 -667 -147 -333 -404 -644 -733 -886 -81 -59 -247 -169 -256 -169 -3 0 -18 -9 -34 -20 -26 -19 -344 -180 -354 -180 -3 0 -29 -11 -58 -24 -227 -101 -642 -225 -973 -290 -125 -25 -397 -70 -480 -80 -22 -3 -76 -9 -120 -15 -100 -13 -142 -17 -357 -36 -29 -2 -98 -7 -153 -10 -267 -15 -436 -28 -525 -40 -14 -2 -45 -7 -70 -10 -59 -8 -99 -14 -130 -20 -14 -3 -41 -7 -60 -11 -19 -3 -39 -7 -45 -8 -5 -2 -28 -6 -50 -10 -234 -45 -617 -165 -822 -257 -23 -10 -45 -19 -48 -19 -7 0 -284 -138 -340 -170 -631 -355 -1107 -842 -1402 -1432 -159 -320 -251 -633 -308 -1056 -26 -190 -27 -635 -1 -832 3 -19 7 -59 10 -89 4 -30 11 -84 17 -120 6 -36 12 -77 14 -91 7 -43 33 -174 39 -190 3 -8 7 -28 9 -45 6 -35 52 -221 72 -285 7 -25 23 -79 35 -120 29 -99 118 -283 189 -389 67 -103 203 -244 286 -298 75 -49 178 -103 196 -103 16 0 27 16 77 110 124 231 304 529 485 800 82 124 153 227 157 230 3 3 28 36 54 74 116 167 384 497 546 671 148 160 448 450 560 542 14 12 54 45 90 75 88 73 219 172 313 238 42 29 77 57 77 62 0 5 -13 34 -29 66 -69 137 -149 405 -181 602 -7 41 -14 82 -15 90 -1 8 -6 46 -10 83 -3 37 -8 77 -10 88 -2 11 -7 65 -11 122 -3 56 -8 104 -9 107 -2 3 0 12 5 19 6 10 10 8 15 -10 10 -34 167 -346 228 -454 118 -210 319 -515 340 -515 4 0 40 18 80 40 230 128 521 255 787 343 118 40 336 102 395 113 28 5 53 11 105 23 25 5 59 12 75 15 17 3 41 8 55 11 34 7 274 43 335 50 152 18 372 29 565 29 194 0 481 -11 489 -19 2 -3 -3 -6 -12 -6 -9 -1 -20 -2 -24 -3 -33 -8 -73 -16 -98 -21 -61 -10 -264 -56 -390 -90 -649 -170 -1243 -437 -1770 -794 -60 -41 -121 -82 -134 -93 l-24 -18 124 -59 c109 -52 282 -116 404 -149 92 -26 192 -51 220 -55 17 -3 64 -12 105 -21 71 -14 151 -28 230 -41 19 -3 46 -7 60 -10 14 -2 45 -7 70 -10 25 -4 56 -8 70 -10 14 -2 53 -7 88 -10 35 -4 71 -8 81 -10 10 -2 51 -6 92 -9 101 -9 141 -14 147 -21 3 -3 -15 -5 -39 -6 -24 0 -52 -2 -62 -4 -21 -4 -139 -12 -307 -22 -242 -14 -700 -7 -880 13 -41 4 -187 27 -250 39 -125 23 -274 68 -373 111 -43 19 -81 34 -86 34 -4 0 -16 -8 -27 -17 -10 -10 -37 -33 -59 -52 -166 -141 -422 -395 -592 -586 -228 -257 -536 -672 -688 -925 -21 -36 -43 -66 -47 -68 -4 -2 -8 -7 -8 -11 0 -5 -24 -48 -54 -97 -156 -261 -493 -915 -480 -935 2 -3 47 -21 101 -38 54 -18 107 -36 118 -41 58 -25 458 -138 640 -181 118 -34 243 -71 277 -81 20 -4 46 -7 62 -7 24 0 55 -3 89 -9 49 -7 186 -9 237 -4 28 2 47 12 63 28 101 99 277 293 412 470 67 73 127 140 159 152 32 13 104 21 158 17 90 -8 255 -35 338 -59 81 -24 244 -80 366 -123 39 -14 78 -29 88 -33 34 -23 28 -37 -21 -60z" />
+                    </svg>
+                    </a>
+                    <button class="close-button  m-3" onclick="toggleMenu()">×</button>
+                </div>
+                <style>
+                    @keyframes pulse {
 
-  <li class="mb-1">
-    <a class="flex items-center font-medium" href="#QuienesSomos">
-      <i class="bi bi-people text-green-600 mr-2 animate-pulse"></i>
-      <span>Quiénes somos</span>
-    </a>
-  </li>
+                        0%,
+                        100% {
+                            transform: scale(1);
+                        }
 
-  <li class="mb-1">
-    <a class="flex items-center font-medium" href="#Caracteristicas">
-      <i class="bi bi-grid text-green-600 mr-2 animate-pulse"></i>
-      <span>Características</span>
-    </a>
-  </li>
+                        50% {
+                            transform: scale(1.2);
+                        }
+                    }
 
-  <li class="mb-1">
-    <a class="flex items-center font-medium" href="#Beneficios">
-      <i class="bi bi-star text-green-600 mr-2 animate-pulse"></i>
-      <span>Beneficios</span>
-    </a>
-  </li>
+                    .animate-pulse {
+                        animation: pulse 1s infinite;
+                    }
+                </style>
 
-  <li class="mb-1">
-    <a class="flex items-center font-medium" href="#Planes">
-      <i class="bi bi-calendar2-event text-green-600 mr-2 animate-pulse"></i>
-      <span>Planes</span>
-    </a>
-  </li>
+                <ul class="space-y-6 text-gray-600">
+                    <li class="mb-1">
+                        <a class="flex items-center font-medium" href="#carouselExampleCaptions">
+                            <i class="bi bi-star text-green-600 mr-2 animate-pulse"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
 
-  <li class="mb-1">
-    <a class="flex items-center font-medium" href="#NosAcompanan">
-      <i class="bi bi-people-fill text-green-600 mr-2 animate-pulse"></i>
-      <span>Nos acompañan</span>
-    </a>
-  </li>
+                    <li class="mb-1">
+                        <a class="flex items-center font-medium" href="#QuienesSomos">
+                            <i class="bi bi-people text-green-600 mr-2 animate-pulse"></i>
+                            <span>Quiénes somos</span>
+                        </a>
+                    </li>
 
-  <li class="mb-1">
-    <a class="flex items-center font-medium" href="#Contacto">
-      <i class="bi bi-envelope text-green-600 mr-2 animate-pulse"></i>
-      <span>Contacto</span>
-    </a>
-  </li>
-</ul>
+                    <li class="mb-1">
+                        <a class="flex items-center font-medium" href="#Caracteristicas">
+                            <i class="bi bi-grid text-green-600 mr-2 animate-pulse"></i>
+                            <span>Características</span>
+                        </a>
+                    </li>
+
+                    <li class="mb-1">
+                        <a class="flex items-center font-medium" href="#Beneficios">
+                            <i class="bi bi-star text-green-600 mr-2 animate-pulse"></i>
+                            <span>Beneficios</span>
+                        </a>
+                    </li>
+
+                    <li class="mb-1">
+                        <a class="flex items-center font-medium" href="#Planes">
+                            <i class="bi bi-calendar2-event text-green-600 mr-2 animate-pulse"></i>
+                            <span>Planes</span>
+                        </a>
+                    </li>
+
+                    <li class="mb-1">
+                        <a class="flex items-center font-medium" href="#NosAcompanan">
+                            <i class="bi bi-people-fill text-green-600 mr-2 animate-pulse"></i>
+                            <span>Nos acompañan</span>
+                        </a>
+                    </li>
+
+                    <li class="mb-1">
+                        <a class="flex items-center font-medium" href="#Contacto">
+                            <i class="bi bi-envelope text-green-600 mr-2 animate-pulse"></i>
+                            <span>Contacto</span>
+                        </a>
+                    </li>
+                </ul>
 
 
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<script>
-    // Función para mostrar y ocultar el menú off-canvas
-    function toggleMenu() {
-        const menu = document.getElementById('offcanvasMenu');
-        const sideMenu = document.getElementById('sideMenu');
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-            sideMenu.classList.remove('translate-x-full'); // Desliza el menú
-        } else {
-            sideMenu.classList.add('translate-x-full'); // Oculta el menú
-            setTimeout(() => {
-                menu.classList.add('hidden');
-            }, 300); // Espera a la animación para ocultarlo
+    <script>
+        // Función para mostrar y ocultar el menú off-canvas
+        function toggleMenu() {
+            const menu = document.getElementById('offcanvasMenu');
+            const sideMenu = document.getElementById('sideMenu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                sideMenu.classList.remove('translate-x-full'); // Desliza el menú
+            } else {
+                sideMenu.classList.add('translate-x-full'); // Oculta el menú
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 300); // Espera a la animación para ocultarlo
+            }
         }
-    }
-</script>
+    </script>
 
 
 
@@ -281,7 +289,8 @@
                 </div>
 
                 <div class="text-content-viajes ">
- <h2 style="margin-bottom:30px; font-size: 2rem;"><strong>Transformación del Negocio de los Viajes</strong></h2>
+                    <h2 style="margin-bottom:30px; font-size: 2rem;"><strong>Transformación del Negocio de los
+                            Viajes</strong></h2>
                     <p>En el pasado, las empresas de viajes dependían principalmente de métodos tradicionales
                         para
                         gestionar sus
@@ -314,8 +323,8 @@
                 </div>
 
                 <div class="text-content-viajes2">
-                       <h2 class="section-title" style="color: #333">Del
-                    Modelo Tradicional al Digital</h2>
+                    <h2 class="section-title" style="color: #333">Del
+                        Modelo Tradicional al Digital</h2>
                     <p>El Futuro del Turismo Está en la Digitalización. La digitalización es el futuro del sector de
                         viajes y
                         turismo, y Travel Connect está aquí para guiar a los agentes de viajes y PYMEs en este proceso
@@ -438,21 +447,29 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
             <h2 class="section-title" style="color: #333; text-align: center;">Beneficios</h2>
             <section class="beneficios-section">
                 <style>
-                    .beneficios-section {
-                        display: flex;
-                        gap: 40px;
-                        justify-content: center;
-                        align-items: stretch;
-                        padding: 80px 40px;
-                        background-image: url('https://img.freepik.com/foto-gratis/dos-companeros-trabajo-trabajando-nueva-estrategia-empresarial_329181-17664.jpg?uid=R102197663&ga=GA1.1.1238354021.1740411874&semt=ais_hybrid&w=740');
-                        background-size: cover;
-                        background-attachment: fixed;
-                        background-position: center;
-                        flex-wrap: wrap;
-                        width: 100%;
-                        height: 100vh;
-                        box-sizing: border-box;
-                    }
+   .beneficios-section {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: stretch;
+    padding: 80px 20px; /* Menor padding horizontal */
+    background-image: url('https://img.freepik.com/foto-gratis/dos-companeros-trabajo-trabajando-nueva-estrategia-empresarial_329181-17664.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* Pantallas más grandes: cambia a fila */
+@media (min-width: 880px) {
+    .beneficios-section {
+        flex-direction: row;
+        gap: 30px;
+    }
+}
 
                     .beneficio-columna {
                         background-color: rgba(255, 255, 255, 0.95);
@@ -621,20 +638,23 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
                 document.addEventListener('DOMContentLoaded', () => {
                     const words = ['FIDELIZAR', 'CAPTAR', 'INNOVAR', 'GENERAR'];
                     const animatedText = document.querySelector('.animated-text');
+                    if (!animatedText) {
+                        console.error('No se encontró el elemento con la clase .animated-text');
+                        return;
+                    }
                     let currentIndex = 0;
 
                     const animateWord = () => {
-                        animatedText.style.opacity = 0; // Ocultar palabra actual
-                        animatedText.style.transform = 'translateX(100%)'; // Posición inicial fuera de la pantalla
+                        animatedText.style.opacity = 0;
+                        animatedText.style.transform = 'translateX(100%)';
                         setTimeout(() => {
-                            animatedText.textContent = words[currentIndex]; // Cambiar palabra
-                            animatedText.style.opacity = 1; // Mostrar palabra
-                            animatedText.style.transform = 'translateX(0)'; // Mover palabra al centro
-                            currentIndex = (currentIndex + 1) % words.length; // Siguiente palabra
-                        }, 900); // Tiempo para actualizar la palabra
+                            animatedText.textContent = words[currentIndex];
+                            animatedText.style.opacity = 1;
+                            animatedText.style.transform = 'translateX(0)';
+                            currentIndex = (currentIndex + 1) % words.length;
+                        }, 900);
                     };
-
-                    setInterval(animateWord, 5000); // Cambiar palabras cada 3 segundos
+                    setInterval(animateWord, 5000); // Cambiar palabras cada 5 segundos
                     animateWord(); // Iniciar animación
                 });
             </script>
@@ -748,41 +768,85 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
                 </script>
 
             </div>
+
         </section>
 
 
-        <section id="NosAcompanan"
-            style="margin-top: 20px; margin-bottom: 20px; padding: 20px; ; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f8f7f7;">
-            <h2 class="section-title" style="color: #333">Nos acompañan</h2>
-            </div>
-            <div style="
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 30px;
-        align-items: center;
-        justify-items: center;
-        max-width: 1000px;
-        margin: 0 auto;
-        margin-bottom: 20px;
-        padding: 0 20px;
-    "
-                class="acompanan-grid">
-                <img src="{{ asset('storage/travel/acompañan1.png') }}" alt="Logo 1"
-                    style="max-height: 80px; object-fit: contain;">
-                <img src="{{ asset('storage/travel/acompañan2.png') }}" alt="Logo 2"
-                    style="max-height: 50px; object-fit: contain;">
-                <img src="{{ asset('storage/travel/acompañan3.png') }}" alt="Logo 3"
-                    style="max-height: 50px; object-fit: contain;">
-                <img src="{{ asset('storage/travel/acompañan4.jpg') }}" alt="Logo 4"
-                    style="max-height: 80px; object-fit: contain;">
-                <img src="{{ asset('storage/travel/acompañan5.jpg') }}" alt="Logo 5"
-                    style="max-height: 80px; object-fit: contain;">
-                <img src="{{ asset('storage/travel/acompañan6.png') }}" alt="Logo 6"
-                    style="max-height: 50px; object-fit: contain;">
-                <img src="{{ asset('storage/travel/acompañan7.jpg') }}" alt="Logo 7"
-                    style="max-height: 100px; object-fit: contain;">
-            </div>
-        </section>
+    <section id="NosAcompanan" class="mt-6 mb-6 py-6 px-6 bg-gray-100 rounded-lg shadow-lg">
+  <h2 class="text-center text-gray-800 text-2xl font-semibold mb-6">Nos acompañan</h2>
+
+  <div class="overflow-hidden w-full">
+   <div class="flex whitespace-nowrap animate-scroll-logos">
+
+
+      <!-- Primer bloque de logos -->
+      <div class="flex gap-10 shrink-0">
+        @for ($i = 0; $i < 2; $i++)
+        <img src="{{ asset('storage/travel/acompañan1.png') }}" alt="Logo 1" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan2.png') }}" alt="Logo 2" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan3.png') }}" alt="Logo 3" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan6.png') }}" alt="Logo 6" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan70.png') }}" alt="Logo 7" class="h-12 object-contain">
+         <img src="{{ asset('storage/travel/acompañan1.png') }}" alt="Logo 1" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan2.png') }}" alt="Logo 2" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan3.png') }}" alt="Logo 3" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan6.png') }}" alt="Logo 6" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompañan70.png') }}" alt="Logo 7" class="h-12 object-contain">
+       @endfor
+
+    </div>
+  </div>
+</section>
+
+<!-- Agregar animación en Tailwind -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Agrega la animación personalizada en Tailwind
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes scroll-logos {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .animate-scroll-logos {
+                animation: scroll-logos 10s linear infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+   <style>
+    @media (max-width: 768px) {
+        .price-btn {
+            transition: none !important;
+            transform: none !important;
+        }
+
+        .price-btn:hover {
+            transform: none !important;
+            background-color: inherit !important;
+            color: inherit !important;
+        }
+         .consultar-btn:hover {
+            background-color: inherit !important;
+        }
+
+    }
+</style>
+
+
+</script>
+
+
+
         <section id="Contacto">
             <div class="contacto-container">
                 <div class="contacto-form">
