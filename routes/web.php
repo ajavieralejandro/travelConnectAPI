@@ -10,7 +10,7 @@ use App\Http\Controllers\JuliaController;
 use App\Http\Controllers\PaquetesController;
 use App\Http\Controllers\PaqueteAgenciaController;
 use App\Http\Controllers\HotelTravelGate;
-
+use App\Http\Controllers\ContactController;
 
 Route::get ('/paquetes', [JuliaController::class, 'getPaquetes']);
 
@@ -70,6 +70,8 @@ Route::post('/paquetes/filtrar', [PaquetesController::class, 'obtenerPaquetesPor
 ;
 Route::post('/paquetes2/filtrar2', [PaquetesController::class, 'obtenerPaquetesPorDestino'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 ;
+
+Route::post('/contacto/enviar', [ContactController::class, 'send'])->name('contact.send');
 
 
 Route::post('/hotels/search', [HotelTravelGate::class, 'searchHotels'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);

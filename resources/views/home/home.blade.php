@@ -19,6 +19,17 @@
 </head>
 
 <body>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 
     <!-- Header con Logo -->
   <header class="py-4 text-center">
@@ -787,11 +798,15 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
             <div class="contacto-container">
                 <div class="contacto-form">
                     <h2 class="section-title" style="color: #333">Contacto</h2>
-                    <p class="contacto-description">Utilizá el siguiente formulario para ponerte en contacto con
-                        nosotros. ¡Nos
-                        encantaría saber de ti!</p>
+                    <p class="contacto-description">Utilizá el siguiente formulario para ponerte en contacto con nosotros. ¡Nos encantaría saber de ti!</p>
 
-                    <form action="#" method="POST">
+                    @if(session('success'))
+                        <div style="color: green">{{ session('success') }}</div>
+                    @endif
+
+                    <form action="{{ route('contact.send') }}" method="POST">
+                        @csrf
+
                         <div class="form-group">
                             <div>
                                 <label for="nombre">Nombre</label>
@@ -800,22 +815,19 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
 
                             <div>
                                 <label for="apellido">Apellido</label>
-                                <input type="text" id="apellido" name="apellido" placeholder="Apellido"
-                                    required>
+                                <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div>
                                 <label for="telefono">Teléfono</label>
-                                <input type="tel" id="telefono" name="telefono" placeholder="54 11 XXXXXXXX"
-                                    required>
+                                <input type="tel" id="telefono" name="telefono" placeholder="54 11 XXXXXXXX" required>
                             </div>
 
                             <div>
                                 <label for="email">Mail</label>
-                                <input type="email" id="email" name="email"
-                                    placeholder="usuario@dominio.com" required>
+                                <input type="email" id="email" name="email" placeholder="usuario@dominio.com" required>
                             </div>
                         </div>
 
@@ -827,14 +839,14 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
 
                             <div>
                                 <label for="pais">País</label>
-                                <select id="paisSelect">
+                                <select id="paisSelect" name="pais">
                                     <option value="">Selecciona un país</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label for="provicnia">Provincia</label>
-                                <select id="ciudadSelect">
+                                <label for="provincia">Provincia</label>
+                                <select id="ciudadSelect" name="provincia">
                                     <option value="">Selecciona una ciudad</option>
                                 </select>
                             </div>
