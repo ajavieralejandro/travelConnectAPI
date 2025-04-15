@@ -768,12 +768,14 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
                 </script>
 
             </div>
+           <style>
 
+           </style>
         </section>
 
 
     <section id="NosAcompanan" class="mt-6 mb-6 py-6 px-6 bg-gray-100 rounded-lg shadow-lg">
-  <h2 class="text-center text-gray-800 text-2xl font-semibold mb-6">Nos acompañan</h2>
+   <h2 class="section-title" style="color: #333">Nos acompañan</h2>
 
   <div class="overflow-hidden w-full">
    <div class="flex whitespace-nowrap animate-scroll-logos">
