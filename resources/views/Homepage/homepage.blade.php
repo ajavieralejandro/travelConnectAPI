@@ -801,7 +801,24 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
     </div>
   </div>
 </section>
+ <style>
+    @media (max-width: 768px) {
+        .price-btn {
+            transition: none !important;
+            transform: none !important;
+        }
 
+        .price-btn:hover {
+            transform: none !important;
+            background-color: inherit !important;
+            color: inherit !important;
+        }
+         .consultar-btn:hover {
+            background-color: inherit !important;
+        }
+
+    }
+</style>
 <!-- Agregar animación en Tailwind -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -823,24 +840,7 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
         `;
         document.head.appendChild(style);
     });
-   <style>
-    @media (max-width: 768px) {
-        .price-btn {
-            transition: none !important;
-            transform: none !important;
-        }
 
-        .price-btn:hover {
-            transform: none !important;
-            background-color: inherit !important;
-            color: inherit !important;
-        }
-         .consultar-btn:hover {
-            background-color: inherit !important;
-        }
-
-    }
-</style>
 
 
 </script>
