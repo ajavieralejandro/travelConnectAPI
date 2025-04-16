@@ -43,6 +43,7 @@ return array(
     'Stancl\\VirtualColumn\\' => array($vendorDir . '/stancl/virtualcolumn/src'),
     'Stancl\\Tenancy\\' => array($vendorDir . '/stancl/tenancy/src'),
     'Stancl\\JobPipeline\\' => array($vendorDir . '/stancl/jobpipeline/src'),
+    'SendinBlue\\Client\\' => array($vendorDir . '/sendinblue/api-v3-sdk/lib'),
     'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
     'Ramsey\\Collection\\' => array($vendorDir . '/ramsey/collection/src'),
     'Psy\\' => array($vendorDir . '/psy/psysh/src'),

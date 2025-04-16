@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'ac6a019df2e88976c178fb15d98330ac23f8dbe4',
+        'reference' => '92edd01723c727195c0f1df7072620becd018d49',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -442,7 +442,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'ac6a019df2e88976c178fb15d98330ac23f8dbe4',
+            'reference' => '92edd01723c727195c0f1df7072620becd018d49',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1048,6 +1048,15 @@
             'install_path' => __DIR__ . '/../sebastian/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'sendinblue/api-v3-sdk' => array(
+            'pretty_version' => 'v8.4.2',
+            'version' => '8.4.2.0',
+            'reference' => '5d08398c7247a2f5d80f285d08a6dbe169f18eab',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sendinblue/api-v3-sdk',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'spatie/once' => array(
             'dev_requirement' => false,

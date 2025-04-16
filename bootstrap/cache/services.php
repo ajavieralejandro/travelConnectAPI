@@ -33,7 +33,9 @@
     29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     30 => 'Termwind\\Laravel\\TermwindServiceProvider',
     31 => 'Stancl\\Tenancy\\TenancyServiceProvider',
-    32 => 'App\\Providers\\AppServiceProvider',
+    32 => 'App\\Providers\\BrevoServiceProvider',
+    33 => 'App\\Providers\\AppServiceProvider',
+    34 => 'App\\Providers\\BrevoServiceProvider',
   ),
   'eager' => 
   array (
@@ -53,7 +55,9 @@
     13 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
     15 => 'Stancl\\Tenancy\\TenancyServiceProvider',
-    16 => 'App\\Providers\\AppServiceProvider',
+    16 => 'App\\Providers\\BrevoServiceProvider',
+    17 => 'App\\Providers\\AppServiceProvider',
+    18 => 'App\\Providers\\BrevoServiceProvider',
   ),
   'deferred' => 
   array (
