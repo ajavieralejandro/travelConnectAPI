@@ -374,70 +374,101 @@
 
         <section id="Caracteristicas" class="caracteristicas">
             <div class="containerCaracterisitcas">
-                <h2 class="section-title" style="color: #333">Características</h2>
-                <div class="rowCaracteristicas">
-                    <!-- Contenedor para cada tarjeta e imagen -->
-                    <div class="custom-feature-container">
-                        <!-- Imagen fuera de la tarjeta -->
-                        <div class="custom-feature-image" style="margin-top: 20%">
-                            <img src="{{ asset('storage/travel/integrarnos.jpg') }}" alt="Integración">
+                <h2 class="section-title" style="color: #333; text-align: center;">Características</h2>
+
+                <!-- Contenedor general flexible -->
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+
+                    <!-- Tarjeta 1 -->
+                    <div style="flex: 1 1 250px; max-width: 300px;">
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <img src="{{ asset('storage/travel/integrarnos.jpg') }}" alt="Integración"
+                                style="max-width: 100%; height: auto;">
                         </div>
-                        <!-- Contenedor de la tarjeta -->
-                        <div class="custom-feature-item"
-                            style="background: #cbe68a;
-background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);; padding: 210px 25px 25px; ">
-                            <h3><strong>Integrarnos</strong></h3>
+                        <div
+                            style="background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);
+                            padding: 2rem;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            min-height: 200px;
+                            border-radius: 12px;
+                            box-sizing: border-box;">
+                            <h3><strong>Integrar</strong></h3>
                             <p>Con los principales contenidos del mercado.</p>
                         </div>
                     </div>
 
-                    <div class="custom-feature-container">
-                        <div class="custom-feature-image" style="margin-top: 20%">
-                            <img src="{{ asset('storage/travel/vincular.jpg') }}" alt="Vincular">
+                    <!-- Tarjeta 2 -->
+                    <div style="flex: 1 1 250px; max-width: 300px;">
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <img src="{{ asset('storage/travel/vincular.jpg') }}" alt="Vincular"
+                                style="max-width: 100%; height: auto;">
                         </div>
-                        <div class="custom-feature-item"
-                            style="background: #cbe68a;
-background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);; padding: 210px 25px 25px; ">
+                        <div
+                            style="background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);
+                            padding: 2rem;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            min-height: 200px;
+                            border-radius: 12px;
+                            box-sizing: border-box;">
                             <h3><strong>Vincular</strong></h3>
                             <p>Desde la web hasta el back office pasando por procesos intermedios.</p>
                         </div>
                     </div>
 
-                    <div class="custom-feature-container">
-                        <div class="custom-feature-image" style="margin-top: 20%">
-                            <img src="{{ asset('storage/travel/activar.jpg') }}" alt="Marketing Digital">
+                    <!-- Tarjeta 3 -->
+                    <div style="flex: 1 1 250px; max-width: 300px;">
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <img src="{{ asset('storage/travel/activar.jpg') }}" alt="Marketing Digital"
+                                style="max-width: 100%; height: auto;">
                         </div>
-                        <div class="custom-feature-item"
-                            style="background: #cbe68a;
-background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);; padding: 210px 25px 25px; ">
+                        <div
+                            style="background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);
+                            padding: 2rem;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            min-height: 200px;
+                            border-radius: 12px;
+                            box-sizing: border-box;">
                             <h3><strong>Activar</strong></h3>
                             <p>El marketing digital para la generación de la demanda.</p>
                         </div>
                     </div>
 
-                    <div class="custom-feature-container">
-                        <div class="custom-feature-image" style="margin-top: 20%">
-                            <img src="{{ asset('storage/travel/nosotros 4.jpg') }}" alt="Negociar">
+                    <!-- Tarjeta 4 -->
+                    <div style="flex: 1 1 250px; max-width: 300px;">
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <img src="{{ asset('storage/travel/nosotros 4.jpg') }}" alt="Negociar"
+                                style="max-width: 100%; height: auto;">
                         </div>
-                        <div class="custom-feature-item"
-                            style="background: #cbe68a;
-background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);; padding: 210px 25px 25px; ">
+                        <div
+                            style="background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1) 42%);
+                            padding: 2rem;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            min-height: 200px;
+                            border-radius: 12px;
+                            box-sizing: border-box;">
                             <h3><strong>Negociar</strong></h3>
                             <p>Siempre desde una visión digital.</p>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </section>
-
-        <section>
-            <!-- Banner de imagen -->
-            <div
-                style="width: 100%; padding-top: 20%; background-image: url('{{ asset('storage/travel/1.jpg') }}'); background-size: cover; background-position: center;">
-            </div>
-
-
-
         </section>
 
 
@@ -447,32 +478,36 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
             <h2 class="section-title" style="color: #333; text-align: center;">Beneficios</h2>
             <section class="beneficios-section">
                 <style>
-   .beneficios-section {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    align-items: stretch;
-    padding: 80px 20px; /* Menor padding horizontal */
-    background-image: url('https://img.freepik.com/foto-gratis/dos-companeros-trabajo-trabajando-nueva-estrategia-empresarial_329181-17664.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    flex-wrap: wrap;
-    width: 100%;
-    box-sizing: border-box;
-}
+                    .beneficios-section {
+                        display: flex;
+                        gap: 40px;
+                        justify-content: center;
+                        align-items: stretch;
+                        padding: 80px 20px;
+                        background-image: url('https://img.freepik.com/foto-gratis/dos-companeros-trabajo-trabajando-nueva-estrategia-empresarial_329181-17664.jpg');
+                        background-size: cover;
+                        background-attachment: fixed;
+                        background-position: center;
+                        background-color: rgba(0, 0, 0, 0.4);
+                        /* Oscurece la imagen */
+                        background-blend-mode: darken;
+                        flex-wrap: wrap;
+                        width: 100%;
+                        box-sizing: border-box;
+
+                    }
 
 
-/* Pantallas más grandes: cambia a fila */
-@media (min-width: 880px) {
-    .beneficios-section {
-        flex-direction: row;
-        gap: 30px;
-    }
-}
+                    /* Pantallas más grandes: cambia a fila */
+                    @media (min-width: 880px) {
+                        .beneficios-section {
+                            flex-direction: row;
+                            gap: 30px;
+                        }
+                    }
 
                     .beneficio-columna {
-                        background-color: rgba(255, 255, 255, 0.95);
+                        background-color: rgba(255, 255, 255, 0.8);
                         flex: 1;
                         margin: 10px;
                         max-width: 420px;
@@ -634,198 +669,199 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
                 </script>
             </section>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const words = ['FIDELIZAR', 'CAPTAR', 'INNOVAR', 'GENERAR'];
-                    const animatedText = document.querySelector('.animated-text');
-                    if (!animatedText) {
-                        console.error('No se encontró el elemento con la clase .animated-text');
-                        return;
-                    }
-                    let currentIndex = 0;
 
-                    const animateWord = () => {
-                        animatedText.style.opacity = 0;
-                        animatedText.style.transform = 'translateX(100%)';
-                        setTimeout(() => {
-                            animatedText.textContent = words[currentIndex];
-                            animatedText.style.opacity = 1;
-                            animatedText.style.transform = 'translateX(0)';
-                            currentIndex = (currentIndex + 1) % words.length;
-                        }, 900);
-                    };
-                    setInterval(animateWord, 5000); // Cambiar palabras cada 5 segundos
-                    animateWord(); // Iniciar animación
-                });
-            </script>
+
+        </section>
+
+
+
+  <section>
+            <!-- Banner de imagen -->
+            <div
+                style="width: 100%; padding-top: 20%;  background-image: url('{{ asset('storage/travel/1.jpg') }}'); background-size: cover; background-position: center;">
+            </div>
+
+
 
         </section>
 
 
 
 
+       <section id="Planes" style="max-width: 1200px; margin: 0 auto; padding: 40px; position: relative;
+    background: url('https://img.freepik.com/foto-gratis/amable-disenador-cliente-que-discute-color-pared_74855-2806.jpg?uid=R102197663&ga=GA1.1.1238354021.1740411874&semt=ais_hybrid&w=740') no-repeat center center/cover; overflow: hidden;">
 
-
-        <section id="Planes"
-            style="max-width: 1200px; margin: 0 auto; padding: 40px; position: relative;
-    background: url('https://img.freepik.com/foto-gratis/amable-disenador-cliente-que-discute-color-pared_74855-2806.jpg?uid=R102197663&ga=GA1.1.1238354021.1740411874&semt=ais_hybrid&w=740') no-repeat center center/cover;">
-
-            <!-- Capa de opacidad -->
-            <div
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(255, 255, 255, 0.8); z-index: 0; ">
-            </div>
-
-            <!-- Contenido -->
-            <div
-                style="position: relative; z-index: 1; margin-top: 20px; padding: 20px;
-        border-radius: 10px;  ">
-
-                <h2 class="section-title" style="color: #333">Planes</h2>
-                <p>Somos expertos en tecnología para agencias de viajes.</p>
-
-                <div class="cards-container " style="background: none;">
-
-                    <!-- Tarjeta 1 -->
-                    <div class="card card-1">
-                        <button class="price-btn">Precio: $152000</button>
-                        <h3>Socio Full</h3>
-                        <ul>
-                            <li>Sitio web</li>
-                            <li>Motor reserva aéreos</li>
-                            <li>Contenidos dinámicos</li>
-                            <li>Acceso coworking</li>
-                            <li>Dominio propio</li>
-                            <li>Integración backoffice</li>
-                        </ul>
-                        <button class="consultar-btn" onclick="consultar(1)">Consultar</button>
-                    </div>
-
-                    <!-- Tarjeta 2 -->
-                    <div class="card card-2">
-                        <button class="price-btn">Precio: $120000</button>
-                        <h3>Socio Basic</h3>
-                        <ul>
-                            <li>Sitio web</li>
-                            <li>Motor reserva aéreos</li>
-                            <li>Contenidos dinámicos</li>
-                            <li>Acceso coworking</li>
-                            <li>Dominio propio</li>
-                        </ul>
-                        <button class="consultar-btn" onclick="consultar(2)">Consultar</button>
-                    </div>
-
-                    <!-- Tarjeta 3 -->
-                    <div class="card card-3">
-                        <button class="price-btn">Precio: $290000</button>
-                        <h3>Socio Comercial</h3>
-                        <ul>
-                            <li>Sitio web</li>
-                            <li>Motor reserva aéreos</li>
-                            <li>Contenidos dinámicos</li>
-                            <li>Acceso coworking</li>
-                            <li>Dominio propio</li>
-                            <li>Integración backoffice</li>
-                            <li>Gestión comercial</li>
-                        </ul>
-                        <button class="consultar-btn" onclick="consultar(3)">Consultar</button>
-                    </div>
-                </div>
-
-                <!-- Formulario de consulta -->
-                <div id="formulario-consulta" style="display: none;">
-                    <h2 class="section-title" style="color: #333">Formulario de consulta</h2>
-                    <p id="plan-info">Estás solicitando información por el plan número: <span id="plan-numero"></span>
-                    </p>
-
-                    <form action="" method="POST">
-                        @csrf
-                        <div>
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" name="nombre" id="nombre" required>
-                        </div>
-                        <div>
-                            <label for="email">Correo electrónico:</label>
-                            <input type="email" name="email" id="email" required>
-                        </div>
-                        <div>
-                            <label for="consulta">Consulta:</label>
-                            <textarea name="consulta" id="consulta" required></textarea>
-                        </div>
-                        <button type="submit">Enviar consulta</button>
-                    </form>
-
-                    @if (session('success'))
-                        <p>{{ session('success') }}</p>
-                    @endif
-                </div>
-
-                <script>
-                    function consultar(plan) {
-                        document.getElementById("formulario-consulta").style.display = "block";
-                        document.getElementById("plan-numero").textContent = plan;
-                    }
-                </script>
-
-            </div>
-           <style>
-
-           </style>
-        </section>
-
-
-    <section id="NosAcompanan" class="mt-6 mb-6 py-6 px-6 bg-gray-100 rounded-lg shadow-lg">
-   <h2 class="section-title" style="color: #333">Nos acompañan</h2>
-
-  <div class="overflow-hidden w-full">
-   <div class="flex whitespace-nowrap animate-scroll-logos">
-
-
-      <!-- Primer bloque de logos -->
-      <div class="flex gap-10 shrink-0">
-        @for ($i = 0; $i < 2; $i++)
-        <img src="{{ asset('storage/travel/acompanan1.png') }}" alt="Logo 1" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan2.png') }}" alt="Logo 2" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan3.png') }}" alt="Logo 3" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan6.png') }}" alt="Logo 6" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan70.png') }}" alt="Logo 7" class="h-12 object-contain"><img src="{{ asset('storage/travel/acompanan1.png') }}" alt="Logo 1" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan2.png') }}" alt="Logo 2" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan3.png') }}" alt="Logo 3" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan6.png') }}" alt="Logo 6" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompanan70.png') }}" alt="Logo 7" class="h-12 object-contain">
-       @endfor
-
+    <!-- Capa de opacidad oscura + desenfoque -->
+    <div style="
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 0;">
     </div>
-  </div>
+
+    <!-- Contenido principal con z-index mayor -->
+    <div style="position: relative; z-index: 1;">
+
+        <h2 class="section-title" style="color: #fff">Planes</h2>
+        <p style="color: #f1f1f1;">Somos expertos en tecnología para agencias de viajes.</p>
+
+        <div class="cards-container" style="background: none; display: flex; gap: 20px; flex-wrap: wrap;">
+
+            <!-- Tarjeta 1 -->
+            <div class="card card-1">
+                <button class="price-btn">Precio: $152000</button>
+                <h3>Socio Full</h3>
+                <ul>
+                    <li>Sitio web</li>
+                    <li>Motor reserva aéreos</li>
+                    <li>Contenidos dinámicos</li>
+                    <li>Acceso coworking</li>
+                    <li>Dominio propio</li>
+                    <li>Integración backoffice</li>
+                </ul>
+                <button class="consultar-btn" onclick="consultar(1)">Consultar</button>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="card card-2">
+                <button class="price-btn">Precio: $120000</button>
+                <h3>Socio Basic</h3>
+                <ul>
+                    <li>Sitio web</li>
+                    <li>Motor reserva aéreos</li>
+                    <li>Contenidos dinámicos</li>
+                    <li>Acceso coworking</li>
+                    <li>Dominio propio</li>
+                </ul>
+                <button class="consultar-btn" onclick="consultar(2)">Consultar</button>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="card card-3">
+                <button class="price-btn">Precio: $290000</button>
+                <h3>Socio Comercial</h3>
+                <ul>
+                    <li>Sitio web</li>
+                    <li>Motor reserva aéreos</li>
+                    <li>Contenidos dinámicos</li>
+                    <li>Acceso coworking</li>
+                    <li>Dominio propio</li>
+                    <li>Integración backoffice</li>
+                    <li>Gestión comercial</li>
+                </ul>
+                <button class="consultar-btn" onclick="consultar(3)">Consultar</button>
+            </div>
+        </div>
+
+        <!-- Formulario de consulta -->
+        <div id="formulario-consulta" style="display: none; color: white;">
+            <h2 class="section-title">Formulario de consulta</h2>
+            <p id="plan-info">Estás solicitando información por el plan número: <span id="plan-numero"></span></p>
+
+            <form action="" method="POST">
+                @csrf
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" id="nombre" required>
+                </div>
+                <div>
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div>
+                    <label for="consulta">Consulta:</label>
+                    <textarea name="consulta" id="consulta" required></textarea>
+                </div>
+                <button type="submit">Enviar consulta</button>
+            </form>
+
+            @if (session('success'))
+                <p>{{ session('success') }}</p>
+            @endif
+        </div>
+
+        <script>
+            function consultar(plan) {
+                document.getElementById("formulario-consulta").style.display = "block";
+                document.getElementById("plan-numero").textContent = plan;
+            }
+        </script>
+    </div>
 </section>
- <style>
-    @media (max-width: 768px) {
-        .price-btn {
-            transition: none !important;
-            transform: none !important;
-        }
 
-        .price-btn:hover {
-            transform: none !important;
-            background-color: inherit !important;
-            color: inherit !important;
-        }
-         .consultar-btn:hover {
-            background-color: inherit !important;
-        }
 
-    }
-</style>
-<!-- Agregar animación en Tailwind -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Agrega la animación personalizada en Tailwind
-        const style = document.createElement('style');
-        style.innerHTML = `
+
+        <section id="NosAcompanan" class="mt-6 mb-6 py-6 px-6 bg-gray-100 rounded-lg shadow-lg">
+            <h2 class="section-title" style="color: #333; margin-top: 2rem; text-align: center;">Nos acompañan</h2>
+
+            <div class="overflow-hidden w-full mt-6 mb-6 py-6 px-6">
+                <div class="flex whitespace-nowrap animate-scroll-logos">
+
+
+                    <!-- Primer bloque de logos -->
+                    <div class="flex gap-10 shrink-0">
+                        @for ($i = 0; $i < 2; $i++)
+                            <img src="{{ asset('storage/travel/acompanan1.png') }}" alt="Logo 1"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan2.png') }}" alt="Logo 2"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan3.png') }}" alt="Logo 3"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan4.jpg') }}" alt="Logo 4"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan5.jpg') }}" alt="Logo 5"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan6.png') }}" alt="Logo 6"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan70.png') }}" alt="Logo 7"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan1.png') }}" alt="Logo 1"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan2.png') }}" alt="Logo 2"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan3.png') }}" alt="Logo 3"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan4.jpg') }}" alt="Logo 4"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan5.jpg') }}" alt="Logo 5"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan6.png') }}" alt="Logo 6"
+                                class="h-12 object-contain">
+                            <img src="{{ asset('storage/travel/acompanan70.png') }}" alt="Logo 7"
+                                class="h-12 object-contain">
+                        @endfor
+
+                    </div>
+                </div>
+        </section>
+        <style>
+            @media (max-width: 768px) {
+                .price-btn {
+                    transition: none !important;
+                    transform: none !important;
+                }
+
+                .price-btn:hover {
+                    transform: none !important;
+                    background-color: inherit !important;
+                    color: inherit !important;
+                }
+
+                .consultar-btn:hover {
+                    background-color: inherit !important;
+                }
+
+            }
+        </style>
+        <!-- Agregar animación en Tailwind -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Agrega la animación personalizada en Tailwind
+                const style = document.createElement('style');
+                style.innerHTML = `
             @keyframes scroll-logos {
                 0% {
                     transform: translateX(0);
@@ -839,12 +875,9 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
                 animation: scroll-logos 10s linear infinite;
             }
         `;
-        document.head.appendChild(style);
-    });
-
-
-
-</script>
+                document.head.appendChild(style);
+            });
+        </script>
 
 
 
@@ -990,7 +1023,7 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
 
 
 
-    <!-- Footer (versión que ya diseñamos) -->
+    <!-- Footer  -->
     <footer class="footer">
         <div class="container">
             <div class="row justify-content-center">
