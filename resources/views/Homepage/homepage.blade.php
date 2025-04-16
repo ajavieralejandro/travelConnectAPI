@@ -784,20 +784,19 @@ background: linear-gradient(0deg, rgba(203, 230, 138, 1) 0%, rgba(92, 179, 95, 1
       <!-- Primer bloque de logos -->
       <div class="flex gap-10 shrink-0">
         @for ($i = 0; $i < 2; $i++)
-        <img src="{{ asset('storage/travel/acompañan1.png') }}" alt="Logo 1" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan2.png') }}" alt="Logo 2" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan3.png') }}" alt="Logo 3" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan6.png') }}" alt="Logo 6" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan70.png') }}" alt="Logo 7" class="h-12 object-contain">
-         <img src="{{ asset('storage/travel/acompañan1.png') }}" alt="Logo 1" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan2.png') }}" alt="Logo 2" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan3.png') }}" alt="Logo 3" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan6.png') }}" alt="Logo 6" class="h-12 object-contain">
-        <img src="{{ asset('storage/travel/acompañan70.png') }}" alt="Logo 7" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan1.png') }}" alt="Logo 1" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan2.png') }}" alt="Logo 2" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan3.png') }}" alt="Logo 3" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan6.png') }}" alt="Logo 6" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan70.png') }}" alt="Logo 7" class="h-12 object-contain"><img src="{{ asset('storage/travel/acompanan1.png') }}" alt="Logo 1" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan2.png') }}" alt="Logo 2" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan3.png') }}" alt="Logo 3" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan4.jpg') }}" alt="Logo 4" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan5.jpg') }}" alt="Logo 5" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan6.png') }}" alt="Logo 6" class="h-12 object-contain">
+        <img src="{{ asset('storage/travel/acompanan70.png') }}" alt="Logo 7" class="h-12 object-contain">
        @endfor
 
     </div>
