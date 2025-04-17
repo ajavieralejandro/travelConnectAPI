@@ -44,12 +44,15 @@ Route::middleware('is_admin')->group(function () {
     Route::post('/register', [TenantController::class, 'register']);    });
 
 
-    Route::domain('{subdomain}.localhost')->group(function () {
-        if ($subdomain === 'www') {
-            return redirect('/');
-        }
-        Route::get('/', [TenantController::class, 'show']);
-    });
+ // Redirigir www.localhost a /
+Route::domain('www.travelconnect.com.ar')->get('/', function () {
+    return redirect('/');
+});
+
+// Rutas para subdominios
+Route::domain('{subdomain}.travelconnect.com.ar')->group(function () {
+    Route::get('/', [TenantController::class, 'show']);
+});
 Route::post('/send-soap-request', [SoapController::class, 'sendSoapRequest'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 Route::get('/tenant-check', function () {
     dd([

@@ -11,13 +11,14 @@ class BrevoServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(TransactionalEmailsApi::class, function () {
-            $apiKey = config('services.brevo.key');
+       // Leemos la API Key desde el archivo de configuración 'services.php'
+    $apiKey = config('services.brevo.key');
 
-            $config = Configuration::getDefaultConfiguration()
-                ->setApiKey('api-key', $apiKey);
+    // Configuramos la API Key y el host de Brevo
+    $config = Configuration::getDefaultConfiguration()
+                ->setApiKey('api-key', $apiKey)  // API Key desde config('services.brevo.key')
+                ->setHost('https://api.brevo.com/v3');  // Actualizamos el host a Brevo
+    return new TransactionalEmailsApi(new Client(), $config);
 
-            return new TransactionalEmailsApi(new Client(), $config);
-        });
     }
 }

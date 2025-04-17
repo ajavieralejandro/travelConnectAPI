@@ -8,9 +8,8 @@ use SendinBlue\Client\Model\SendSmtpEmail;
 
 class ContactController extends Controller
 {
-    public function send(Request $request, TransactionalEmailsApi $brevo)
+    public function send(Request $request)
     {
-
         $validated = $request->validate([
             'nombre' => 'required',
             'apellido' => 'required',
@@ -33,24 +32,26 @@ class ContactController extends Controller
 EOT;
 
         try {
-            $email = new SendSmtpEmail([
+            $response = Http::withHeaders([
+                'api-key' => config('services.brevo.key'),
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])->post('https://api.brevo.com/v3/smtp/email', [
+                'sender' => ['name' => 'Formulario de Contacto', 'email' => 'amorosijavier@gmail.com'],
+                'to' => [['email' => 'amorosijavier@gmail.com', 'name' => 'Administrador del sitio']],
                 'subject' => 'Nuevo mensaje desde el sitio',
-                'sender' => [
-                    'name' => 'Formulario de Contacto',
-                    'email' => 'amorosijavier@gmail.com', // Este mail debe estar validado en Brevo
-                ],
-                'to' => [
-                    ['email' => 'amorosijavier@gmail.com', 'name' => 'Administrador del sitio'],
-                ],
                 'htmlContent' => $contenido,
             ]);
 
-            $brevo->sendTransacEmail($email);
+            if ($response->successful()) {
+                return back()->with('success', 'Mensaje enviado correctamente.');
+            } else {
+                return back()->withErrors(['error' => 'Error al enviar el mensaje: ' . $response->body()]);
+            }
 
-            return back()->with('success', 'Mensaje enviado correctamente.');
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
-            return back()->withErrors(['error' => 'Error al enviar el mensaje: ' . $e->getMessage()]);
+            return back()->withErrors(['error' => 'Excepción: ' . $e->getMessage()]);
         }
     }
+
 }
