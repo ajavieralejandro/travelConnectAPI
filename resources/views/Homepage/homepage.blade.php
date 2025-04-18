@@ -21,142 +21,133 @@
 <body>
 
     <!-- Header con Logo -->
-    <header class="text-center py-4">
-        <nav class="relative flex items-center justify-between px-4 py-4 bg-white shadow-md">
-            <!-- Logo -->
-            <a class="text-3xl font-bold leading-none" href="index.php?seccion=inicio">
-                <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-32 mx-auto mt-6">
-            </a>
+ <header class="text-center py-4">
+    <nav class="relative flex items-center justify-between px-4 py-4 bg-white shadow-md z-50">
+        <!-- Logo -->
+        <a class="text-3xl font-bold leading-none" href="index.php?seccion=inicio">
+            <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-32 mx-auto mt-6">
+        </a>
 
-            <!-- Botón hamburguesa para móvil -->
-            <div class="lg:hidden">
-                <button class="flex items-center p-3 text-black-600 navbar-burger" onclick="toggleMenu()">
-                    <svg class="block w-5 h-5 fill-current" viewBox="0 0 20 20">
-                        <title>Menú</title>
-                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Menú principal -->
-            <ul id="menu"
-                class="absolute hidden lg:flex lg:static lg:translate-x-0 lg:translate-y-0 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 lg:items-center lg:space-x-6 text-sm">
-                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#carouselExampleCaptions">Inicio</a>
-                </li>
-                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#QuienesSomos">Quiénes somos</a></li>
-                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Caracteristicas">Características</a>
-                </li>
-                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Beneficios">Beneficios</a></li>
-                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Planes">Planes</a></li>
-                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#NosAcompanan">Nos acompañan</a></li>
-                <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Contacto">Contacto</a></li>
-            </ul>
-        </nav>
-
-        <!-- Menú lateral para móviles (off-canvas) -->
-        <div id="offcanvasMenu" class="fixed inset-0 z-50 bg-black bg-opacity-25 hidden lg:hidden">
-            <div class="fixed top-0 right-0 z-50 w-64 bg-white shadow-lg p-6 h-full transform translate-x-full transition-all duration-300 ease-in-out"
-                id="sideMenu">
-                <div class="flex items-center mb-8">
-                    <a class="mr-auto text-3xl font-bold leading-none" href="#">
-                        <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-10 h-auto">
-                    </a>
-                    <path xmlns="http://www.w3.org/2000/svg"
-                        d="M8284 9162 c-2 -207 -55 -427 -161 -667 -147 -333 -404 -644 -733 -886 -81 -59 -247 -169 -256 -169 -3 0 -18 -9 -34 -20 -26 -19 -344 -180 -354 -180 -3 0 -29 -11 -58 -24 -227 -101 -642 -225 -973 -290 -125 -25 -397 -70 -480 -80 -22 -3 -76 -9 -120 -15 -100 -13 -142 -17 -357 -36 -29 -2 -98 -7 -153 -10 -267 -15 -436 -28 -525 -40 -14 -2 -45 -7 -70 -10 -59 -8 -99 -14 -130 -20 -14 -3 -41 -7 -60 -11 -19 -3 -39 -7 -45 -8 -5 -2 -28 -6 -50 -10 -234 -45 -617 -165 -822 -257 -23 -10 -45 -19 -48 -19 -7 0 -284 -138 -340 -170 -631 -355 -1107 -842 -1402 -1432 -159 -320 -251 -633 -308 -1056 -26 -190 -27 -635 -1 -832 3 -19 7 -59 10 -89 4 -30 11 -84 17 -120 6 -36 12 -77 14 -91 7 -43 33 -174 39 -190 3 -8 7 -28 9 -45 6 -35 52 -221 72 -285 7 -25 23 -79 35 -120 29 -99 118 -283 189 -389 67 -103 203 -244 286 -298 75 -49 178 -103 196 -103 16 0 27 16 77 110 124 231 304 529 485 800 82 124 153 227 157 230 3 3 28 36 54 74 116 167 384 497 546 671 148 160 448 450 560 542 14 12 54 45 90 75 88 73 219 172 313 238 42 29 77 57 77 62 0 5 -13 34 -29 66 -69 137 -149 405 -181 602 -7 41 -14 82 -15 90 -1 8 -6 46 -10 83 -3 37 -8 77 -10 88 -2 11 -7 65 -11 122 -3 56 -8 104 -9 107 -2 3 0 12 5 19 6 10 10 8 15 -10 10 -34 167 -346 228 -454 118 -210 319 -515 340 -515 4 0 40 18 80 40 230 128 521 255 787 343 118 40 336 102 395 113 28 5 53 11 105 23 25 5 59 12 75 15 17 3 41 8 55 11 34 7 274 43 335 50 152 18 372 29 565 29 194 0 481 -11 489 -19 2 -3 -3 -6 -12 -6 -9 -1 -20 -2 -24 -3 -33 -8 -73 -16 -98 -21 -61 -10 -264 -56 -390 -90 -649 -170 -1243 -437 -1770 -794 -60 -41 -121 -82 -134 -93 l-24 -18 124 -59 c109 -52 282 -116 404 -149 92 -26 192 -51 220 -55 17 -3 64 -12 105 -21 71 -14 151 -28 230 -41 19 -3 46 -7 60 -10 14 -2 45 -7 70 -10 25 -4 56 -8 70 -10 14 -2 53 -7 88 -10 35 -4 71 -8 81 -10 10 -2 51 -6 92 -9 101 -9 141 -14 147 -21 3 -3 -15 -5 -39 -6 -24 0 -52 -2 -62 -4 -21 -4 -139 -12 -307 -22 -242 -14 -700 -7 -880 13 -41 4 -187 27 -250 39 -125 23 -274 68 -373 111 -43 19 -81 34 -86 34 -4 0 -16 -8 -27 -17 -10 -10 -37 -33 -59 -52 -166 -141 -422 -395 -592 -586 -228 -257 -536 -672 -688 -925 -21 -36 -43 -66 -47 -68 -4 -2 -8 -7 -8 -11 0 -5 -24 -48 -54 -97 -156 -261 -493 -915 -480 -935 2 -3 47 -21 101 -38 54 -18 107 -36 118 -41 58 -25 458 -138 640 -181 118 -34 243 -71 277 -81 20 -4 46 -7 62 -7 24 0 55 -3 89 -9 49 -7 186 -9 237 -4 28 2 47 12 63 28 101 99 277 293 412 470 67 73 127 140 159 152 32 13 104 21 158 17 90 -8 255 -35 338 -59 81 -24 244 -80 366 -123 39 -14 78 -29 88 -33 34 -23 28 -37 -21 -60z" />
-                    </svg>
-                    </a>
-                    <button class="close-button  m-3" onclick="toggleMenu()">×</button>
-                </div>
-                <style>
-                    @keyframes pulse {
-
-                        0%,
-                        100% {
-                            transform: scale(1);
-                        }
-
-                        50% {
-                            transform: scale(1.2);
-                        }
-                    }
-
-                    .animate-pulse {
-                        animation: pulse 1s infinite;
-                    }
-                </style>
-
-                <ul class="space-y-6 text-gray-600">
-                    <li class="mb-1">
-                        <a class="flex items-center font-medium" href="#carouselExampleCaptions">
-                            <i class="bi bi-star text-green-600 mr-2 animate-pulse"></i>
-                            <span>Inicio</span>
-                        </a>
-                    </li>
-
-                    <li class="mb-1">
-                        <a class="flex items-center font-medium" href="#QuienesSomos">
-                            <i class="bi bi-people text-green-600 mr-2 animate-pulse"></i>
-                            <span>Quiénes somos</span>
-                        </a>
-                    </li>
-
-                    <li class="mb-1">
-                        <a class="flex items-center font-medium" href="#Caracteristicas">
-                            <i class="bi bi-grid text-green-600 mr-2 animate-pulse"></i>
-                            <span>Características</span>
-                        </a>
-                    </li>
-
-                    <li class="mb-1">
-                        <a class="flex items-center font-medium" href="#Beneficios">
-                            <i class="bi bi-star text-green-600 mr-2 animate-pulse"></i>
-                            <span>Beneficios</span>
-                        </a>
-                    </li>
-
-                    <li class="mb-1">
-                        <a class="flex items-center font-medium" href="#Planes">
-                            <i class="bi bi-calendar2-event text-green-600 mr-2 animate-pulse"></i>
-                            <span>Planes</span>
-                        </a>
-                    </li>
-
-                    <li class="mb-1">
-                        <a class="flex items-center font-medium" href="#NosAcompanan">
-                            <i class="bi bi-people-fill text-green-600 mr-2 animate-pulse"></i>
-                            <span>Nos acompañan</span>
-                        </a>
-                    </li>
-
-                    <li class="mb-1">
-                        <a class="flex items-center font-medium" href="#Contacto">
-                            <i class="bi bi-envelope text-green-600 mr-2 animate-pulse"></i>
-                            <span>Contacto</span>
-                        </a>
-                    </li>
-                </ul>
-
-
-            </div>
+        <!-- Botón hamburguesa para móvil -->
+        <div class="lg:hidden">
+            <button class="flex items-center p-3 text-black-600 navbar-burger" onclick="toggleMenu()">
+                <svg class="block w-5 h-5 fill-current" viewBox="0 0 20 20">
+                    <title>Menú</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                </svg>
+            </button>
         </div>
-    </header>
 
-    <script>
-        // Función para mostrar y ocultar el menú off-canvas
-        function toggleMenu() {
+        <!-- Menú principal (pantallas grandes) -->
+        <ul id="menu"
+            class="absolute hidden lg:flex lg:static transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 lg:items-center lg:space-x-6 text-sm">
+            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#carouselExampleCaptions">Inicio</a></li>
+            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#QuienesSomos">Quiénes somos</a></li>
+            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Caracteristicas">Características</a></li>
+            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Beneficios">Beneficios</a></li>
+            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Planes">Planes</a></li>
+            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#NosAcompanan">Nos acompañan</a></li>
+            <li><a class="text-gray-600 hover:text-blue-600 font-medium" href="#Contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Menú lateral para móviles -->
+    <div id="offcanvasMenu" class="fixed inset-0 z-50 bg-black bg-opacity-25 hidden lg:hidden">
+        <div class="fixed top-0 right-0 w-64 bg-white shadow-lg p-6 h-full transform translate-x-full transition-all duration-300 ease-in-out" id="sideMenu">
+            <div class="flex items-center justify-between mb-8">
+                <a href="#">
+                    <img src="{{ asset('storage/travel/logo.png') }}" alt="Logo" class="w-10 h-auto ">
+                </a>
+                <button class="text-3xl font-bold p-2 ml-4" onclick="toggleMenu()">×</button>
+            </div>
+
+            <ul class="space-y-6 text-gray-600">
+                <li><a class="flex items-center font-medium" href="#carouselExampleCaptions" onclick="toggleMenu()">Inicio</a></li>
+                <li><a class="flex items-center font-medium" href="#QuienesSomos" onclick="toggleMenu()">Quiénes somos</a></li>
+                <li><a class="flex items-center font-medium" href="#Caracteristicas" onclick="toggleMenu()">Características</a></li>
+                <li><a class="flex items-center font-medium" href="#Beneficios" onclick="toggleMenu()">Beneficios</a></li>
+                <li><a class="flex items-center font-medium" href="#Planes" onclick="toggleMenu()">Planes</a></li>
+                <li><a class="flex items-center font-medium" href="#NosAcompanan" onclick="toggleMenu()">Nos acompañan</a></li>
+                <li><a class="flex items-center font-medium" href="#Contacto" onclick="toggleMenu()">Contacto</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Botón flotante para abrir menú en móviles -->
+   <!-- Botón flotante para abrir menú en móviles -->
+<button
+    onclick="toggleMenu()"
+    class="fixed bottom-4 right-4 z-50 text-white rounded-full p-3 shadow-lg lg:hidden hover:brightness-110 transition duration-300"
+    style="background-color: #0fc94d;"
+    title="Abrir menú">
+    <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+    </svg>
+</button>
+
+</header>
+
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('offcanvasMenu');
+        const sideMenu = document.getElementById('sideMenu');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            setTimeout(() => {
+                sideMenu.classList.remove('translate-x-full');
+            }, 10);
+        } else {
+            sideMenu.classList.add('translate-x-full');
+            setTimeout(() => {
+                menu.classList.add('hidden');
+            }, 300);
+        }
+    }
+</script>
+
+<!-- Scripts -->
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('offcanvasMenu');
+        const sideMenu = document.getElementById('sideMenu');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            sideMenu.classList.remove('translate-x-full');
+        } else {
+            sideMenu.classList.add('translate-x-full');
+            setTimeout(() => {
+                menu.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    // Permite cerrar con la tecla ESC
+    document.addEventListener('keydown', function (event) {
+        if (event.key === "Escape") {
             const menu = document.getElementById('offcanvasMenu');
             const sideMenu = document.getElementById('sideMenu');
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                sideMenu.classList.remove('translate-x-full'); // Desliza el menú
-            } else {
-                sideMenu.classList.add('translate-x-full'); // Oculta el menú
+            if (!menu.classList.contains('hidden')) {
+                sideMenu.classList.add('translate-x-full');
                 setTimeout(() => {
                     menu.classList.add('hidden');
-                }, 300); // Espera a la animación para ocultarlo
+                }, 300);
             }
         }
-    </script>
+    });
+</script>
+
+<!-- Pulsación animada -->
+<style>
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+
+    .animate-pulse {
+        animation: pulse 1s infinite;
+    }
+</style>
+
 
 
 
@@ -216,64 +207,7 @@
         </div>
 
 
-        <section class="welcome-section position-relative text-black">
-            <style>
-                .welcome-section {
-                    position: relative;
-                    text-align: center;
-                    color: white;
-                    height: 7cm;
-                    overflow: hidden;
-                }
 
-                .welcome-section .background-image {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-repeat: repeat-x;
-                    background-position: center;
-                    background-attachment: fixed;
-                    background-color: rgb(252, 248, 248);
-                    z-index: 1;
-                }
-
-                .welcome-section .container {
-                    position: relative;
-                    z-index: 2;
-                    padding: 1rem 0;
-                }
-
-                .welcome-section h1 {
-                    color: white;
-                    font-size: 1.5rem;
-                }
-
-                .welcome-section p {
-                    color: white;
-                    font-size: 1rem;
-                }
-            </style>
-
-            <!-- Imagen de fondo definida en línea -->
-            <div class="background-image" style="background-image: url('{{ asset('storage/travel/logosf.png') }}');">
-            </div>
-
-            <div class="container text-center">
-
-
-                @if (isset($textoBienvenida) && isset($textoBienvenida->contenido) && !empty($textoBienvenida->contenido))
-                    <p class="animate-text lead mt-2">
-                        {{ $textoBienvenida->contenido }}
-                    </p>
-                @else
-                    <p class="animate-text lead mt-2">
-                        <!-- Texto alternativo si no hay contenido -->
-                    </p>
-                @endif
-            </div>
-        </section>
 
 
 
@@ -371,6 +305,16 @@
             });
         </script>
 
+
+  <section>
+            <!-- Banner de imagen -->
+            <div
+                style="width: 100%; padding-top: 20%; margin-bottom: 30px; background-image: url('{{ asset('storage/travel/1.jpg') }}'); background-size: cover; background-position: center;">
+            </div>
+
+
+
+        </section>
 
         <section id="Caracteristicas" class="caracteristicas">
             <div class="containerCaracterisitcas">
@@ -474,9 +418,11 @@
 
 
 
-        <section id="Beneficios">
-            <h2 class="section-title" style="color: #333; text-align: center;">Beneficios</h2>
-            <section class="beneficios-section">
+       <section id="Beneficios" style="width: 100%;  padding: 10px; position: relative;">
+
+
+    <h2 class="section-title" style="color: #333; text-align: center; font-weight: bold;">Beneficios</h2>
+      <section class="beneficios-section">
                 <style>
                     .beneficios-section {
                         display: flex;
@@ -675,34 +621,15 @@
 
 
 
-  <section>
-            <!-- Banner de imagen -->
-            <div
-                style="width: 100%; padding-top: 20%;  background-image: url('{{ asset('storage/travel/1.jpg') }}'); background-size: cover; background-position: center;">
-            </div>
 
 
 
-        </section>
+   <section id="Planes" style="width: 100%; padding: 10px ; position: relative; margin-top: 30px;
+    background: url('https://img.freepik.com/foto-gratis/amable-disenador-cliente-que-discute-color-pared_74855-2806.jpg') no-repeat center center/cover;
+    overflow: hidden;">
 
 
-
-
-       <section id="Planes" style="max-width: 1200px; margin: 0 auto; padding: 40px; position: relative;
-    background: url('https://img.freepik.com/foto-gratis/amable-disenador-cliente-que-discute-color-pared_74855-2806.jpg?uid=R102197663&ga=GA1.1.1238354021.1740411874&semt=ais_hybrid&w=740') no-repeat center center/cover; overflow: hidden;">
-
-    <!-- Capa de opacidad oscura + desenfoque -->
-    <div style="
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        z-index: 0;">
-    </div>
-
-    <!-- Contenido principal con z-index mayor -->
+    <!-- Contenido principal -->
     <div style="position: relative; z-index: 1;">
 
         <h2 class="section-title" style="color: #fff">Planes</h2>
@@ -757,7 +684,7 @@
         </div>
 
         <!-- Formulario de consulta -->
-        <div id="formulario-consulta" style="display: none; color: white;">
+        <div id="formulario-consulta" style="display: none; background-color: white; color: black; padding: 20px; border-radius: 10px; margin-top: 30px;">
             <h2 class="section-title">Formulario de consulta</h2>
             <p id="plan-info">Estás solicitando información por el plan número: <span id="plan-numero"></span></p>
 
@@ -783,14 +710,81 @@
             @endif
         </div>
 
+        <!-- Script -->
         <script>
             function consultar(plan) {
-                document.getElementById("formulario-consulta").style.display = "block";
+                const formulario = document.getElementById("formulario-consulta");
+                formulario.style.display = "block";
                 document.getElementById("plan-numero").textContent = plan;
+                formulario.scrollIntoView({ behavior: "smooth" }); // Scroll automático
             }
         </script>
     </div>
+    <!-- Capa de opacidad oscura + desenfoque -->
+    <div style="
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 0;">
+    </div>
+
 </section>
+
+<!-- Estilo extra para quitar hover en móvil -->
+<style>
+    @media (max-width: 768px) {
+        .card:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .consultar-btn {
+            background-color: #0fc94d !important;
+            color: #0e0d0d !important;
+            border: none !important;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: none !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+         .consultar-btn:hover,
+    .consultar-btn:active,
+    .consultar-btn:focus {
+        background-color:  #0fc94d !important;
+        color: #181717 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        outline: none !important;
+    }
+         .price-btn {
+        pointer-events: none; /* Evita que sea interactivo */
+        background-color: #0fc94d; /* Color neutro */
+        color: #333;
+        border: none;
+        cursor: default;
+        box-shadow: none;
+        transform: none;
+        transition: none;
+    }
+
+    .price-btn:hover,
+    .price-btn:active,
+    .price-btn:focus {
+        background-color: #0fc94d;
+        color: #333;
+        box-shadow: none;
+        transform: none;
+        outline: none;
+    }
+    }
+</style>
+
+
 
 
 
@@ -1037,11 +1031,15 @@
             </div>
         </div>
 
-        <div class="row text-center contact-info">
-            <div class="col-12">
-                <p><i class="fas fa-phone mr-2"></i> +(54) 11 5578 6993</p>
-            </div>
-        </div>
+       <div class="row text-center contact-info">
+    <div class="col-12">
+        <p>
+            <i class="fas fa-phone mr-2"></i>
+            <a href="tel:+541155786993">+(54) 11 5578 6993</a>
+        </p>
+    </div>
+</div>
+
 
         <div class="row text-center contact-info">
             <div class="col-12">
