@@ -42,10 +42,16 @@ class PaquetesController extends Controller
         ]);
     }
 
+    public function getPaqueteById($id){
+        $paquete = Paquete::find($id);
+        return response()->json($paquete);
+    }
+
     private function importarDesdeJulia(Request $request)
     {
         try {
-            $response = $this->juliaService->enviarPaquetes($request);
+            $response = $this->
+            vice->enviarPaquetes($request);
             return response()->json($response);
         } catch (\Exception $e) {
             Log::error('Error en enviarPaquetes:', ['error' => $e->getMessage()]);
@@ -217,4 +223,70 @@ class PaquetesController extends Controller
 
         return response()->json('hola');
     }
+
+    public function storePaquete(Request $request)
+    {
+        $validated = $request->validate([
+            'titulo' => 'required|string',
+            'descripcion' => 'nullable|string',
+            'pais' => 'required|string',
+            'ciudad' => 'required|string',
+            'ciudad_iata' => 'nullable|string',
+            'fecha_vigencia_desde' => 'required|date',
+            'fecha_vigencia_hasta' => 'required|date',
+            'cant_noches' => 'required|integer',
+            'tipo_producto' => 'nullable|string',
+            'activo' => 'boolean',
+            'imagen_principal' => 'nullable|string',
+            'edad_menores' => 'nullable|integer',
+            'transporte' => 'nullable|string',
+            'tipo_moneda' => 'nullable|string',
+            'descuento' => 'nullable|numeric',
+            'componentes' => 'nullable|array',
+            'categorias' => 'nullable|array',
+            'hoteles' => 'nullable|array',
+            'galeria_imagenes' => 'nullable|array',
+        ]);
+
+        $paquete = Paquete::create([
+            ...$validated,
+            'usuario_id' => auth()->id(),
+            'usuario' => auth()->user()->name ?? auth()->user()->email,
+            'paquete_externo_id' => uniqid(),
+            'componentes' => json_encode($request->input('componentes', [])),
+            'categorias' => json_encode($request->input('categorias', [])),
+            'hoteles' => json_encode($request->input('hoteles', [])),
+            'galeria_imagenes' => json_encode($request->input('galeria_imagenes', [])),
+        ]);
+
+        return response()->json(['message' => 'Paquete creado', 'data' => $paquete]);
+    }
+
+    // Actualizar paquete (solo si es del usuario)
+    public function updatePaquete(Request $request, $id)
+    {
+        $paquete = Paquete::where('id', $id)->where('usuario_id', auth()->id())->firstOrFail();
+
+        $data = $request->all();
+
+        foreach (['componentes', 'categorias', 'hoteles', 'galeria_imagenes'] as $campo) {
+            if (isset($data[$campo])) {
+                $data[$campo] = json_encode($data[$campo]);
+            }
+        }
+
+        $paquete->update($data);
+
+        return response()->json(['message' => 'Paquete actualizado', 'data' => $paquete]);
+    }
+
+    // Eliminar paquete (solo si es del usuario)
+    public function destroyPaquete($id)
+    {
+        $paquete = Paquete::where('id', $id)->where('usuario_id', auth()->id())->firstOrFail();
+        $paquete->delete();
+
+        return response()->json(['message' => 'Paquete eliminado']);
+    }
+
 }

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use SendinBlue\Client\Api\TransactionalEmailsApi;
-use SendinBlue\Client\Model\SendSmtpEmail;
+use Illuminate\Support\Facades\Http;
 
 class ContactController extends Controller
 {
@@ -37,21 +36,26 @@ EOT;
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->post('https://api.brevo.com/v3/smtp/email', [
-                'sender' => ['name' => 'Formulario de Contacto', 'email' => 'amorosijavier@gmail.com'],
-                'to' => [['email' => 'amorosijavier@gmail.com', 'name' => 'Administrador del sitio']],
-                'subject' => 'Nuevo mensaje desde el sitio',
+                'sender' => [
+                    'name' => 'formulario de contacto',
+                    'email' => 'amorosijavier@gmail.com', // este mail debe estar validado en brevo
+                ],
+                'to' => [
+                    ['email' => 'amorosijavier@gmail.com', 'name' => 'administrador'],
+                    ['email' => 'paonovick@hotmail.com', 'name' => 'paonovick'],
+                    ['email' => 'tomas@travelconnect.com.ar', 'name' => 'tomas'],
+                ],
+                'subject' => 'nuevo mensaje desde el sitio',
                 'htmlContent' => $contenido,
             ]);
 
             if ($response->successful()) {
-                return back()->with('success', 'Mensaje enviado correctamente.');
+                return back()->with('success', 'mensaje enviado correctamente.');
             } else {
-                return back()->withErrors(['error' => 'Error al enviar el mensaje: ' . $response->body()]);
+                return back()->withErrors(['error' => 'error al enviar el mensaje: ' . $response->body()]);
             }
-
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Excepción: ' . $e->getMessage()]);
+            return back()->withErrors(['error' => 'excepción al enviar: ' . $e->getMessage()]);
         }
     }
-
 }
