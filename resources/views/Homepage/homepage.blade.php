@@ -447,7 +447,18 @@
 
 
     <h2 class="section-title" style="color: #333; text-align: center; font-weight: bold;">Beneficios</h2>
-      <section class="beneficios-section">
+      <section class="beneficios-section" style="color: #f1f1f1; text-align: center; font-size:larger;">
+         <p>
+        Como asociado, tendrás acceso a herramientas innovadoras que facilitarán el crecimiento de tu
+        agencia y optimizarán los procesos operativos. Entre los beneficios destacados se incluyen:
+      </p>
+          <p>
+        Es una plataforma de transformación en donde la emisión automática de aéreos, la web con los
+        paquetes de hoteles y aéreos, los prospectos de consultas, el CRM y el backoffice te ayudarán a
+        optimizar la gestión de tus procesos, mejorar la experiencia del cliente, y aumentar la
+        eficiencia operativa en tu negocio. Todo esto con el objetivo de simplificar y potenciar tu
+        estrategia en el mercado.
+      </p>
                 <style>
                     .beneficios-section {
                         display: flex;
@@ -586,58 +597,61 @@
                     }
                 </style>
 
-                <div class="beneficio-columna izquierda">
-                    <h3>Para el asociado</h3>
-                    <p>
-                        Como asociado, tendrás acceso a herramientas innovadoras que facilitarán el crecimiento de tu
-                        agencia y optimizarán los procesos operativos. Entre los beneficios destacados se incluyen:
-                    </p>
-                    <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
-                        <li><i class="bi bi-rocket" style="margin-right: 8px; color: #0fc94d;"></i>Maximizar un modelo
-                            de negocios productivo por medio de una fuerte impronta tecnológica.</li>
-                        <li><i class="bi bi-layers" style="margin-right: 8px; color: #0fc94d;"></i>Contar con un
-                            ecosistema digital integrado con productos y procesos para lograr mejores resultados
-                            comerciales y operativos en el día a día.</li>
-                        <li><i class="bi bi-people" style="margin-right: 8px; color: #0fc94d;"></i>Ser parte de una
-                            comunidad activa y con fuerza de desarrollo y crecimiento.</li>
-                        <li><i class="bi bi-graph-up" style="margin-right: 8px; color: #0fc94d;"></i>Gestionar de
-                            manera eficaz, a través de indicadores y variables del negocio.</li>
-                    </ul>
-                </div>
+     <section class="beneficios-section">
+    <div class="beneficio-columna izquierda">
+      <h3>Para el asociado</h3>
 
-                <div class="beneficio-columna derecha">
-                    <h3>Más ventajas</h3>
-                    <p>
-                        Es una plataforma de transformación en donde la emisión automática de aéreos, la web con los
-                        paquetes de hoteles y aéreos, los prospectos de consultas, el CRM y el backoffice te ayudarán a
-                        optimizar la gestión de tus procesos, mejorar la experiencia del cliente, y aumentar la
-                        eficiencia operativa en tu negocio. Todo esto con el objetivo de simplificar y potenciar tu
-                        estrategia en el mercado.
-                    </p>
-                    <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
-                        <li><i class="bi bi-bar-chart-line" style="margin-right: 8px; color: #0fc94d;"></i>Potencia tu
-                            estrategia en el mercado.</li>
-                        <li><i class="bi bi-gear" style="margin-right: 8px; color: #0fc94d;"></i>Optimiza la gestión
-                            comercial.</li>
-                        <li><i class="bi bi-robot" style="margin-right: 8px; color: #0fc94d;"></i>CRM, BackOffice,
-                            ChatBot al servicio de tu empresa.</li>
-                    </ul>
+      <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
+        <li><i class="bi bi-rocket" style="margin-right: 8px; color: #0fc94d;"></i>Maximizar un modelo de negocios productivo por medio de una fuerte impronta tecnológica.</li>
+        <li><i class="bi bi-layers" style="margin-right: 8px; color: #0fc94d;"></i>Contar con un ecosistema digital integrado con productos y procesos para lograr mejores resultados comerciales y operativos en el día a día.</li>
+        <li><i class="bi bi-people" style="margin-right: 8px; color: #0fc94d;"></i>Ser parte de una comunidad activa y con fuerza de desarrollo y crecimiento.</li>
+        <li><i class="bi bi-graph-up" style="margin-right: 8px; color: #0fc94d;"></i>Gestionar de manera eficaz, a través de indicadores y variables del negocio.</li>
+      </ul>
+    </div>
 
-                </div>
+    <div class="beneficio-columna central">
+      <h3>ChatBot con IA</h3>
+      <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
+        <li><i class="bi bi-chat-dots" style="margin-right: 8px; color: #0fc94d;"></i>Conversa en lenguaje natural, brindando una experiencia fluida y personalizada.</li>
+        <li><i class="bi bi-sliders" style="margin-right: 8px; color: #0fc94d;"></i>Permite configurar su perfil, estilo y forma de responder mediante prompts personalizados.</li>
+        <li><i class="bi bi-share" style="margin-right: 8px; color: #0fc94d;"></i>Omnicanal: Responde consultas desde Instagram, Facebook y WhatsApp al mismo tiempo.</li>
+        <li><i class="bi bi-question-circle" style="margin-right: 8px; color: #0fc94d;"></i>Responde preguntas frecuentes y recopila los datos necesarios para generar cotizaciones.</li>
+        <li><i class="bi bi-send-check" style="margin-right: 8px; color: #0fc94d;"></i>Da seguimiento a cotizaciones, consulta al cliente si las recibió y ofrece asistencia adicional.</li>
+        <li><i class="bi bi-search" style="margin-right: 8px; color: #0fc94d;"></i>Consulta de tarifas: Puede brindar información accediendo a fuentes indicadas (sistemas, listados o plataformas externas).</li>
+      </ul>
+    </div>
 
-                <script>
-                    window.addEventListener("scroll", () => {
-                        document.querySelectorAll(".beneficio-columna").forEach((col) => {
-                            const pos = col.getBoundingClientRect().top;
-                            const trigger = window.innerHeight - 100;
+    <div class="beneficio-columna derecha">
+      <h3>Más ventajas</h3>
 
-                            if (pos < trigger) {
-                                col.style.opacity = "1";
-                                col.style.transform = "translateY(0)";
-                            }
-                        });
-                    });
-                </script>
+      <ul style="color: #555; font-size: 1.2rem; line-height: 1.6; padding-left: 20px;">
+    <li><i class="bi bi-bar-chart-line" style="margin-right: 8px; color: #0fc94d;"></i>Potencia tu estrategia en el mercado.</li>
+    <li><i class="bi bi-gear" style="margin-right: 8px; color: #0fc94d;"></i>Optimiza la gestión comercial.</li>
+    <li><i class="bi bi-robot" style="margin-right: 8px; color: #0fc94d;"></i>CRM, BackOffice, ChatBot al servicio de tu empresa.</li>
+    <li><i class="bi bi-lightbulb" style="margin-right: 8px; color: #0fc94d;"></i>Automatización inteligente de tareas repetitivas.</li>
+    <li><i class="bi bi-clock-history" style="margin-right: 8px; color: #0fc94d;"></i>Ahorro de tiempo con procesos más ágiles y eficientes.</li>
+    <li><i class="bi bi-globe2" style="margin-right: 8px; color: #0fc94d;"></i>Acceso a herramientas digitales desde cualquier lugar.</li>
+    <li><i class="bi bi-bar-chart" style="margin-right: 8px; color: #0fc94d;"></i>Reportes e indicadores clave para tomar mejores decisiones.</li>
+    <li><i class="bi bi-puzzle" style="margin-right: 8px; color: #0fc94d;"></i>Integración sencilla con sistemas ya existentes.</li>
+    <li><i class="bi bi-star" style="margin-right: 8px; color: #0fc94d;"></i>Mejora de la experiencia del cliente con respuestas más rápidas.</li>
+  </ul>
+    </div>
+  </section>
+
+  <script>
+    window.addEventListener("scroll", () => {
+      document.querySelectorAll(".beneficio-columna").forEach((col) => {
+        const pos = col.getBoundingClientRect().top;
+        const trigger = window.innerHeight - 100;
+
+        if (pos < trigger) {
+          col.style.opacity = "1";
+          col.style.transform = "translateY(0)";
+        }
+      });
+    });
+  </script>
+</section>
             </section>
 
 
