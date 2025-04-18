@@ -4,19 +4,44 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ?? 'Travel Connect' }}</title>
 
+    <!-- SEO y Metadatos -->
+    <title>{{ $title ?? 'Travel Connect' }}</title>
+    <meta name="description" content="Transformamos agencias de viajes  con soluciones digitales. -RED DE AGENCIAS- CRM, reservas online, chatBot y más. Travel Connect Red de Agenias.">
+    <meta name="keywords" content="agencias de viajes, tecnología, digitalización, ChatBot con IA, CRM, turismo, Travel Connect">
+    <meta name="author" content="Travel Connect">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="{{ $title ?? 'Travel Connect - RED DE AGENCIAS - Transformación Digital para Agencias de Viajes' }}">
+    <meta property="og:description" content="Digitalizamos tu agencia de viajes. Automatización, gestión de clientes, reservas online, CRM, ChatBot con IA y más.">
+    <meta property="og:image" content="{{ asset('storage/travel/og-image.png') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Travel Connect">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $title ?? 'Travel Connect - Soluciones Tecnológicas para Turismo' }}">
+    <meta name="twitter:description" content="Potenciamos agencias de viajes con herramientas digitales. Soluciones integrales para crecer en el mercado actual.">
+    <meta name="twitter:image" content="{{ asset('storage/travel/og-image.png') }}">
+    <meta name="twitter:site" content="@travelconnectar">
+
+    <!-- Redes Sociales -->
+    <link rel="me" href="https://www.instagram.com/travelconnectar/">
+    <link rel="me" href="https://www.linkedin.com/company/travelconnectarg">
+
+    <!-- Icono del sitio -->
     <link rel="icon" href="{{ asset('/favicon.ico') }}" type="image/x-icon">
+
+    <!-- Estilos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-
     @vite(['resources/css/styles.css'])
     @vite(['resources/css/app.css'])
-
-
-
-
 </head>
+
 
 <body>
 
@@ -624,117 +649,117 @@
 
 
 
-   <section id="Planes" style="width: 100%; padding: 10px ; position: relative; margin-top: 30px;
-    background: url('https://img.freepik.com/foto-gratis/amable-disenador-cliente-que-discute-color-pared_74855-2806.jpg') no-repeat center center/cover;
-    overflow: hidden;">
+  <section id="Planes" style="width: 100%; padding: 10px ; position: relative; margin-top: 30px;
+background: url('https://img.freepik.com/foto-gratis/amable-disenador-cliente-que-discute-color-pared_74855-2806.jpg') no-repeat center center/cover;
+overflow: hidden;">
 
+<!-- Contenido principal -->
+<div style="position: relative; z-index: 1;">
 
-    <!-- Contenido principal -->
-    <div style="position: relative; z-index: 1;">
+     <h2 class="section-title" style="color: #faf5f5; text-align: center; font-weight: bold;">Planes</h2>
+    <p style="color: #f1f1f1; text-align: center; font-size:larger;">Somos expertos en tecnología para agencias de viajes.</p>
 
-        <h2 class="section-title" style="color: #fff">Planes</h2>
-        <p style="color: #f1f1f1;">Somos expertos en tecnología para agencias de viajes.</p>
+    <div class="cards-container" style="background: none; display: flex; gap: 20px; flex-wrap: wrap;">
 
-        <div class="cards-container" style="background: none; display: flex; gap: 20px; flex-wrap: wrap;">
-
-            <!-- Tarjeta 1 -->
-            <div class="card card-1">
-                <button class="price-btn">Precio: $152000</button>
-                <h3>Socio Full</h3>
-                <ul>
-                    <li>Sitio web</li>
-                    <li>Motor reserva aéreos</li>
-                    <li>Contenidos dinámicos</li>
-                    <li>Acceso coworking</li>
-                    <li>Dominio propio</li>
-                    <li>Integración backoffice</li>
-                </ul>
-                <button class="consultar-btn" onclick="consultar(1)">Consultar</button>
-            </div>
-
-            <!-- Tarjeta 2 -->
-            <div class="card card-2">
-                <button class="price-btn">Precio: $120000</button>
-                <h3>Socio Basic</h3>
-                <ul>
-                    <li>Sitio web</li>
-                    <li>Motor reserva aéreos</li>
-                    <li>Contenidos dinámicos</li>
-                    <li>Acceso coworking</li>
-                    <li>Dominio propio</li>
-                </ul>
-                <button class="consultar-btn" onclick="consultar(2)">Consultar</button>
-            </div>
-
-            <!-- Tarjeta 3 -->
-            <div class="card card-3">
-                <button class="price-btn">Precio: $290000</button>
-                <h3>Socio Comercial</h3>
-                <ul>
-                    <li>Sitio web</li>
-                    <li>Motor reserva aéreos</li>
-                    <li>Contenidos dinámicos</li>
-                    <li>Acceso coworking</li>
-                    <li>Dominio propio</li>
-                    <li>Integración backoffice</li>
-                    <li>Gestión comercial</li>
-                </ul>
-                <button class="consultar-btn" onclick="consultar(3)">Consultar</button>
-            </div>
+        <!-- Tarjeta 1 -->
+        <div class="card card-1">
+            <button class="price-btn">Precio: $152000</button>
+            <h3>Socio Full</h3>
+            <ul>
+                <li>Sitio web</li>
+                <li>Motor reserva aéreos</li>
+                <li>Contenidos dinámicos</li>
+                <li>Acceso coworking</li>
+                <li>Dominio propio</li>
+                <li>Integración backoffice</li>
+            </ul>
+            <a class="consultar-btn" href="https://wa.me/5491123456789?text=Hola,%20quiero%20consultar%20por%20el%20plan%20Socio%20Full" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="height: 20px; vertical-align: middle; margin-right: 8px;">
+                Consultar
+            </a>
         </div>
 
-        <!-- Formulario de consulta -->
-        <div id="formulario-consulta" style="display: none; background-color: white; color: black; padding: 20px; border-radius: 10px; margin-top: 30px;">
-            <h2 class="section-title">Formulario de consulta</h2>
-            <p id="plan-info">Estás solicitando información por el plan número: <span id="plan-numero"></span></p>
-
-            <form action="" method="POST">
-                @csrf
-                <div>
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" name="nombre" id="nombre" required>
-                </div>
-                <div>
-                    <label for="email">Correo electrónico:</label>
-                    <input type="email" name="email" id="email" required>
-                </div>
-                <div>
-                    <label for="consulta">Consulta:</label>
-                    <textarea name="consulta" id="consulta" required></textarea>
-                </div>
-                <button type="submit">Enviar consulta</button>
-            </form>
-
-            @if (session('success'))
-                <p>{{ session('success') }}</p>
-            @endif
+        <!-- Tarjeta 2 -->
+        <div class="card card-2">
+            <button class="price-btn">Precio: $120000</button>
+            <h3>Socio Basic</h3>
+            <ul>
+                <li>Sitio web</li>
+                <li>Motor reserva aéreos</li>
+                <li>Contenidos dinámicos</li>
+                <li>Acceso coworking</li>
+                <li>Dominio propio</li>
+            </ul>
+            <a class="consultar-btn" href="https://wa.me/5491123456789?text=Hola,%20quiero%20consultar%20por%20el%20plan%20Socio%20Basic" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="height: 20px; vertical-align: middle; margin-right: 8px;">
+                Consultar
+            </a>
         </div>
 
-        <!-- Script -->
-        <script>
-            function consultar(plan) {
-                const formulario = document.getElementById("formulario-consulta");
-                formulario.style.display = "block";
-                document.getElementById("plan-numero").textContent = plan;
-                formulario.scrollIntoView({ behavior: "smooth" }); // Scroll automático
-            }
-        </script>
+        <!-- Tarjeta 3 -->
+        <div class="card card-3">
+            <button class="price-btn">Precio: $290000</button>
+            <h3>Socio Comercial</h3>
+            <ul>
+                <li>Sitio web</li>
+                <li>Motor reserva aéreos</li>
+                <li>Contenidos dinámicos</li>
+                <li>Acceso coworking</li>
+                <li>Dominio propio</li>
+                <li>Integración backoffice</li>
+                <li>Gestión comercial</li>
+            </ul>
+            <a class="consultar-btn" href="https://wa.me/5491123456789?text=Hola,%20quiero%20consultar%20por%20el%20plan%20Socio%20Comercial" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="height: 20px; vertical-align: middle; margin-right: 8px;">
+                Consultar
+            </a>
+        </div>
     </div>
-    <!-- Capa de opacidad oscura + desenfoque -->
-    <div style="
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        z-index: 0;">
-    </div>
+</div>
+
+<!-- Capa de opacidad oscura + desenfoque -->
+<div style="
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 0;">
+</div>
 
 </section>
 
-<!-- Estilo extra para quitar hover en móvil -->
+<!-- Estilos para el botón con WhatsApp -->
 <style>
+    .consultar-btn {
+        display: inline-flex;
+        align-items: center;
+        background-color: #0fc94d;
+        color: #0e0d0d;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 16px;
+    }
+
+    .consultar-btn:hover {
+        background-color: #0abf45;
+        color: #1a1919;
+    }
+      .price-btn {
+            pointer-events: none;
+            background-color: #0fc94d;
+            color: #333;
+            border: none;
+            cursor: default;
+            box-shadow: none;
+            transform: none;
+            transition: none;
+        }
+
     @media (max-width: 768px) {
         .card:hover {
             transform: none !important;
@@ -742,47 +767,30 @@
         }
 
         .consultar-btn {
-            background-color: #0fc94d !important;
-            color: #0e0d0d !important;
-            border: none !important;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: none !important;
             box-shadow: none !important;
             transform: none !important;
         }
 
-         .consultar-btn:hover,
-    .consultar-btn:active,
-    .consultar-btn:focus {
-        background-color:  #0fc94d !important;
-        color: #181717 !important;
-        box-shadow: none !important;
-        transform: none !important;
-        outline: none !important;
-    }
-         .price-btn {
-        pointer-events: none; /* Evita que sea interactivo */
-        background-color: #0fc94d; /* Color neutro */
-        color: #333;
-        border: none;
-        cursor: default;
-        box-shadow: none;
-        transform: none;
-        transition: none;
-    }
+        .price-btn {
+            pointer-events: none;
+            background-color: #0fc94d;
+            color: #333;
+            border: none;
+            cursor: default;
+            box-shadow: none;
+            transform: none;
+            transition: none;
+        }
 
-    .price-btn:hover,
-    .price-btn:active,
-    .price-btn:focus {
-        background-color: #0fc94d;
-        color: #333;
-        box-shadow: none;
-        transform: none;
-        outline: none;
-    }
+        .price-btn:hover,
+        .price-btn:active,
+        .price-btn:focus {
+            background-color: #0fc94d;
+            color: #333;
+        }
     }
 </style>
+
 
 
 
@@ -1025,7 +1033,7 @@
                     <h4 class="footer-title">¡Seguinos!
                         <a href="https://www.instagram.com/travelconnectar/" target="_blank" class="social-icon"><i
                                 class="bi bi-instagram"></i></a>
-                        <a href="https://www.linkedin.com/company/travelconnectarg/posts/?feedView=all"
+                        <a href="https://www.linkedin.com/company/travelconnectarg"
                             target="_blank" class="social-icon"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
