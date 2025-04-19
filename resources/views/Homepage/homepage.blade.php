@@ -15,7 +15,7 @@
     <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:title" content="{{ $title ?? 'Travel Connect - RED DE AGENCIAS - Transformación Digital para Agencias de Viajes' }}">
     <meta property="og:description" content="Digitalizamos tu agencia de viajes. Automatización, gestión de clientes, reservas online, CRM, ChatBot con IA y más.">
-    <meta property="og:image" content="{{ asset('storage/travel/og-image.png') }}">
+    <meta property="og:image" content="{{ asset('storage/travel/og-image2.png') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Travel Connect">
