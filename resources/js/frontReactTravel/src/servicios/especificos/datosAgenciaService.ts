@@ -3,12 +3,14 @@ import { transformarAgenciaBackData, AgenciaBackData } from "./transformarAgenci
 import { fetchDatosAgenciaMock } from "./fetchDatosAgenciaMock";
 import { fetchDatosAgenciaReal } from "./fetchDatosAgenciaReal";
 
-const usarMock = true;
+const usarMock = false;
 
 export const fetchDatosAgencia = async (): Promise<DatosAgencia> => {
   const datosBack: AgenciaBackData = usarMock
     ? await fetchDatosAgenciaMock()
     : await fetchDatosAgenciaReal();
-
-  return transformarAgenciaBackData(datosBack);
+    console.log("Los datos que estoy trayendo son : ",datosBack);
+   const agencia_t =  transformarAgenciaBackData(datosBack);
+   console.log("Los datos transformados son :",agencia_t);
+   return agencia_t;
 };

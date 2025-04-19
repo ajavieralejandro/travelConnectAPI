@@ -38,8 +38,7 @@ class AgenciaController extends Controller
                 'dominio' => 'required|string|max:255|unique:agencias,dominio',
                 'logo' => 'nullable|image|mimes:jpeg,png|max:2048',
                 'favicon' => 'nullable|image|mimes:jpeg,png|max:2048',
-                'fondo_1' => 'nullable|image|mimes:jpeg,png|max:2048',
-                'fondo_2' => 'nullable|image|mimes:jpeg,png|max:2048',
+
                 'header_imagen_background' => 'nullable|file|mimes:jpeg,png|max:10240',
                 'header_video_background' => 'nullable|file|mimes:mp4,mov,avi|max:51200',
                 'publicidad_imagen_1' => 'nullable|image|mimes:jpeg,png|max:10240',
@@ -246,7 +245,7 @@ public function guardarVideo(Request $request)
             $response = [
                 'idAgencia' => (string) $agencia->id,
                 'nombreAgencia' => $agencia->nombre,
-                'logoAgencia' => $agencia->logo,
+                'logo' => $agencia->logo,
                 'tipografiaAgencia' => $agencia->tipografia_agencia,
                 'colorTipografiaAgencia' => $agencia->color_tipografia_agencia,
                 'colorFondoApp' => $agencia->color_fondo_app,
@@ -256,12 +255,13 @@ public function guardarVideo(Request $request)
                     'terciario' => $agencia->color_terciario,
                 ],
 
-                'header' => [
-                    'imagenBackground' => $agencia->header_imagen_background,
-                    'imagenBackgroundOpacidad' => (float) $agencia->header_imagen_background_opacidad,
-                    'videoBackground' => $agencia->header_video_background,
-                    'videoBackgroundOpacidad' => $agencia->header_video_background_opacidad,
-                ],
+
+
+                    'header_imagen_background' => $agencia->header_imagen_background,
+                    'header_imagen_background_opacidad' => (float) $agencia->header_imagen_background_opacidad,
+                    'header_video_background' => $agencia->header_video_background,
+                    'header_video_background_opacidad' => $agencia->header_video_background_opacidad,
+
 
                 'buscador' => [
                     'tipografia' => $agencia->buscador_tipografia,

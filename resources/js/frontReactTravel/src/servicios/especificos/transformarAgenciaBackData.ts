@@ -89,7 +89,7 @@ export function transformarAgenciaBackData(data: AgenciaBackData): DatosAgencia 
     header: {
       imagenBackground: data.header_imagen_background,
       imagenBackgroundOpacidad: data.header_imagen_background_opacidad,
-      videoBackground: data.header_video_background,
+      videoBackground: data.header_imagen_background,
       videoBackgroundOpacidad: data.header_video_background_opacidad,
     },
 

@@ -1,8 +1,7 @@
 import { AgenciaBackData } from "./transformarAgenciaBackData";
 
 export const fetchDatosAgenciaReal = async (): Promise<AgenciaBackData> => {
-  const url = `${process.env.REACT_APP_API_URL}/agencia`;
-
+    const url = `${window.location.origin}/agencia`;
   const response = await fetch(url, {
     headers: { Accept: "application/json" },
   });

@@ -50,7 +50,7 @@ Route::domain('www.travelconnect.com.ar')->get('/', function () {
 });
 
 // Rutas para subdominios
-Route::domain('{subdomain}.travelconnect.com.ar')->group(function () {
+Route::domain('{subdomain}.localhost')->group(function () {
     Route::get('/', [TenantController::class, 'show']);
 });
 Route::post('/send-soap-request', [SoapController::class, 'sendSoapRequest'])->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
